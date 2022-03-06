@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/06 13:53:49 by apommier         ###   ########.fr        #
+#    Updated: 2022/03/06 15:54:06 by sadjigui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,10 @@ CFLAGS	= -Wall -Wextra
 RM		= rm -rf
 LIBFT	= ./libft
 
-${NAME}: ${OBJS} 
-		@make bonus -C ${LIBFT} 
-		@${CC} ${CFLAGS} ${OBJS} ${LIBFT}/libft.a -o ${NAME}
-	
+${NAME}: ${OBJS}
+		@make bonus -C ${LIBFT}
+		@${CC} ${CFLAGS} ${OBJS} ${LIBFT}/libft.a -o ${NAME} -lreadline
+
 all:	${NAME} bonus
 
 clean:
@@ -33,7 +33,7 @@ clean:
 fclean:	clean
 		@${RM} ${NAME}
 		@make fclean -C ${LIBFT}
-		
+
 re: 	fclean all
 
 .PHONY: all clean fclean re bonus
