@@ -3,57 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/08 18:20:19 by apommier          #+#    #+#             */
-/*   Updated: 2022/01/17 11:28:01 by apommier         ###   ########.fr       */
+/*   Created: 2021/05/22 13:13:20 by sadjigui          #+#    #+#             */
+/*   Updated: 2021/05/31 17:09:12 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static char	*fill(long n, int j, int minus)
+int	base_len(long nb)
 {
-	char	*dest;
+	int	len;
 
-	j += minus;
-	dest = (char *)malloc(sizeof(char) * (j + 1));
-	if (dest == 0)
-		return (0);
-	dest[j] = 0;
-	if (n == 0)
-		dest[j - 1] = '0';
-	while (n)
+	len = 1;
+	if (nb < 0)
 	{
-		dest[j - 1] = n % 10 + '0';
-		j--;
-		n /= 10;
+		nb = -nb;
+		len++;
 	}
-	if (minus)
-		dest[j - 1] = '-';
-	return (dest);
+	while (nb >= 10)
+	{
+		nb /= 10;
+		len++;
+	}
+	return (len);
 }
 
-char	*ft_itoa(int n)
+static void	filler(char *str, int i, long n)
 {
-	long	i;
-	long	k;
-	int		j;
-	int		minus;
+	if (n < 0)
+	{
+		str[0] = '-';
+		n = -n;
+	}
+	while (n > 0)
+	{
+		str[i] = 48 + (n % 10);
+		n /= 10;
+		i--;
+	}
+}
 
-	k = n;
-	minus = 0;
-	j = 1;
-	if (k < 0)
+char	*ft_itoa(int nb)
+{
+	long	n;
+	int		i;
+	char	*str;
+
+	n = nb;
+	i = base_len(n);
+	str = (char *)malloc(sizeof(char) * i + 1);
+	if (!str)
+		return (NULL);
+	str[i] = '\0';
+	i--;
+	if (n == 0)
 	{
-		minus = 1;
-		k = k * -1;
+		str[0] = 48;
+		return (str);
 	}
-	i = k;
-	while (k >= 10)
-	{
-		k /= 10;
-		j++;
-	}
-	return (fill(i, j, minus));
+	filler(str, i, n);
+	return (str);
 }

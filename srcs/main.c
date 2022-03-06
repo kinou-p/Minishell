@@ -1,37 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/31 17:14:39 by sadjigui          #+#    #+#             */
-/*   Updated: 2021/12/08 19:22:11 by sadjigui         ###   ########.fr       */
+/*   Created: 2022/02/26 16:00:41 by sadjigui          #+#    #+#             */
+/*   Updated: 2022/03/06 15:31:18 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/mini.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t size)
+void	red()
 {
-	size_t	i;
+	printf("\033[1;31m");
+}
 
-	i = 0;
-	if (src == dest)
-		return (dest);
-	if (dest > src)
+void	normal()
+{
+	printf("\033[0m");
+}
+
+void	boot_shell(t_struct *data)
+{
+	char *input;
+	while(1)
 	{
-		while (size > 0)
-		{
-			*(char *)(dest + (size - 1)) = *(char *)(src + (size - 1));
-			size--;
-		}
-		return (dest);
+		red();
+		input = readline("Minishell> ");
+		lexer(input, data);
+		add_history(input);
+		normal();
 	}
-	while (i < size)
-	{
-		*(char *)(dest + i) = *(char *)(src + i);
-		i++;
-	}
-	return (dest);
+}
+
+int main(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+	t_struct data;
+
+	init_struct(&data, env);
+	boot_shell(&data);
 }

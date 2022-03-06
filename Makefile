@@ -1,39 +1,35 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/06 13:53:49 by apommier         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = Minishell
 
+CC = clang
 
-NAME	= minishell
-SRCS	= main.c
-OBJS	= ${SRCS:.c=.o}
-CC		= gcc
-CFLAGS	= -Wall -Wextra
-#CFLAGS	= -Wall -Wextra -Werror
-RM		= rm -rf
-LIBFT	= ./libft
+FLAGS    = -Wall -Wextra -Werror
 
-${NAME}: ${OBJS} 
-		@make bonus -C ${LIBFT} 
-		@${CC} ${CFLAGS} ${OBJS} ${LIBFT}/libft.a -o ${NAME}
-	
-all:	${NAME} bonus
+DEL = /bin/rm -f
+
+SRCS =     ./srcs/main.c\
+			./srcs/parser.c\
+			./srcs/init.c\
+			./srcs/exit.c\
+			./srcs/export_utils.c\
+
+SRCS_O    = ${SRCS:.c=.o}
+all: $(NAME)
+
+LIBC    = ar -rcs
+
+%.o: %.c
+		${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+
+$(NAME): ${SRCS_O}
+			make bonus -C ./libft/
+		 $(CC) $(FLAGS) $(SRCS_O) -o $(NAME) -L ./libft/ -lft -lreadline
+
+fclean: clean
+		$(DEL) $(NAME)
+		make fclean -C ./libft/
 
 clean:
-		@${RM} ${OBJS}
-		@make clean -C ${LIBFT}
+		$(DEL) $(SRCS_O)
+		make clean -C ./libft/
 
-fclean:	clean
-		@${RM} ${NAME}
-		@make fclean -C ${LIBFT}
-		
-re: 	fclean all
-
-.PHONY: all clean fclean re bonus
+re: fclean all

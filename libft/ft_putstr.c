@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstbeforelast.c                                 :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 19:16:55 by apommier          #+#    #+#             */
-/*   Updated: 2022/01/17 11:28:22 by apommier         ###   ########.fr       */
+/*   Created: 2021/12/08 19:23:23 by sadjigui          #+#    #+#             */
+/*   Updated: 2021/12/08 19:23:28 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstbeforelast(t_list *lst)
+void	ft_putstr(char const *str)
 {
-	t_list	*save;
+	int	i;
 
-	save = 0;
-	if (!lst)
-		return (0);
-	while (lst->next)
-	{
-		save = lst;
-		lst = lst->next;
-	}
-	return (save);
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+		write(1, &str[i++], 1);
 }
