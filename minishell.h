@@ -43,6 +43,6 @@ typedef struct	s_command {
 }						t_cmd;
 
 //main.c
-int	main(int ac, char **av, char **path);
+int	main();//int ac, char **av, char **path);
 
 #endif

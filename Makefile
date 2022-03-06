@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/06 16:59:33 by apommier         ###   ########.fr        #
+#    Updated: 2022/03/06 17:29:26 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME	= minishell
 SRCS	= main.c
 OBJS	= ${SRCS:.c=.o}
-CC		= gcc
+CC		= clang
 #CFLAGS	= -Wall -Wextra
 LIB		= -lreadline
 #CFLAGS	= -Wall -Wextra -Werror
@@ -23,7 +23,7 @@ LIBFT	= ./libft
 
 ${NAME}: ${OBJS}
 		@make bonus -C ${LIBFT}
-		@${CC} ${CFLAGS} ${OBJS} ${LIBFT}/libft.a ${LIB} -o ${NAME}
+		@${CC} ${LIB} ${OBJS} ${LIBFT}/libft.a -o ${NAME} 
 
 all:	${NAME} bonus
 
