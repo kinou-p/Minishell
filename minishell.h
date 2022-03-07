@@ -37,12 +37,13 @@ typedef struct	s_command {
 	char				*out_file;
 	char				*input_file;
 	char				*err_file;
-	int					background;
-	struct s_command	*current_cmd;
 	struct	s_simple	*current_s_cmd;
 }						t_cmd;
 
 //main.c
 int	main();//int ac, char **av, char **path);
+
+//pipe.c
+void	execute(t_cmd *cmd, char *infile, char *outfile);
 
 #endif
