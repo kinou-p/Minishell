@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 17:16:44 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:33:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	execute(t_cmd *cmd)
 	int i;
 
 	i = 0;
-	printf("in execute\n");
 	//set the initial input 
 	if (cmd->current_s_cmd->infile)
 	{
@@ -43,7 +42,6 @@ void	execute(t_cmd *cmd)
 	}
 	while( i < cmd->nb_s_cmd) 
 	{
-		printf("enter while\n");
 		if (i != 0 && cmd->current_s_cmd->infile)
 			fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
 		//redirect input
@@ -52,7 +50,6 @@ void	execute(t_cmd *cmd)
 		//setup output
 		if (i == cmd->nb_s_cmd - 1)
 		{
-			printf("if last cmd\n");
 			// Last simple command
 			if (cmd->current_s_cmd->outfile)
 				fdout = open(cmd->current_s_cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -71,7 +68,6 @@ void	execute(t_cmd *cmd)
 			fdout=fdpipe[1];
 			fdin=fdpipe[0];
 		}
-		printf("select if last or not done \n");
 		// Redirect output
 		dup2(fdout,1);
 		close(fdout);
@@ -82,13 +78,10 @@ void	execute(t_cmd *cmd)
 		if(ret==0)
 		{
 			return_exec = execvp(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args);
-			printf("exec done ret exec= %d\n", return_exec);
 			_exit(1);
 		}
 		i++;
-		printf("good i = %d\n", i);
 	} //while
-	printf("quit while\n");
 	//restore in/out defaults
 	dup2(tmpin,0);
 	dup2(tmpout,1);

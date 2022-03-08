@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 18:02:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:32:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ char	*does_access(char **path, char **exec)
 	i = 0;
 	if (exec[0][0] != '/')
 		swap = ft_strjoin(path[i], "/");
+	cmd = ft_strjoin(swap, exec[0]);
+	free(swap);
+	swap = cmd;
 	while (access(swap, F_OK) && path[i++])
 	{
 		free(swap);
@@ -99,11 +102,8 @@ char	*get_command(char **exec, char **path)
 	char	*swap;
 
 	swap = 0;
-	printf("in get command exec=\n");
-	print_double(exec);
 	if (exec[0][0] == '/' && !access(exec[0], F_OK))
 	{
-		printf("first\n");
 		free_double(path);
 		return (exec[0]);
 	}
@@ -114,6 +114,5 @@ char	*get_command(char **exec, char **path)
 		exit(1);
 	}
 	swap = does_access(path, exec);
-	printf("swap bfore ret= %s\n", swap);
 	return (swap);
 }

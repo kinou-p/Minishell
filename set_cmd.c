@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 18:04:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:33:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 	split_line = ft_split(line, ' ');
 	s_cmd = malloc(sizeof(t_s_cmd));
 	s_cmd->cmd = get_command(split_line, cmd->path);
-	printf("scmd= %s\n", s_cmd->cmd);
 	if (!s_cmd->cmd)
 	{
 		printf("get command crash");
@@ -41,7 +40,6 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 	s_cmd->infile = 0;
 	s_cmd->nb_args = double_size(split_line);
 	s_cmd->args = split_line;
-	printf("args= %s\n", *(split_line));
 	s_cmd->outfile = 0;
 	return (s_cmd);
 }
