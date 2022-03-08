@@ -6,13 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/07 11:52:26 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:53:42 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_cmd *cmd, char *infile, char *outfile)
+void	execute(t_cmd *cmd)
 {
 	//save in/out 
 	int ret;
@@ -25,21 +25,27 @@ void	execute(t_cmd *cmd, char *infile, char *outfile)
 
 	i = 0;
 	//set the initial input 
-	if (infile) 
-		fdin = open(infile,O_READ); 
-	else //Use default input	
+	if (current_s_cmd->cmd->infile)
+		fdin = open(current_s_cmd->cmd->infile, O_READ);
+	else if (cmd->infile)
+		fdin = open(cmd->infile,O_READ);
+	else
 		fdin=dup(tmpin);
-
-	while( i < numsimplecommands) 
+	while( i < cmd->nb_s_cmd) 
 	{
+		if (i != 0 && current_s_cmd->cmd->infile)
+			fdin = open(current_s_cmd->cmd->infile,O_READ);
 		//redirect input
 		dup2(fdin, 0);
 		close(fdin);
 		//setup output
-		if (i == numsimplecommands - 1)
+		if (i == cmd->nb_s_cmd - 1)
 		{
-			if(outfile)// Last simple command
-				fdout=open(outfile,â€¦â€¦);
+			// Last simple command
+			if (current_s_cmd->cmd->outfile)
+				fdout = open(current_s_cmd->cmd->outfile, â€¦â€¦);
+			else if(cmd->outfile)
+				fdout=open(cmd->outfile, â€¦â€¦);
 			else// Use default output
 				fdout=dup(tmpout);
 		}
@@ -75,10 +81,15 @@ void	execute(t_cmd *cmd, char *infile, char *outfile)
 	close(tmpin);
 	close(tmpout);
 
-	if (!background) {
-	// Wait for last command
-	waitpid(ret, NULL);
+	if (!background)
+	{
+		// Wait for last command
+		waitpid(ret, NULL);
 	}
 
 } // execute 
 
+int main(int argc, char **argv)
+{
+	execute(t_cmd *cmd, char *infile, char *outfile);
+}

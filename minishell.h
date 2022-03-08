@@ -13,27 +13,35 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "./libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "./libft/libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <stdio.h>
+# include <errno.h>
 
 // Command Data Structure
 
 // Describes a simple command and arguments
 typedef struct	s_simple {
 	int		nb_args;
+	char	*infile;
+	char	*outfile;
 	char	**args;
 	char	*cmd;
-}				t_simple_cmd;
+}				t_s_cmd;
 
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
 typedef struct	s_command {
 	int					nb_s_cmd;
-	struct	s_simple	**simple_cmds;
+	struct	s_simple	**s_cmds;
 	char				*out_file;
 	char				*input_file;
 	char				*err_file;
@@ -44,6 +52,9 @@ typedef struct	s_command {
 int	main();//int ac, char **av, char **path);
 
 //pipe.c
-void	execute(t_cmd *cmd, char *infile, char *outfile);
+void	execute(t_cmd *cmd);
+
+//set_command
+t_cmd	*set_cmd(char *input);
 
 #endif
