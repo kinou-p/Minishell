@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 18:32:29 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:40:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*get_command(char **exec, char **path)
 	{
 		printf("BAD PATH FOR CMD\n");
 		free_double(path);
-		exit(1);
+		return(0);
 	}
 	swap = does_access(path, exec);
 	return (swap);

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 18:33:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 20:38:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,26 @@ void	execute(t_cmd *cmd)
 	int tmpin = dup(0);
 	int tmpout= dup(1);
 	int fdin;
-	int fdpipe[2];
 	int i;
 
 	i = 0;
 	//set the initial input 
-	if (cmd->current_s_cmd->infile)
-	{
+	if (cmd->current_s_cmd->infile)//redirection
 		fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
-		printf("good chosse -redirect infile- fdin= %d\n", fdin);
-	}
-	else if (cmd->infile)
-	{
+	else if (cmd->infile)//?
 		fdin = open(cmd->infile, O_RDONLY);
-		printf("good chosse -infile- fdin= %d\n", fdin);
-	}
 	else
-	{
 		fdin=dup(tmpin);
-		printf("good chosse -standar in- fdin= %d\n", fdin);
-	}
 	while( i < cmd->nb_s_cmd) 
 	{
+		//if (i)
+		//	cmd->current_s_cmd++;
 		if (i != 0 && cmd->current_s_cmd->infile)
 			fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
 		//redirect input
 		dup2(fdin, 0);
 		close(fdin);
+		fdin = -1;
 		//setup output
 		if (i == cmd->nb_s_cmd - 1)
 		{
@@ -56,31 +49,33 @@ void	execute(t_cmd *cmd)
 			else if(cmd->outfile)
 				fdout=open(cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
 			else// Use default output
+			{
 				fdout=dup(tmpout);
+			}
 		}
 		else 
 		{
 			//not last 
 			//simple command
 			//create pipe
-			//int fdpipe[2];
+			int fdpipe[2];
 			pipe(fdpipe);
 			fdout=fdpipe[1];
 			fdin=fdpipe[0];
 		}
-		// Redirect output
-		dup2(fdout,1);
+		// redirect output
+		dup2(fdout, 1);
 		close(fdout);
- 
-		// Create child process
+		// create child process
+		
 		ret=fork();
-		int return_exec;
 		if(ret==0)
 		{
-			return_exec = execvp(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args);
-			_exit(1);
+			execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, cmd->path);
+			//_exit(1);
 		}
 		i++;
+		cmd->current_s_cmd = cmd->s_cmds[i];
 	} //while
 	//restore in/out defaults
 	dup2(tmpin,0);
@@ -90,5 +85,4 @@ void	execute(t_cmd *cmd)
 	
 	// Wait for last command
 	waitpid(ret, NULL, 0);
-
 } // execute 
