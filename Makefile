@@ -6,13 +6,14 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/08 15:20:19 by apommier         ###   ########.fr        #
+#    Updated: 2022/03/08 17:30:48 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME	= minishell
 SRCS	= main.c\
+		pipe.c\
+		pipex_utils.c\
 		set_cmd.c
 OBJS	= ${SRCS:.c=.o}
 CC		= clang

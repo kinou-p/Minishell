@@ -21,8 +21,8 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+#include <sys/wait.h>
 # include <fcntl.h>
-# include <sys/types.h>
 # include <stdio.h>
 # include <errno.h>
 
@@ -42,10 +42,11 @@ typedef struct	s_simple {
 typedef struct	s_command {
 	int					nb_s_cmd;
 	struct	s_simple	**s_cmds;
-	char				*out_file;
-	char				*input_file;
+	char				*outfile;
+	char				*infile;
 	char				*err_file;
 	struct	s_simple	*current_s_cmd;
+	char				**path;
 }						t_cmd;
 
 //main.c
@@ -54,7 +55,12 @@ int	main();//int ac, char **av, char **path);
 //pipe.c
 void	execute(t_cmd *cmd);
 
-//set_command
-t_cmd	*set_cmd(char *input);
+//set_cmd.c
+t_cmd	*set_cmd(char *input, char **path);
+
+//pipex_utils.c
+char	**get_path(char **env);
+char	*get_command(char **exec, char **env);
+void	print_double(char **tab);
 
 #endif
