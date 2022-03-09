@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
+# include <signal.h>
 
 // Command Data Structure
 
@@ -62,5 +63,9 @@ t_cmd	*set_cmd(char *input, char **path);
 char	**get_path(char **env);
 char	*get_command(char **exec, char **env);
 void	print_double(char **tab);
+void	free_double(char **tab);
+
+//free_cmd
+void free_cmd(t_cmd *cmd);
 
 #endif

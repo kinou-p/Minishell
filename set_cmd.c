@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 21:05:36 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 13:49:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,16 @@ t_cmd	*set_cmd(char *input, char **env)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (0);
-	cmd->s_cmds = malloc(sizeof(t_s_cmd) * double_size(cmds));
+	cmd->s_cmds = malloc(sizeof(t_s_cmd) * double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		return (0);
+	cmd->s_cmds[double_size(cmds)] = 0;	
 	cmd->path = get_path(env);
 	cmd->outfile = 0;
 	cmd->infile = 0;
 	cmd->nb_s_cmd = double_size(cmds);
 	cmd = split_cmd(cmd, cmds); //split each cmd into args in s_cmd
+	free_double(cmds);
 	if (cmd)
 	{
 		cmd->current_s_cmd = cmd->s_cmds[0];//set first s_cmd

@@ -6,24 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 11:04:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 13:18:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_double(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (tab)
-	{
-		while (tab[i])
-			free(tab[i++]);
-		free(tab);
-	}
-}
 
 void	print_double(char **tab)
 {
@@ -104,13 +91,13 @@ char	*get_command(char **exec, char **path)
 	swap = 0;
 	if ((exec[0][0] == '/' || exec[0][0] == '.') && !access(exec[0], F_OK))
 	{
-		free_double(path);
+		//free_double(path);
 		return (exec[0]);
 	}
 	else if (exec[0][0] == '/')
 	{
 		printf("BAD PATH FOR CMD\n");
-		free_double(path);
+		//free_double(path);
 		return(0);
 	}
 	swap = does_access(path, exec);
