@@ -6,16 +6,16 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/09 12:44:11 by apommier         ###   ########.fr        #
+#    Updated: 2022/03/09 20:43:04 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-SRCS	= main.c\
-		pipe.c\
-		free_cmd.c\
-		pipex_utils.c\
-		set_cmd.c
+SRCS	= srcs/main.c\
+		srcs/pipe/pipe.c\
+		srcs/pipe/pipex_utils.c\
+		srcs/set_cmd/free_cmd.c\
+		srcs/set_cmd/set_cmd.c
 OBJS	= ${SRCS:.c=.o}
 CC		= clang
 CFLAGS	= -Wall -Wextra
