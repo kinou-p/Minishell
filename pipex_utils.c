@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 20:40:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 11:04:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_command(char **exec, char **path)
 	char	*swap;
 
 	swap = 0;
-	if (exec[0][0] == '/' && !access(exec[0], F_OK))
+	if ((exec[0][0] == '/' || exec[0][0] == '.') && !access(exec[0], F_OK))
 	{
 		free_double(path);
 		return (exec[0]);

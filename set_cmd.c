@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 20:41:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/08 21:05:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 	s_cmd = malloc(sizeof(t_s_cmd));
 	s_cmd->cmd = get_command(split_line, cmd->path);
 	if (!s_cmd->cmd)
-	{
-		printf("get command crash");
 		return (0);
-	}
 	s_cmd->infile = 0;
 	s_cmd->outfile = 0;
 	s_cmd->nb_args = double_size(split_line);
@@ -54,7 +51,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		cmd->s_cmds[i] = set_s_cmd(cmds[i], cmd);
 		if (!cmd->s_cmds[i])
 		{
-			printf("get command crash");
+			printf("invalid command\n");
 			return (0);
 		}
 		i++;
@@ -81,6 +78,10 @@ t_cmd	*set_cmd(char *input, char **env)
 	cmd->infile = 0;
 	cmd->nb_s_cmd = double_size(cmds);
 	cmd = split_cmd(cmd, cmds); //split each cmd into args in s_cmd
-	cmd->current_s_cmd = cmd->s_cmds[0];
-	return (cmd);
+	if (cmd)
+	{
+		cmd->current_s_cmd = cmd->s_cmds[0];//set first s_cmd
+		return (cmd);
+	}
+	return (0);
 }
