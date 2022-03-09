@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 14:00:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:56:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_prompt(char **path)
 		if (!ft_strcmp("exit", input))
 		{
 			rl_clear_history();
+			free(input);
 			exit_shell(cmd);
 		}
 		if (ft_strlen(input))
@@ -50,6 +51,8 @@ void	print_prompt(char **path)
 				free_cmd(cmd);
 				cmd = 0;
 			}
+			//free_cmd(cmd);
+			//cmd = 0;
 		}
 	}
 }

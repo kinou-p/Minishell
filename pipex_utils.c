@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 13:18:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:45:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*does_access(char **path, char **exec)
 	}
 	if (path[i])
 		return (swap);
+	free(swap);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 13:49:49 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:58:32 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,23 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	split_line = ft_split(line, ' ');
+	split_line = ft_split(line, ' ');	
 	s_cmd = malloc(sizeof(t_s_cmd));
-	s_cmd->cmd = get_command(split_line, cmd->path);
-	if (!s_cmd->cmd)
+	if (!s_cmd)
 		return (0);
 	s_cmd->infile = 0;
 	s_cmd->outfile = 0;
+	s_cmd->args = 0;
+	//////////////////split_line = set_redirection(s_cmd, line);
+	s_cmd->cmd = get_command(split_line, cmd->path);
+	if (!s_cmd->cmd)
+	{
+		free_double(split_line);
+		free(s_cmd);
+		return (0);
+	}
 	s_cmd->nb_args = double_size(split_line);
+	//set_redirection(s_cmd);
 	s_cmd->args = split_line;
 	return (s_cmd);
 }
@@ -52,6 +61,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		if (!cmd->s_cmds[i])
 		{
 			printf("invalid command\n");
+			free_cmd(cmd);
 			return (0);
 		}
 		i++;
