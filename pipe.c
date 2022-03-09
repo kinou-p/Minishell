@@ -6,13 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/08 20:38:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 11:37:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_cmd *cmd)
+void	execute(t_cmd *cmd, char **env)
 {
 	//save in/out 
 	int ret;
@@ -23,11 +23,10 @@ void	execute(t_cmd *cmd)
 	int i;
 
 	i = 0;
-	//set the initial input 
-	if (cmd->current_s_cmd->infile)//redirection
+	if (cmd->current_s_cmd->infile)//set the initial input
 		fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
-	else if (cmd->infile)//?
-		fdin = open(cmd->infile, O_RDONLY);
+	//else if (cmd->infile)
+	//	fdin = open(cmd->infile, O_RDONLY);
 	else
 		fdin=dup(tmpin);
 	while( i < cmd->nb_s_cmd) 
@@ -71,7 +70,7 @@ void	execute(t_cmd *cmd)
 		ret=fork();
 		if(ret==0)
 		{
-			execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, cmd->path);
+			execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, env);//cmd->path);
 			//_exit(1);
 		}
 		i++;

@@ -53,7 +53,7 @@ typedef struct	s_command {
 int	main();//int ac, char **av, char **path);
 
 //pipe.c
-void	execute(t_cmd *cmd);
+void	execute(t_cmd *cmd, char **env);
 
 //set_cmd.c
 t_cmd	*set_cmd(char *input, char **path);

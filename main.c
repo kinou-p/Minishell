@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 11:16:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/09 11:37:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_prompt(char **path)
 		add_history(input);
 		cmd = set_cmd(input, path);
 		if (cmd)
-			execute(cmd);
+			execute(cmd, path);
 		}
 	}
 }
