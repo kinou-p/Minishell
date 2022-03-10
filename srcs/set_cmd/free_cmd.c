@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 20:43:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/10 01:32:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_double(char **tab)
 
 void exit_shell(t_cmd *cmd)
 {
+	cmd = 0;
 	exit(1);
 }
 
@@ -35,8 +36,6 @@ void free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	printf("free_cmd\n");
-
 	while (cmd->s_cmds[i])
 	{
 		free_double(cmd->s_cmds[i]->args);

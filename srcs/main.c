@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 20:43:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/10 00:16:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,18 @@ void	print_prompt(char **path)
 
 void test(int num)
 {
+	num = 0;
 	printf("CRTL-C ? try exit\n");
 }
 
 int	main(int ac, char **av, char **path)
 {
+	av = 0;
+	if (ac > 1)
+	{
+		printf("too much arguments\n");
+		return (0);
+	}
 	printf("---MINISHELL  START---\n"); 
 	signal(SIGINT, test);
 	print_prompt(path);

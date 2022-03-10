@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/09 20:43:04 by apommier         ###   ########.fr        #
+#    Updated: 2022/03/09 23:29:16 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS	= srcs/main.c\
 		srcs/pipe/pipe.c\
 		srcs/pipe/pipex_utils.c\
 		srcs/set_cmd/free_cmd.c\
-		srcs/set_cmd/set_cmd.c
+		srcs/set_cmd/set_cmd.c\
+		srcs/set_redirection/redirection.c
 OBJS	= ${SRCS:.c=.o}
 CC		= clang
 CFLAGS	= -Wall -Wextra

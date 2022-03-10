@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*	*/
-/*	:::	  ::::::::   */
-/*   minishell.h	:+:	  :+:	:+:   */
-/*	+:+ +:+	 +:+	 */
-/*   By: apommier <apommier@student.42.fr>	  +#+  +:+	   +#+	*/
-/*	+#+#+#+#+#+   +#+	   */
-/*   Created: 2022/03/06 12:49:28 by apommier	  #+#	#+#	 */
-/*   Updated: 2022/03/06 12:57:24 by apommier	 ###   ########.fr	   */
-/*	*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
+/*   Updated: 2022/03/10 00:17:00 by apommier         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -33,6 +33,8 @@
 typedef struct	s_simple {
 	int		nb_args;
 	char	*infile;
+	int		in_type;
+	int		out_type;
 	char	*outfile;
 	char	**args;
 	char	*cmd;
@@ -67,5 +69,9 @@ void	free_double(char **tab);
 
 //free_cmd
 void free_cmd(t_cmd *cmd);
+void exit_shell(t_cmd *cmd);
+
+//redirection.c set redirection and input good
+char	*set_redirection(t_s_cmd *cmd, char *line);
 
 #endif
