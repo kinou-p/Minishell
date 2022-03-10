@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 11:13:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 20:43:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:38:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	execute(t_cmd *cmd, char **env)
 
 	i = 0;
 	if (cmd->current_s_cmd->infile)//set the initial input
-		fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
+		fdin = open(cmd->current_s_cmd->infile, O_APPEND);
+		//fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
 	//else if (cmd->infile)
 	//	fdin = open(cmd->infile, O_RDONLY);
 	else
@@ -34,7 +35,8 @@ void	execute(t_cmd *cmd, char **env)
 		//if (i)
 		//	cmd->current_s_cmd++;
 		if (i != 0 && cmd->current_s_cmd->infile)
-			fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
+			fdin = open(cmd->current_s_cmd->infile, O_CREAT | O_APPEND);
+			//fdin = open(cmd->current_s_cmd->infile, O_RDONLY);
 		//redirect input
 		dup2(fdin, 0);
 		close(fdin);
@@ -44,7 +46,7 @@ void	execute(t_cmd *cmd, char **env)
 		{
 			// Last simple command
 			if (cmd->current_s_cmd->outfile)
-				fdout = open(cmd->current_s_cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
+				fdout = open(cmd->current_s_cmd->outfile, O_RDWR | O_CREAT | O_APPEND, 0666);
 			else if(cmd->outfile)
 				fdout=open(cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
 			else// Use default output

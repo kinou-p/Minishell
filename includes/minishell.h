@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/10 00:17:00 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:39:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void exit_shell(t_cmd *cmd);
 
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line);
+char	next_space(char *str, int i);
 
 #endif
