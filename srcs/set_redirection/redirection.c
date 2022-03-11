@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 16:57:53 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/11 23:24:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,23 +174,28 @@ char	**add_line(char **tab, char *line)
 	int		i;
 
 	i = 0;
-	size = double_size(tab);
-	ret = malloc(sizeof(char *) * size + 2);
+	size = 0;
+	ret = 0;
+	if (tab)
+		size = double_size(tab);
+	//printf("size= %d\n", size);
+	ret = ft_calloc(size + 2, sizeof(char*));
 	if (!ret)
 	{
-		if (tab)
-			free_double(tab);
+	//	if (tab)
+	//		free_double(tab);
 		return (0);
 	}
 	while (tab && tab[i])
 	{
-		ret[i] == tab[i];
+		printf("tab[i]= %s\n", tab[i]);
+		ret[i] = ft_strjoin(tab[i], 0);
 		i++;
 	}
 	ret[i] = line;
 	ret[i + 1] = 0;
-	if (tab)
-		free_double(tab);
+	//if (tab)
+	//	free_double(tab);
 	return(ret);
 }
 
@@ -205,8 +210,13 @@ void	wait_prompt(t_s_cmd *cmd)
 	{
 		input = readline("> ");
 		history = add_line(history, input);
+		print_double(history);
 	}
+	//print_double(history);
+	//free_double(history);
 	free(input);
+	free(cmd->infile);
+	cmd->infile = 0;
 }
 
 char	*set_redirection(t_s_cmd *cmd, char *line)
