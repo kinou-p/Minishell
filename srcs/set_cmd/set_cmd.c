@@ -6,21 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/10 01:27:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:39:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	double_size(char **tab)
-{
-	int i;
 
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
 
 t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 {

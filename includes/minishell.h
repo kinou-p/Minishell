@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/10 11:39:08 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/11 17:04:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ t_cmd	*set_cmd(char *input, char **path);
 //pipex_utils.c
 char	**get_path(char **env);
 char	*get_command(char **exec, char **env);
-void	print_double(char **tab);
-void	free_double(char **tab);
+
+
 
 //free_cmd
 void free_cmd(t_cmd *cmd);
@@ -74,5 +74,10 @@ void exit_shell(t_cmd *cmd);
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line);
 char	next_space(char *str, int i);
+
+//uitls redirection
+int	double_size(char **tab);
+void	print_double(char **tab);
+ void	free_double(char **tab);
 
 #endif

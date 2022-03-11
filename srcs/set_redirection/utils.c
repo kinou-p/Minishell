@@ -1,42 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_cmd.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 17:05:20 by apommier         ###   ########.fr       */
+/*   Created: 2022/03/11 16:35:37 by apommier          #+#    #+#             */
+/*   Updated: 2022/03/11 17:04:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-
-void exit_shell(t_cmd *cmd)
+int	double_size(char **tab)
 {
-	cmd = 0;
-	exit(1);
+	int i;
+
+	i = 0;
+	if (tab == 0)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
 }
 
-void free_cmd(t_cmd *cmd)
+void	free_double(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (cmd->s_cmds[i])
+	if (tab)
 	{
-		free_double(cmd->s_cmds[i]->args);
-		free(cmd->s_cmds[i]->cmd);
-		if (cmd->s_cmds[i]->infile)
-			free(cmd->s_cmds[i]->infile);
-		if (cmd->s_cmds[i]->outfile)
-			free(cmd->s_cmds[i]->outfile);
-		free(cmd->s_cmds[i]);
-		i++;
+		while (tab[i])
+			free(tab[i++]);
+		free(tab);
 	}
-	free_double(cmd->path);
-	free(cmd->s_cmds);
-	free(cmd);
+}
+
+void	print_double(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab)
+	{
+		while (tab[i])
+		{
+			printf("%d -%s-\n", i, tab[i]);
+			i++;
+		}
+		printf("end double\n");
+	}
 }

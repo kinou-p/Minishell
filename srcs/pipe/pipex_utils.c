@@ -6,27 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/09 20:43:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:57:52 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_double(char **tab)
-{
-	int	i;
 
-	i = 0;
-	if (tab)
-	{
-		while (tab[i])
-		{
-			printf("%d -%s-\n", i, tab[i]);
-			i++;
-		}
-		printf("end double\n");
-	}
-}
 
 char	**get_path(char **env)
 {

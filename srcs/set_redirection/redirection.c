@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/10 11:47:21 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:57:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,48 @@ void	set_file(char *file)
 		error_redirect();
 }
 
+char	**add_line(char **tab, char *line)
+{
+	int size;
+	char	**ret;
+	int		i;
+
+	i = 0;
+	size = double_size(tab);
+	ret = malloc(sizeof(char *) * size + 2);
+	if (!ret)
+	{
+		if (tab)
+			free_double(tab);
+		return (0);
+	}
+	while (tab && tab[i])
+	{
+		ret[i] == tab[i];
+		i++;
+	}
+	ret[i] = line;
+	ret[i + 1] = 0;
+	if (tab)
+		free_double(tab);
+	return(ret);
+}
+
+void	wait_prompt(t_s_cmd *cmd)
+{
+	char	*input;
+	char	**history;
+
+	history = 0;
+	input = 0;
+	while (ft_strcmp(input, cmd->infile))
+	{
+		input = readline("> ");
+		history = add_line(history, input);
+	}
+	free(input);
+}
+
 char	*set_redirection(t_s_cmd *cmd, char *line)
 {
 	int i;
@@ -178,8 +220,8 @@ char	*set_redirection(t_s_cmd *cmd, char *line)
 		if(line[i] == '<')
 		{
 			line = ft_input(line, cmd, i);
-			//if (cmd->in_type == 1)
-			//	set_file(cmd->infile);
+			if (cmd->in_type == 1)
+				wait_prompt(cmd);
 			i = 0;
 		}
 		else if(line[i] == '>')
