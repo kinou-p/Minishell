@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 23:24:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/12 00:37:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ void	wait_prompt(t_s_cmd *cmd)
 	free(input);
 	free(cmd->infile);
 	cmd->infile = 0;
+	cmd->in_type = 0;
 }
 
 char	*set_redirection(t_s_cmd *cmd, char *line)
