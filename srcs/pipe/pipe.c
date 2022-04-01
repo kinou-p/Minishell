@@ -9,12 +9,12 @@ void	close_pipe(t_cmd *cmd)
 	close(0);
 	while (cmd->s_cmds[i])// && !cmd->s_cmds[i]->last)
 	{
-		close(cmd->s_cmds[i]->last_pipe[0]);
-		close(cmd->s_cmds[i]->last_pipe[1]);
+		//close(cmd->s_cmds[i]->last_pipe[0]);
+		//close(cmd->s_cmds[i]->last_pipe[1]);
 		close(cmd->s_cmds[i]->fd[0]);
 		close(cmd->s_cmds[i]->fd[1]);
-		close(cmd->s_cmds[i]->pipe[0]);
-		close(cmd->s_cmds[i]->pipe[1]);
+		//close(cmd->s_cmds[i]->pipe[0]);
+		//close(cmd->s_cmds[i]->pipe[1]);
 		i++;
 	}
 }
