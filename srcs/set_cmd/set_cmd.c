@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 16:39:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/03/31 16:31:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		}
 		i++;
 	}
+	cmd->s_cmds[i] = 0;
 	return (cmd);
 }
 

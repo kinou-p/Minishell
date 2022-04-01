@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 17:04:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:37:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@
 
 // Describes a simple command and arguments
 typedef struct	s_simple {
+	int		fd[2];
+	int		pipe[2];
+	int		last;
+	int 	last_pipe[2];
+	int		child;
 	int		nb_args;
 	char	*infile;
 	int		in_type;

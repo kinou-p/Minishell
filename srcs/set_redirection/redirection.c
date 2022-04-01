@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/12 00:37:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:36:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*cut_str(char *str, int start, int end)
 char	*get_word(char *str, int start, int end)
 {
 	char *new;
-	char *swap;
+	//char *swap;
 	int		i;
 
 	i = 0;
