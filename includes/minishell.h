@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/03 19:22:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/05 18:22:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@
 # include <stdio.h>
 # include <errno.h>
 # include <signal.h>
+# include <dirent.h>
 
 // Command Data Structure
 
 // Describes a simple command and arguments
 typedef struct	s_simple {
+	char	**env;
 	int		fd[2];
 	int		pipe[2];
 	int		last;
@@ -84,5 +86,24 @@ char	next_space(char *str, int i);
 int	double_size(char **tab);
 void	print_double_fd(char **tab, int fd);
  void	free_double(char **tab);
+
+//builtins utils
+void	register_env(t_s_cmd *cmd, char *variable);
+void	ft_env(t_s_cmd *cmd, char **env);
+int		find_pwd(t_s_cmd *cmd);
+void	init_s_cmd(t_s_cmd *cmd, char **env);
+int	tab_len(char **tab);
+int	find_len(char *input, int i, char c);
+//real builtin
+void	ft_env(t_s_cmd *cmd, char **env);
+void	ft_exit(t_s_cmd *cmd);
+void	ft_export(t_s_cmd *cmd);
+void	ft_unset(t_s_cmd *cmd);
+void	ft_echo(t_s_cmd *cmd);
+void	ft_pwd(t_s_cmd *cmd);
+void	open_directory(t_s_cmd *cmd);//cd
+//parse builtin
+int	is_builtin(char *cmd);
+void	call_builtin(t_cmd *cmd, char **env);
 
 #endif

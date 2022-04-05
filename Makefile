@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/03/11 16:35:32 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/05 04:11:33 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,18 @@ SRCS	= srcs/main.c\
 		srcs/set_cmd/free_cmd.c\
 		srcs/set_cmd/set_cmd.c\
 		srcs/set_redirection/redirection.c\
-		srcs/set_redirection/utils.c
+		srcs/set_redirection/utils.c\
+		srcs/built_in/unset.c\
+		srcs/built_in/cd.c\
+		srcs/built_in/echo.c\
+		srcs/built_in/export.c\
+		srcs/built_in/utils_builtin.c\
+		srcs/built_in/init_builtin.c\
+		srcs/built_in/export2.c\
+		srcs/built_in/choose_builtin.c
 OBJS	= ${SRCS:.c=.o}
 CC		= clang
-CFLAGS	= -Wall -Wextra
+CFLAGS	= -Wall -Wextra -g
 LIB		= -lreadline
 #CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -rf
@@ -30,7 +38,7 @@ ${NAME}: ${OBJS}
 		@make bonus -C ${LIBFT}
 		@${CC} ${LIB} ${OBJS} ${LIBFT}/libft.a -o ${NAME} 
 
-all:	${NAME} bonus
+all:	${NAME}
 
 clean:
 		@${RM} ${OBJS}
@@ -42,6 +50,6 @@ fclean:	clean
 
 re: 	fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
 
 -include ./valgrind.mk

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/02 18:51:32 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/05 18:26:19 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int	wait_exit(t_cmd *cmd)
 
 void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 {
+	if (is_builtin(cmd->current_s_cmd->cmd))
+	{
+		call_builtin(cmd, env);
+		return ;
+	}
     cmd->current_s_cmd->child = fork();
     if (cmd->current_s_cmd->child == 0)
     {
