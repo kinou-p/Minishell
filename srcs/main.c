@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/01 17:30:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/04 21:12:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	print_prompt(char **path)
 	while (1)
 	{
 		i = 0;
-		//ft_putstr_fd("\033[1;31m~$ \033[0m", 2);
-		/*input = get_next_line(0);
+		/*ft_putstr_fd("\033[1;31m~$ \033[0m", 0);
+		input = get_next_line(0);
 		while (input[i] != '\n' && input[i])
 			i++;
 		if (input[i] == '\n')
@@ -45,7 +45,7 @@ void	print_prompt(char **path)
 		
 		if (!ft_strcmp("exit", input) && input)
 		{
-			dprintf(2, "exit\n");
+			//dprintf(2, "exit\n");
 			rl_clear_history();
 			//free(input);
 			exit_shell(cmd);
@@ -99,7 +99,7 @@ void test(int num)
 void	just_exit(int num)
 {
 	num = 0;
-	printf("crtl d\n");
+	printf("crtl \\n");
 	exit(0);
 }
 

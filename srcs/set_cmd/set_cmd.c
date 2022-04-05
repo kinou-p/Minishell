@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/31 16:31:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/03 18:19:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
+t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
 {
 	t_s_cmd	*s_cmd;
 	char	**split_line;
@@ -29,7 +29,7 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 	s_cmd->outfile = 0;
 	s_cmd->args = 0;
 	//printf("before redirect\n");
-	line = set_redirection(s_cmd, line);//SET REDIRECTION
+	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
 	split_line = ft_split(line, ' ');
 	s_cmd->cmd = get_command(split_line, cmd->path);
 	if (!s_cmd->cmd)
@@ -39,7 +39,6 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd)
 		free(s_cmd);
 		return (0);
 	}
-
 	s_cmd->nb_args = double_size(split_line);
 	//set_redirection(s_cmd);
 	s_cmd->args = split_line;
@@ -54,7 +53,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 	i = 0;
 	while (cmds[i])
 	{
-		cmd->s_cmds[i] = set_s_cmd(cmds[i], cmd);
+		cmd->s_cmds[i] = set_s_cmd(cmds[i], cmd, i);
 		if (!cmd->s_cmds[i])
 		{
 			printf("invalid command\n");

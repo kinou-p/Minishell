@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/01 15:37:03 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/03 19:22:42 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void free_cmd(t_cmd *cmd);
 void exit_shell(t_cmd *cmd);
 
 //redirection.c set redirection and input good
-char	*set_redirection(t_s_cmd *cmd, char *line);
+char	*set_redirection(t_s_cmd *cmd, char *line, int index);
 char	next_space(char *str, int i);
 
 //uitls redirection
 int	double_size(char **tab);
-void	print_double(char **tab);
+void	print_double_fd(char **tab, int fd);
  void	free_double(char **tab);
 
 #endif

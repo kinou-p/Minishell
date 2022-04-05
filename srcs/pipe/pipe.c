@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
+/*   Updated: 2022/04/02 18:51:32 by apommier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 
@@ -73,9 +85,23 @@ void	execute(t_cmd *cmd, char **env)
 	i = 0;
 	tmpin = dup(0);
 	tmpout= dup(1);
-	fdin=dup(tmpin);
+	if (cmd->current_s_cmd->infile)
+	{
+		fdin = open(cmd->current_s_cmd->infile, O_RDWR);
+		if (fdin < 0)
+			printf("open error\n");
+	}
+	else
+		fdin=dup(tmpin);
 	while(cmd->current_s_cmd)
 	{
+		fdout = 0;
+		if (i > 0 && cmd->current_s_cmd->infile)
+		{
+			fdin = open(cmd->current_s_cmd->infile, O_RDWR);
+			if (fdin < 0)
+				printf("open error\n");
+		}
 		if (i == cmd->nb_s_cmd - 1)
 		{
 			cmd->current_s_cmd->last = 1;
@@ -92,7 +118,13 @@ void	execute(t_cmd *cmd, char **env)
 			cmd->current_s_cmd->last = 0;
 			pipe(fdpipe);
 			cmd->current_s_cmd->fd[0] = fdin;
-			cmd->current_s_cmd->fd[1] = fdpipe[1];
+			if (cmd->current_s_cmd->outfile)
+			{
+				fdout = open(cmd->current_s_cmd->outfile, O_RDWR | O_CREAT | O_APPEND, 0666);
+				cmd->current_s_cmd->fd[1] = fdout;
+			}
+			else
+				cmd->current_s_cmd->fd[1] = fdpipe[1];
 			fdin=fdpipe[0];
 			exec_cmd(cmd, env, fdpipe);
 			close(cmd->current_s_cmd->fd[0]);
