@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/07 17:47:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:29:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,30 @@ void	print_prompt(char **path)
 	}
 }
 
+char	**ft_dup_double(char **env)
+{
+	char	**new_tab;
+    int		i;
+
+    i = 0;
+    while (env[i])
+        i++;
+    new_tab = ft_calloc(sizeof(char *), i + 1);
+    i = 0;
+    while (env[i])
+    {
+        new_tab[i] = ft_strdup(env[i]);
+        i++;
+    }
+    new_tab[i] = NULL;
+	return (new_tab);
+}
+
 int	main(int ac, char **av, char **path)
 {
+	char **env;
+
+	env = ft_dup_double(path);
 	av = 0;
 	if (ac != 1)
 	{
@@ -73,6 +95,6 @@ int	main(int ac, char **av, char **path)
 	printf("---MINISHELL  START---\n"); 
 	signal(SIGINT, crtl_c);
 	signal(SIGQUIT, sig_quit);
-	print_prompt(path);
+	print_prompt(env);
 	return (0);
 }
