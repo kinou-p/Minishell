@@ -94,6 +94,8 @@ int		find_pwd(t_s_cmd *cmd);
 void	init_s_cmd(t_s_cmd *cmd, char **env);
 int	tab_len(char **tab);
 int	find_len(char *input, int i, char c);
+int	find_it(t_s_cmd *cmd, char *str);
+
 //real builtin
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);
