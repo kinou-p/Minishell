@@ -55,13 +55,15 @@ void	del_one(t_s_cmd *cmd)
 	while (cmd->env[find_pwd(cmd)][i] != '/')
 		i--;
 	r = ft_substr(cmd->env[find_pwd(cmd)], 0, i);
-	printf("-------------\n");
-	printf("%s\n", cmd->env[find_pwd(cmd)]);
-	printf("%d\n", find_pwd(cmd));
+	// printf ("-->%s\n", r);
 	// free(cmd->env[find_pwd(cmd)]);
-	cmd->env[find_pwd(cmd)] = r;
-	// cmd->env[find_pwd(cmd)] = ft_strdup(r);
-	free(r);
+	if (r)
+		cmd->env[find_pwd(cmd)] = ft_strdup(r);
+	else
+		cmd->env[find_pwd(cmd)] = ft_strdup("PWD=/");
+
+	if (r)
+		free(r);
 }
 
 void	add_one(t_s_cmd *cmd, char *str)
@@ -70,26 +72,9 @@ void	add_one(t_s_cmd *cmd, char *str)
 
 	r = ft_strjoin(cmd->env[find_pwd(cmd)], "/");
 	r = ft_strjoin(r, str);
-	// free(cmd->env[find_pwd(cmd)]);
+	//free(cmd->env[find_pwd(cmd)]);
 	cmd->env[find_pwd(cmd)] = ft_strdup(r);
 	free(r);
-}
-
-int	find_it(t_s_cmd *cmd, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (cmd->env[i])
-	{
-		if (ft_strncmp(cmd->env[i], str, ft_strlen(str)) == 0)
-		{
-			printf("--->%s\n", cmd->env[i]);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
 }
 
 void	change_path(t_s_cmd *cmd)
@@ -99,26 +84,27 @@ void	change_path(t_s_cmd *cmd)
 
 	i = 0;
 	tab = ft_split(cmd->args[1], '/');
-	// while (cmd->env[i])
-	// {
-	// 	if (ft_strncmp(cmd->env[i], "OLDPWD=", 7) == 0)
-	// 	{
-	// 		printf("--->%s\n", cmd->env[i]);
-	// 		break ;
-	// 	}
-	// 	i++;
-	// }
+	while (cmd->env[i])
+	{
+		if (ft_strncmp(cmd->env[i], "OLDPWD=", 7) == 0)
+			break ;
+		i++;
+	}
+	// printf("%d\n", i);
 	/*if (cmd->env[i])
 		free(cmd->env[i]);*/
-	if (find_it(cmd, "OLDPWD") == 1)
-		cmd->env[i] = ft_strjoin("OLD", cmd->env[find_pwd(cmd)]);
+	cmd->env[i] = ft_strjoin("OLD", cmd->env[find_pwd(cmd)]);
 	i = 0;
-	while (tab[i])
+	while (tab[i] && tab_len(tab) > 4)
 	{
+		// printf("%d -> %s\n", tab_len(tab), tab[i]);
+		// if (tab_len(tab) < 2)
+		// 	break ;
 		if (ft_strcmp(tab[i], "..") == 0)
 			del_one(cmd);
 		else
 			add_one(cmd, tab[i]);
+
 		i++;
 	}
 }
@@ -130,9 +116,7 @@ void	reboot_pwd(t_s_cmd *cmd, int i)
 	while (i > 3)
 	{
 		if (chdir("..") == 0)
-		{
 			del_one(cmd);
-		}
 		i--;
 	}
 	str = ft_substr(cmd->args[1], 2, ft_strlen(cmd->args[1]));
@@ -149,10 +133,10 @@ void	open_directory(t_s_cmd *cmd)
 	j = tab_len(str);
 	if (!cmd->args[1])
 	{
-		reboot_pwd(cmd, j);
-		// while (j-- > 3)
-		// 	if (chdir("..") == 0)
-		// 		del_one(cmd);
+		// reboot_pwd(cmd, j);
+		while (j-- > 3)
+			if (chdir("..") == 0)
+				del_one(cmd);
 	}
 	if (tab_len(cmd->args) == 2)
 	{
