@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/05 18:23:49 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:26:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
 	s_cmd = malloc(sizeof(t_s_cmd));
 	if (!s_cmd)
 		return (0);
+	//s_cmd->infile = 0;
+	//s_cmd->outfile = 0;
+	s_cmd->args = 0;
 	s_cmd->infile = 0;
 	s_cmd->outfile = 0;
-	s_cmd->args = 0;
 	//printf("before redirect\n");
 	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
 	split_line = ft_split(line, ' ');
-	print_double_fd(split_line, 0);
+	//print_double_fd(split_line, 0);
 	if (!is_builtin(split_line[0]))
 		s_cmd->cmd = get_command(split_line, cmd->path);
 	else
@@ -89,8 +91,9 @@ t_cmd	*set_cmd(char *input, char **env)
 		return (0);
 	cmd->s_cmds[double_size(cmds)] = 0;	
 	cmd->path = get_path(env);
-	cmd->outfile = 0;
-	cmd->infile = 0;
+	cmd->err_var = 0;
+	//cmd->outfile = 0;
+	//cmd->infile = 0;
 	cmd->nb_s_cmd = double_size(cmds);
 	cmd = split_cmd(cmd, cmds, env); //split each cmd into args in s_cmd
 	free(cmds);

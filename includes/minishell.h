@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/05 18:22:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:47:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ typedef struct	s_simple {
 typedef struct	s_command {
 	int					nb_s_cmd;
 	struct	s_simple	**s_cmds;
-	char				*outfile;
-	char				*infile;
-	char				*err_file;
+	//char				*outfile;
+	//char				*infile;
+	int					err_var;
 	struct	s_simple	*current_s_cmd;
 	char				**path;
 }						t_cmd;
@@ -94,6 +94,9 @@ int		find_pwd(t_s_cmd *cmd);
 void	init_s_cmd(t_s_cmd *cmd, char **env);
 int	tab_len(char **tab);
 int	find_len(char *input, int i, char c);
+//void	lone_export(t_s_cmd *cmd);
+//void	find_variable(char *variable, t_s_cmd *cmd);
+
 //real builtin
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);
@@ -102,6 +105,7 @@ void	ft_unset(t_s_cmd *cmd);
 void	ft_echo(t_s_cmd *cmd);
 void	ft_pwd(t_s_cmd *cmd);
 void	open_directory(t_s_cmd *cmd);//cd
+
 //parse builtin
 int	is_builtin(char *cmd);
 void	call_builtin(t_cmd *cmd, char **env);

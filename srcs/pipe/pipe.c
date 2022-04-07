@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/05 18:26:19 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:08:54 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,51 @@ int	wait_exit(t_cmd *cmd)
 				close(cmd->s_cmds[i]->fd[0]);
 				close(cmd->s_cmds[i]->fd[1]);
             }
+			if (WIFEXITED(status))
+			{
+				if (!cmd->err_var)
+					cmd->err_var = WEXITSTATUS(status);
+				//printf("code= %d\n", cmd->err_var);
+			}
+			else if (WIFSIGNALED(status))
+			{
+				cmd->err_var = WTERMSIG(status);
+				if (cmd->err_var == 2)
+					ft_putstr_fd("\b\b\b\b\b", 1);
+			}
 			i++;
         }
     }
 	return (ret);
 }
 
-
-
 void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 {
-	if (is_builtin(cmd->current_s_cmd->cmd))
+	cmd->current_s_cmd->child = fork();
+	if (cmd->current_s_cmd->child == 0)
 	{
-		call_builtin(cmd, env);
-		return ;
-	}
-    cmd->current_s_cmd->child = fork();
-    if (cmd->current_s_cmd->child == 0)
-    {
 		if (fdpipe)
 			close(fdpipe[0]);
 		dup2(cmd->current_s_cmd->fd[0], 0);
 		dup2(cmd->current_s_cmd->fd[1], 1);
 		close(cmd->current_s_cmd->fd[0]);
 		close(cmd->current_s_cmd->fd[1]);
+		if (is_builtin(cmd->current_s_cmd->cmd))
+		{
+			call_builtin(cmd, env);
+			exit(0);
+		}
+		if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
+		{
+			ft_putstr_fd("Minishell: command not found\n", 2);
+			exit(0);
+		}
         if (-1 == execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, env))
-			dprintf(2, "exec error\n");
+			ft_putstr_fd("Minishell: exec error\n", 2);
         exit(0);
     }
+	else if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
+		cmd->err_var = 127;
 }
 
 void	execute(t_cmd *cmd, char **env)
@@ -88,13 +105,14 @@ void	execute(t_cmd *cmd, char **env)
 	int i;
 
 	i = 0;
+	fdpipe[1] = -1;
 	tmpin = dup(0);
-	tmpout= dup(1);
+	tmpout = dup(1);
 	if (cmd->current_s_cmd->infile)
 	{
 		fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 		if (fdin < 0)
-			printf("open error\n");
+			printf("Minishell: open error\n");
 	}
 	else
 		fdin=dup(tmpin);
@@ -105,7 +123,7 @@ void	execute(t_cmd *cmd, char **env)
 		{
 			fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 			if (fdin < 0)
-				printf("open error\n");
+				printf("Minishell: open error\n");
 		}
 		if (i == cmd->nb_s_cmd - 1)
 		{
@@ -116,7 +134,10 @@ void	execute(t_cmd *cmd, char **env)
 				fdout=dup(tmpout);
 			cmd->current_s_cmd->fd[0] = fdin;
 			cmd->current_s_cmd->fd[1] = fdout;
-			exec_cmd(cmd, env, 0);
+			if (is_builtin(cmd->current_s_cmd->cmd))
+				call_builtin(cmd, env);
+			else
+				exec_cmd(cmd, env, 0);
 		}
 		else 
 		{
@@ -134,9 +155,11 @@ void	execute(t_cmd *cmd, char **env)
 			exec_cmd(cmd, env, fdpipe);
 			close(cmd->current_s_cmd->fd[0]);
 		}
-		close(fdpipe[1]);
+		if (fdpipe[1] > 0)
+			close(fdpipe[1]);
 		i++;
 		cmd->current_s_cmd = cmd->s_cmds[i];
+		//printf("cmd->err_var= %d\n", cmd->err_var);
 	}
 	close_pipe(cmd);
 	wait_exit(cmd);

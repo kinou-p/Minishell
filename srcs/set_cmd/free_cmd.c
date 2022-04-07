@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/03/11 17:05:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:00:58 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void exit_shell(t_cmd *cmd)
 {
+	ft_putstr_fd("exit\n", 1);
 	cmd = 0;
 	exit(1);
 }
