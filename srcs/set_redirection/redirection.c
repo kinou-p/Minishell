@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/03 21:59:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:18:01 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 	int i;
 
 	i = 0;
-	printf("enter redirection\n");
+//	printf("enter redirection\n");
 	while (line[i])
 	{
 		if(line[i] == '<')
