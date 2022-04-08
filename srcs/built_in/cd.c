@@ -124,6 +124,16 @@ void	reboot_pwd(t_s_cmd *cmd, int i)
 	free(str);
 }
 
+int	find_it(char **str, char *s)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && ft_strncmp(str[i], s, ft_strlen(s)))
+		i++;
+	return (i);
+}
+
 void	open_directory(t_s_cmd *cmd)
 {
 	char **str;
@@ -134,9 +144,18 @@ void	open_directory(t_s_cmd *cmd)
 	if (!cmd->args[1])
 	{
 		// reboot_pwd(cmd, j);
-		while (j-- > 3)
-			if (chdir("..") == 0)
-				del_one(cmd);
+		if (tab_len(str) > 3)
+		{
+			while (j-- > 3)
+				if (chdir("..") == 0)
+					del_one(cmd);
+		}
+		else
+		{
+			char *p = ft_substr(cmd->env[find_it(cmd->env, "HOME=")], 6, ft_strlen(cmd->env[find_it(cmd->env, "HOME=")]));
+			chdir(p);
+			// printf("%s\n", p);
+		}
 	}
 	if (tab_len(cmd->args) == 2)
 	{
