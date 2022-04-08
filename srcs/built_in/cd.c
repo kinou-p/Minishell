@@ -95,7 +95,7 @@ void	change_path(t_s_cmd *cmd)
 		free(cmd->env[i]);*/
 	cmd->env[i] = ft_strjoin("OLD", cmd->env[find_pwd(cmd)]);
 	i = 0;
-	while (tab[i] && tab_len(tab) > 4)
+	while (tab[i])
 	{
 		// printf("%d -> %s\n", tab_len(tab), tab[i]);
 		// if (tab_len(tab) < 2)
@@ -153,7 +153,12 @@ void	open_directory(t_s_cmd *cmd)
 		else
 		{
 			char *p = ft_substr(cmd->env[find_it(cmd->env, "HOME=")], 6, ft_strlen(cmd->env[find_it(cmd->env, "HOME=")]));
-			chdir(p);
+			if (chdir(p) == 0)
+			{
+				cmd->env[find_it(cmd->env, "OLDPWD=")] = ft_strjoin("OLD", cmd->env[find_pwd(cmd)]);
+				cmd->env[find_pwd(cmd)] = ft_strjoin("PWD=/", p);
+			}
+			free(p);
 			// printf("%s\n", p);
 		}
 	}
