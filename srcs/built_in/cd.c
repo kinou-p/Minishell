@@ -144,10 +144,17 @@ void	open_directory(t_s_cmd *cmd)
 	str = ft_split(cmd->big_cmd->env[find_pwd(cmd)], '/');
 	// printf("jojo\n");
 	// printf("%s\n", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")]);
+	if (cmd->args[2])
+	{
+		printf("cd: too many arguments\n");
+		cmd->big_cmd->err_var = 1;
+		return ;
+	}
 	if (find_it(cmd->big_cmd->env, "HOME=") == 0)
 	{
 		//printf("%d\n", tab_len(cmd->args[1]));
 		printf("bash: cd: HOME not set\n");
+		cmd->big_cmd->err_var = 1;
 		return ;
 	}
 	j = tab_len(str);
@@ -179,6 +186,11 @@ void	open_directory(t_s_cmd *cmd)
 			reboot_pwd(cmd, j);
 		if (chdir(cmd->args[1]) == 0)
 			change_path(cmd);
+		else
+		{
+			printf("cdksnckds");
+			cmd->big_cmd->err_var = 1;
+		}
 	}
 	if (str)
 		free_double(str);
