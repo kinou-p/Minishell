@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/07 16:47:50 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:59:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
@@ -32,7 +32,7 @@
 
 // Describes a simple command and arguments
 typedef struct	s_simple {
-	char	**env;
+	struct s_command	*big_cmd;
 	int		fd[2];
 	int		pipe[2];
 	int		last;
@@ -50,6 +50,7 @@ typedef struct	s_simple {
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
 typedef struct	s_command {
+	char				**env;
 	int					nb_s_cmd;
 	struct	s_simple	**s_cmds;
 	//char				*outfile;
@@ -72,11 +73,9 @@ t_cmd	*set_cmd(char *input, char **path);
 char	**get_path(char **env);
 char	*get_command(char **exec, char **env);
 
-
-
 //free_cmd
 void free_cmd(t_cmd *cmd);
-void exit_shell(t_cmd *cmd);
+void exit_shell(t_cmd *cmd, char **env);
 
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line, int index);

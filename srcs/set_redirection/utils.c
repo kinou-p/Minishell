@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:35:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/03 20:20:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:34:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	print_double_fd(char **tab, int fd)
 		while (tab[i])
 		{
 			ft_putstr_fd(tab[i], fd);
-			if (tab[i + 1])
-				ft_putstr_fd("\n", fd);
+			ft_putstr_fd("\n", fd);
 			i++;
 		}
 	}

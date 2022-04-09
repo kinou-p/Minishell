@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/07 17:26:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:53:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds, char **env)
 			free_cmd(cmd);
 			return (0);
 		}
-		cmd->s_cmds[i]->env = env;
+		//cmd->s_cmds[i]->env = env;
+		cmd->s_cmds[i]->big_cmd = cmd;
 		i++;
 	}
 	cmd->s_cmds[i] = 0;
@@ -89,9 +90,13 @@ t_cmd	*set_cmd(char *input, char **env)
 	cmd->s_cmds = malloc(sizeof(t_s_cmd) * double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		return (0);
+	cmd->path = 0;
 	cmd->s_cmds[double_size(cmds)] = 0;	
 	cmd->path = get_path(env);
-	cmd->err_var = 0;
+	cmd->env = env;
+	//set_quote_and_var;
+	
+	//cmd->err_var = 0;
 	//cmd->outfile = 0;
 	//cmd->infile = 0;
 	cmd->nb_s_cmd = double_size(cmds);
