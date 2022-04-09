@@ -6,9 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:09:47 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 21:10:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:21:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 void	print_env(char **tab, int fd)
 {
