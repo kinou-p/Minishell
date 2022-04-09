@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 19:19:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:24:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	print_prompt(char **path)
 	char	*input;
 	t_cmd	*cmd;
 	int		i;
-	char 	**swap;
 	
 	input = 0;
 	i = 0;
