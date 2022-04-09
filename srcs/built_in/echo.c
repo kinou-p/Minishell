@@ -134,15 +134,23 @@ void	find_value(t_s_cmd *cmd, char *str)
 void	ft_echo(t_s_cmd *d)
 {
 	int	i;
-	int j;
+	size_t j;
 	int	is_option;
 
-	j = 0;
 	i = 1;
 	is_option = 0;
-	if (d->args[i] && ft_strcmp(d->args[i], "-n") == 0)
+	while (d->args[i] && d->args[i][0] == '-')
 	{
-		is_option = 1;
+		j = 1;
+		while (d->args[i][j] && d->args[i][j] == 'n')
+			j++;
+		// printf("---->%zu\n", j);
+	// printf("--->%zu\n", ft_strlen(d->args[i]));
+
+		if (j == ft_strlen(d->args[i]))
+			is_option = 1;
+		else
+			break ;
 		i++;
 	}
 	if (d->args[i])
@@ -153,7 +161,7 @@ void	ft_echo(t_s_cmd *d)
 			else
 				printf("%s", d->args[i]);
 			if (d->args[i + 1] != NULL)
-			printf("\n");
+				printf(" ");
 			i++;
 		}
 	// else
