@@ -154,23 +154,24 @@ void	open_directory(t_s_cmd *cmd)
 	if (!cmd->args[1])
 	{
 		// reboot_pwd(cmd, j);
-		if (tab_len(str) > 3)
-		{
-			while (j-- > 3)
-				if (chdir("..") == 0)
-					del_one(cmd);
-		}
-		else
-		{
-			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")], 6, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")]));
+		// if (tab_len(str) > 3)
+		// {
+		// 	while (j-- > 3)
+		// 		if (chdir("..") == 0)
+		// 			del_one(cmd);
+		// }
+		// else
+		// {
+			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")]));
+            printf("%s\n", p);
 			if (chdir(p) == 0)
 			{
 				cmd->big_cmd->env[find_it(cmd->big_cmd->env, "OLDPWD=")] = ft_strjoin("OLD", cmd->big_cmd->env[find_pwd(cmd)]);
-				cmd->big_cmd->env[find_pwd(cmd)] = ft_strjoin("PWD=/", p);
+				cmd->big_cmd->env[find_pwd(cmd)] = ft_strjoin("PWD=", p);
 			}
 			free(p);
 			// printf("%s\n", p);
-		}
+		// }
 	}
 	if (tab_len(cmd->args) == 2)
 	{
