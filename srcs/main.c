@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 04:47:37 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:19:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void crtl_c(int num)
 {
-//	close(0);
+	int tmpin;
+
+	tmpin = dup(0);
+	num = 0;
+	
+	close(0);
+	//dup2(tmpin, 0);
+	//close(tmpin);
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -23,45 +30,10 @@ void crtl_c(int num)
 
 void	sig_quit(int num)
 {
+	num = 0;
 	ft_putstr_fd("\b \b\b \b", 1);
 	//printf("quit num= %d\n", num);
 	//exit(0);
-}
-
-void	print_prompt(char **path)
-{
-	char	*input;
-	t_cmd	*cmd;
-	int		i;
-	
-	input = 0;
-	i = 0;
-	cmd = 0;
-	while (1)
-	{
-		i = 0;
-		input = readline("\033[1;31m~$ \033[0m");
-		if (!input)
-			exit_shell(cmd, path);
-		add_history(input);	
-		if (!ft_strcmp("exit", input) && input)
-		{
-			free(input);
-			exit_shell(cmd, path);
-		}
-		if (ft_strlen(input) && next_space(input, 0) && input)
-		{
-			cmd = set_cmd(input, path);
-			if (cmd)
-			{
-				cmd->err_var = 0;
-				execute(cmd, path);
-				path = cmd->env;
-				free_cmd(cmd);
-			}
-		}
-		free(input);
-	}
 }
 
 char	**ft_dup_double(char **env)
@@ -81,6 +53,44 @@ char	**ft_dup_double(char **env)
     }
     new_tab[i] = NULL;
 	return (new_tab);
+}
+
+void	print_prompt(char **path)
+{
+	char	*input;
+	t_cmd	*cmd;
+	int		i;
+	char 	**swap;
+	
+	input = 0;
+	i = 0;
+	cmd = 0;
+	while (1)
+	{
+		i = 0;
+		input = readline("\033[1;31m~$ \033[0m");
+		if (!input)
+			exit_shell(cmd);
+		add_history(input);	
+		if (!ft_strcmp("exit", input) && input)
+		{
+			free(input);
+			exit_shell(cmd);
+		}
+		if (ft_strlen(input) && next_space(input, 0) && input)
+		{
+			cmd = set_cmd(input, path);
+			if (cmd)
+			{
+				cmd->err_var = 0;
+				execute(cmd, path);
+				path = ft_dup_double(cmd->env);
+				free_cmd(cmd);
+				cmd = 0;
+			}
+		}
+		free(input);
+	}
 }
 
 int	main(int ac, char **av, char **path)
