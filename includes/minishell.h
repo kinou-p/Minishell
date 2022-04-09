@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 18:48:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:24:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	lone_export(t_s_cmd *cmd);
 void	find_variable(char *variable, t_s_cmd *cmd);
 
 //real builtin
+void	print_env(char **tab);
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);
 void	ft_export(t_s_cmd *cmd);
@@ -107,6 +108,6 @@ void	open_directory(t_s_cmd *cmd);//cd
 
 //parse builtin
 int	is_builtin(char *cmd);
-void	call_builtin(t_cmd *cmd, char **env);
+void	call_builtin(t_cmd *cmd);
 
 #endif
