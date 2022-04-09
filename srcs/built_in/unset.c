@@ -28,7 +28,7 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	{
 		// if (a == i)
 		// 	a++;
-		printf("%s\n", cmd->big_cmd->env[a]);
+		// printf("%s\n", cmd->big_cmd->env[a]);
 		if (a != i)
 		{
 			tmp[b] = ft_substr(cmd->big_cmd->env[a], 0, ft_strlen(cmd->big_cmd->env[a]));

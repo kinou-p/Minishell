@@ -78,8 +78,10 @@ void	ft_export_variable(t_s_cmd *cmd, char *variable)
 	{
 		if (ft_strncmp(unset, cmd->big_cmd->env[i], ft_strlen(unset)) == 0)
 		{
-			find_variable(unset, cmd);
-			break ;
+			free(cmd->big_cmd->env[i]);
+			cmd->big_cmd->env[i] = dest;
+			// find_variable(unset, cmd);
+			return ;
 		}
 		i++;
 	}
