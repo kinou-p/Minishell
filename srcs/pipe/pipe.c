@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 04:29:40 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:35:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 		close(cmd->current_s_cmd->fd[1]);
 		if (is_builtin(cmd->current_s_cmd->cmd))
 		{
-			call_builtin(cmd, env);
+			call_builtin(cmd);
 			exit(0);
 		}
 		if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
@@ -135,7 +135,7 @@ void	execute(t_cmd *cmd, char **env)
 			cmd->current_s_cmd->fd[0] = fdin;
 			cmd->current_s_cmd->fd[1] = fdout;
 			if (i == 0 && is_builtin(cmd->current_s_cmd->cmd))
-				call_builtin(cmd, env);
+				call_builtin(cmd);
 			else
 				exec_cmd(cmd, env, 0);
 		}
