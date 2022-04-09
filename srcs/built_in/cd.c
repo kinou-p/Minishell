@@ -188,7 +188,7 @@ void	open_directory(t_s_cmd *cmd)
 			change_path(cmd);
 		else
 		{
-			printf("cdksnckds");
+			printf("cd: %s: No such directory\n", cmd->args[1]);
 			cmd->big_cmd->err_var = 1;
 		}
 	}
