@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 04:59:53 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 18:48:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*get_command(char **exec, char **env);
 
 //free_cmd
 void free_cmd(t_cmd *cmd);
-void exit_shell(t_cmd *cmd, char **env);
+void exit_shell(t_cmd *cmd);
 
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line, int index);
@@ -91,10 +91,10 @@ void	register_env(t_s_cmd *cmd, char *variable);
 void	ft_env(t_s_cmd *cmd, char **env);
 int		find_pwd(t_s_cmd *cmd);
 void	init_s_cmd(t_s_cmd *cmd, char **env);
-int	tab_len(char **tab);
-int	find_len(char *input, int i, char c);
-//void	lone_export(t_s_cmd *cmd);
-//void	find_variable(char *variable, t_s_cmd *cmd);
+int		tab_len(char **tab);
+int		find_len(char *input, int i, char c);
+void	lone_export(t_s_cmd *cmd);
+void	find_variable(char *variable, t_s_cmd *cmd);
 
 //real builtin
 void	ft_env(t_s_cmd *cmd, char **env);

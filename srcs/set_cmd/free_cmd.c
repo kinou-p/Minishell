@@ -6,18 +6,19 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 04:48:22 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:19:58 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void exit_shell(t_cmd *cmd, char **env)
+void exit_shell(t_cmd *cmd)
 {
 	int i;
 	
 	i = 0;
-	free_double(cmd->env);
+	if (cmd)
+		free_double(cmd->env);
 	clear_history();
 	//print_double_fd(cmd->s_cmds[0]->env, 1);
 	ft_putstr_fd("exit\n", 1);
@@ -43,6 +44,7 @@ void free_cmd(t_cmd *cmd)
 		free(cmd->s_cmds[i]);
 		i++;
 	}
+	free_double(cmd->env);
 	free_double(cmd->path);
 	free(cmd->s_cmds);
 	free(cmd);

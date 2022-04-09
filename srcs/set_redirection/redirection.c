@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/06 16:18:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:04:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*cut_str(char *str, int start, int end)
 	return (str);
 }
 
-char	*get_word(char *str, int start, int end)
+char	*get_word(char *str, int start)
 {
 	char *new;
 	//char *swap;
@@ -87,7 +87,7 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 		i++;
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
-	cmd->infile = get_word(line, word_index, i);
+	cmd->infile = get_word(line, word_index);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -108,7 +108,7 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 		i++;
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
-	cmd->outfile = get_word(line, index, i);
+	cmd->outfile = get_word(line, index);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -178,7 +178,7 @@ char	**add_line(char **tab, char *line)
 	if (tab)
 		size = double_size(tab);
 	//printf("size= %d\n", size);
-	ret = ft_calloc(size + 1, sizeof(char*));
+	ret = ft_calloc(size + 2, sizeof(char*));
 	if (!ret)
 	{
 	//	if (tab)
@@ -191,10 +191,10 @@ char	**add_line(char **tab, char *line)
 		ret[i] = ft_strjoin(tab[i], 0);
 		i++;
 	}
-	ret[i] = line;
+	ret[i] = ft_strjoin(line, 0);
 	ret[i + 1] = 0;
-	//if (tab)
-	//	free_double(tab);
+	if (tab)
+		free_double(tab);
 	return(ret);
 }
 
@@ -216,7 +216,10 @@ char	*set_heredoc(int index, char **in)
 		file_name = ft_strjoin(".heredoc", 0);
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0666);
 	if (fd > 0)
+	{
 		print_double_fd(in, fd);
+		free_double(in);
+	}
 	close(fd);
 	return (file_name);
 }
@@ -234,15 +237,19 @@ void	wait_prompt(t_s_cmd *cmd, int index)
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
 		//printf("input = -%s-\n", input);
+		if (!input)
+			return ;
 		input[ft_strlen(input) - 1] = 0;
 		//printf("input2 = -%s-\n", input);
-		history = add_line(history, input);
+		if (ft_strcmp(input, cmd->infile))
+			history = add_line(history, input);
 		//print_double(history);
 	}
 	//print_double(history);
 	//free_double(history);
 	free(input);
 	free(cmd->infile);
+	cmd->infile = 0;//option?
 	cmd->infile = set_heredoc(index, history);
 	//cmd->infile = 0;
 	cmd->in_type = 0;
