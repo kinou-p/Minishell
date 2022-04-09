@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 20:52:56 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/05 17:30:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,19 @@ void	find_for_print(t_s_cmd *cmd, char *input)
 	str = ft_strjoin(input, "=");
 	x = ft_strlen(str);
 	// printf("%d\n", x);
-	while (cmd->env[i])
+	while (cmd->big_cmd->env[i])
 	{
-		if (ft_strncmp(cmd->env[i], str, x) == 0)
+		if (ft_strncmp(cmd->big_cmd->env[i], str, x) == 0)
 		{
-			// printf("%s\n", cmd->env[i]);
+			// printf("%s\n", cmd->big_cmd->env[i]);
 			break ;
 		}
 
 		i++;
 	}
-	if (cmd->env[i] != NULL)
+	if (cmd->big_cmd->env[i] != NULL)
 	{
-		print_value(cmd->env[i], input);
+		print_value(cmd->big_cmd->env[i], input);
 		// print_rest(input, tmp, j);
 	}
 }

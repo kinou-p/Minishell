@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 23:26:59 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/05 03:54:10 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:59:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	ft_export_variable(t_s_cmd *cmd, char *variable)
 	// printf("jojo\n");
 	dest = check_value(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
-	while (cmd->env[i] != NULL)
+	while (cmd->big_cmd->env[i] != NULL)
 	{
-		if (ft_strncmp(unset, cmd->env[i], ft_strlen(unset)) == 0)
+		if (ft_strncmp(unset, cmd->big_cmd->env[i], ft_strlen(unset)) == 0)
 		{
 			find_variable(unset, cmd);
 			break ;

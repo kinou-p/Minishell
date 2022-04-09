@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/07 19:29:27 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:47:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void crtl_c(int num)
 {
+//	close(0);
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -41,12 +42,12 @@ void	print_prompt(char **path)
 		i = 0;
 		input = readline("\033[1;31m~$ \033[0m");
 		if (!input)
-			exit_shell(cmd);
+			exit_shell(cmd, path);
 		add_history(input);	
 		if (!ft_strcmp("exit", input) && input)
 		{
-			rl_clear_history();
-			exit_shell(cmd);
+			free(input);
+			exit_shell(cmd, path);
 		}
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
@@ -55,7 +56,8 @@ void	print_prompt(char **path)
 			{
 				cmd->err_var = 0;
 				execute(cmd, path);
-				cmd = 0;
+				path = cmd->env;
+				free_cmd(cmd);
 			}
 		}
 		free(input);
@@ -74,7 +76,7 @@ char	**ft_dup_double(char **env)
     i = 0;
     while (env[i])
     {
-        new_tab[i] = ft_strdup(env[i]);
+        new_tab[i] = ft_strjoin(env[i], 0);
         i++;
     }
     new_tab[i] = NULL;

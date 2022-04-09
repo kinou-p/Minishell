@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/07 19:08:54 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:29:40 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	execute(t_cmd *cmd, char **env)
 {
 	int fdpipe[2];
 	int fdout;
+	int fdin;
 	int tmpin;
 	int tmpout;
-	int fdin;
 	int i;
 
 	i = 0;
@@ -134,7 +134,7 @@ void	execute(t_cmd *cmd, char **env)
 				fdout=dup(tmpout);
 			cmd->current_s_cmd->fd[0] = fdin;
 			cmd->current_s_cmd->fd[1] = fdout;
-			if (is_builtin(cmd->current_s_cmd->cmd))
+			if (i == 0 && is_builtin(cmd->current_s_cmd->cmd))
 				call_builtin(cmd, env);
 			else
 				exec_cmd(cmd, env, 0);
@@ -163,8 +163,8 @@ void	execute(t_cmd *cmd, char **env)
 	}
 	close_pipe(cmd);
 	wait_exit(cmd);
-	dup2(tmpin,0);
-	dup2(tmpout,1);
+	dup2(tmpin, 0);
+	dup2(tmpout, 1);
 	close(tmpin);
 	close(tmpout);
 }

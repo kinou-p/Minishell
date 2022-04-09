@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:58:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/05 03:47:53 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	lone_export(t_s_cmd *cmd)
 	int i;
 
 	i = 0;
-	tmp = cmd->env;
+	tmp = cmd->big_cmd->env;
 	sort_tab(tmp);
 	while (tmp[i])
 	{
