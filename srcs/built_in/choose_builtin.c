@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:12:52 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 05:00:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:14:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(char *cmd)
 void	call_builtin(t_cmd *cmd, char **env)
 {
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "env"))
-		print_double_fd(env, 0);
+		print_env(cmd->env);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "export"))
 		ft_export(cmd->current_s_cmd);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "unset"))

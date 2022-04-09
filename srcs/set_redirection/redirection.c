@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 19:04:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/09 21:05:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,42 +25,30 @@ char	*cut_str(char *str, int start, int end)
 	char	*swap;
 	char	*del;
 
-	//printf("before cut :%s\n", str);
 	del = str;
 	swap = ft_strjoin(&str[end], 0);
-	//printf("&str[start] :%s\n", &str[start]);
 	str[start] = 0;
 	str = ft_strjoin(str, swap);
 	free(del);
 	free(swap);
-	//printf("after cut :%s\n", str);
 	return (str);
 }
 
 char	*get_word(char *str, int start)
 {
 	char *new;
-	//char *swap;
 	int		i;
 
 	i = 0;
-	//printf("str de get_word %s\n", str);
 	while (str[start + i] == '<' || str[start + i] == '>')
 		i++;
 	while (str[start + i] == ' ')
 		i++;
-	//printf("srt= %s\n", &str[start + i]);
 	new = ft_strjoin(&str[start + i], 0);
-	//printf("char= %c\n",new[end - start - i]);
-	//printf("char str= %s end=%d start=%d out=%d\n", &new[0], end, start, end - start - i - 1);
 	i = 0;
 	while (new[i] && new[i] != ' ' && new[i] != '>' && new[i] != '<')
 		i++;
 	new[i] = 0;
-	//new[end - start - start] = 0;
-	//swap = new;
-	//new = ft_strjoin(&new[i], 0);
-	//free(swap);
 	printf("get word= %s\n", new);
 	return (new);
 }
@@ -76,7 +64,6 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 	int	i;
 	int word_index;
 
-	//printf("&line[index] :%s\n", &line[index]);
 	word_index = 0;
 	i = index;
 	i++;
@@ -97,7 +84,6 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 	int	i;
 	int word_index;
 
-	//printf("&line[index] :%s\n", &line[index]);
 	word_index = 0;
 	i = index;
 	i++;
@@ -177,17 +163,11 @@ char	**add_line(char **tab, char *line)
 	ret = 0;
 	if (tab)
 		size = double_size(tab);
-	//printf("size= %d\n", size);
 	ret = ft_calloc(size + 2, sizeof(char*));
 	if (!ret)
-	{
-	//	if (tab)
-	//		free_double(tab);
 		return (0);
-	}
 	while (tab && tab[i])
 	{
-		//printf("tab[i]= %s\n", tab[i]);
 		ret[i] = ft_strjoin(tab[i], 0);
 		i++;
 	}
@@ -206,7 +186,6 @@ char	*set_heredoc(int index, char **in)
 	int		i;
 
 	i = 0;
-	//print_double_fd(in, 1);
 	if (index)
 	{
 		nbr_file = ft_itoa(index + 1);
@@ -231,27 +210,20 @@ void	wait_prompt(t_s_cmd *cmd, int index)
 
 	history = 0;
 	input = 0;
-	//printf("-%s-\n", cmd->infile);
 	while (ft_strcmp(input, cmd->infile))
 	{
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
-		//printf("input = -%s-\n", input);
 		if (!input)
 			return ;
 		input[ft_strlen(input) - 1] = 0;
-		//printf("input2 = -%s-\n", input);
 		if (ft_strcmp(input, cmd->infile))
 			history = add_line(history, input);
-		//print_double(history);
 	}
-	//print_double(history);
-	//free_double(history);
 	free(input);
 	free(cmd->infile);
 	cmd->infile = 0;//option?
 	cmd->infile = set_heredoc(index, history);
-	//cmd->infile = 0;
 	cmd->in_type = 0;
 }
 
