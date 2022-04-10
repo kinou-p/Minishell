@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 18:47:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:45:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
 	s_cmd->outfile = 0;
 	//printf("before redirect\n");
 	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
-	split_line = ft_split(line, ' ');
+	split_line = ft_split_with_quote(line, ' ');
 	//print_double_fd(split_line, 0);
 	if (!is_builtin(split_line[0]))
-		s_cmd->cmd = get_command(split_line, cmd->path);
+		s_cmd->cmd = ft_strdup(get_command(split_line, cmd->path));
 	else
-		s_cmd->cmd = ft_strjoin(split_line[0], 0);
+		s_cmd->cmd = ft_strdup(split_line[0]);
 	/*if (!s_cmd->cmd)
 	{
 		free(line);
@@ -81,7 +81,9 @@ t_cmd	*set_cmd(char *input, char **env)
 	t_cmd	*cmd;
 	char	**cmds;
 
-	cmds = ft_split(input, '|');
+	cmds = ft_split_with_quote(input, '|');
+	printf("-after split | -\n");
+	print_double_fd(cmds, 1);
 	if (!cmds)
 		return (0);
 	cmd = malloc(sizeof(t_cmd));

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 21:05:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/10 18:13:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ void	wait_prompt(t_s_cmd *cmd, int index)
 	{
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
+		//input = readline("");
+		printf("input= %s\n", input);
 		if (!input)
 			return ;
 		input[ft_strlen(input) - 1] = 0;
@@ -245,7 +247,7 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 		else if(line[i] == '>')
 		{
 			line = ft_output(line, cmd, i);
-			if (cmd->in_type == 0)
+			//if (cmd->in_type == 0)
 				set_file(cmd->outfile);
 			i = 0;
 		}

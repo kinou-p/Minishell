@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 19:24:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:46:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void crtl_c(int num)
 	num = 0;
 	
 	close(0);
-	//dup2(tmpin, 0);
-	//close(tmpin);
+	dup2(tmpin, 0);
+	close(tmpin);
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **path)
 	av = 0;
 	if (ac != 1)
 	{
-		printf("too much arguments\n");
+		ft_putstr_fd("Error: too much arguments\n", 2);
 		return (0);
 	}
 	printf("---MINISHELL  START---\n"); 

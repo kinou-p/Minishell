@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 21:24:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:14:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	*get_command(char **exec, char **env);
 //free_cmd
 void free_cmd(t_cmd *cmd);
 void exit_shell(t_cmd *cmd);
+
+//set_quote.c
+char	**ft_split_with_quote(char const *s, char c);
 
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line, int index);
