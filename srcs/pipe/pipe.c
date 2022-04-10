@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 21:35:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:07:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 		}
 		if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 		{
-			ft_putstr_fd("Minishell: command not found\n", 2);
+			ft_putstr_fd("Minishell: command not found: ", 2);
+			ft_putstr_fd(cmd->current_s_cmd->cmd + 1, 2);
+			ft_putstr_fd("\n", 2);
 			exit(0);
 		}
         if (-1 == execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, env))
