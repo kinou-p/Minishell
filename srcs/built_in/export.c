@@ -17,16 +17,16 @@ int	check_variable(char *variable)
 	int	i;
 
 	i = 0;
-	if (!ft_isalpha(variable[i]))
-		return(0);
+	if (!ft_isalpha(variable[i]) && variable[i] != '_')
+		return(1);
 	i++;
-	while(variable[i] != '=')
+	while(variable[i] && variable[i] != '=')
 	{
-		if(!ft_isalnum(variable[i]))
-			return(0);
+		if(!ft_isalnum(variable[i]) && variable[i] != '_')
+			return(1);
 		i++;
 	}
-	return(1);
+	return(0);
 }
 
 // char	*define_double_quotes(char *value)
@@ -66,12 +66,14 @@ void	ft_export_variable(t_s_cmd *cmd, char *variable)
 	int	i;
 
 	i = 0;
-	if (check_variable(variable) == 0)
+	if (check_variable(variable) == 1)
 	{
-		printf("Voir bash\n");
+		ft_putstr_fd("Minishell: export: ", 2);
+		ft_putstr_fd(variable, 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		// 1
 		return ;
 	}
-	// printf("jojo\n");
 	dest = check_value(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
 	printf("%s\n", unset);

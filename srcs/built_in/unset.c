@@ -58,21 +58,22 @@ void	unset_variable(t_s_cmd *cmd, int i)
 
 void	find_variable(char *variable, t_s_cmd *cmd)
 {
-	char	*str;
+	// char	*str;
 	int	i;
 	int	j;
 
-	i = 0;
-	str = ft_strjoin(variable, "=");
+	i = find_it(cmd->big_cmd->env, variable);
+	// str = ft_strjoin(variable, "=");
 	j = 0;
-	while (str[j])
-		j++;
-	while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
-		i++;
+	// while (str[j])
+	// 	j++;
+	// while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
+	// 	i++;
+
 	if (i == tab_len(cmd->big_cmd->env))
 		return ;
 	unset_variable(cmd, i);
-	free(str);
+	// free(str);
 }
 
 void	ft_unset(t_s_cmd *cmd)
