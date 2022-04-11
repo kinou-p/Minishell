@@ -108,15 +108,15 @@ void	ft_env(t_s_cmd *cmd, char **env)
 	cmd->big_cmd->env[i] = NULL;
 }
 
-int		find_pwd(t_s_cmd *cmd)
-{
-	int	i;
+// int		find_pwd(t_s_cmd *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	while (cmd->big_cmd->env[i] && ft_strncmp(cmd->big_cmd->env[i], "PWD=", 4) != 0)
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (cmd->big_cmd->env[i] && ft_strncmp(cmd->big_cmd->env[i], "PWD=", 4) != 0)
+// 		i++;
+// 	return (i);
+// }
 
 void	init_s_cmd(t_s_cmd *cmd, char **env)
 {

@@ -69,7 +69,6 @@ void	find_variable(char *variable, t_s_cmd *cmd)
 	// 	j++;
 	// while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
 	// 	i++;
-
 	if (i == tab_len(cmd->big_cmd->env))
 		return ;
 	unset_variable(cmd, i);

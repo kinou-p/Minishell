@@ -111,6 +111,8 @@ void	change_path(t_s_cmd *cmd)
 
 		i++;
 	}
+	if (tab)
+		free_double(tab);
 }
 
 void	reboot_pwd(t_s_cmd *cmd, int i)
@@ -145,7 +147,7 @@ void	open_directory(t_s_cmd *cmd)
 	char **str;
 	int j;
 
-	if (find_it(cmd->big_cmd->env, "PWD"))
+	if (find_it(cmd->big_cmd->env, "PWD") != -1)
 	{
 		str = ft_split(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], '/');
 		j = double_size(str);
@@ -167,9 +169,9 @@ void	open_directory(t_s_cmd *cmd)
 			return ;
 		}
 			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]));
-            printf("%s\n", p);
+            // printf("%s\n", p);
 			if (chdir(p) == 0)
-				if (find_it(cmd->big_cmd->env, "PWD"))
+				if (find_it(cmd->big_cmd->env, "PWD") != -1)
 				{
 					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "OLDPWD")] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strjoin("PWD=", p);
@@ -182,8 +184,11 @@ void	open_directory(t_s_cmd *cmd)
 			reboot_pwd(cmd, j);
 		if (chdir(cmd->args[1]) == 0)
 		{
-			if (find_it(cmd->big_cmd->env, "PWD"))
+			if (find_it(cmd->big_cmd->env, "PWD") != -1)
+			{
 				change_path(cmd);
+
+			}
 		}
 		else
 		{
