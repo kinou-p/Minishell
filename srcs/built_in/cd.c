@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:39:48 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,22 @@ void	del_one(t_s_cmd *cmd)
 	int	i;
 	char *r;
 
-	if (find_it(cmd->big_cmd->env, "PWD="))
+	if (find_it(cmd->big_cmd->env, "PWD"))
 	{
 
-	i = ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")]);
+	i = ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	// printf("%s\n", cmd->args[6]);
-	// while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")][i])
+	// while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")][i])
 	// 	i++;
-	while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")][i] != '/')
+	while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")][i] != '/')
 		i--;
-	r = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")], 0, i);
+	r = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], 0, i);
 	// printf ("-->%s\n", r);
-	// free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")]);
+	// free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	if (r)
-		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")] = ft_strdup(r);
+		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
 	else
-		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")] = ft_strdup("PWD=/");
+		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup("PWD=/");
 
 	if (r)
 		free(r);
@@ -74,10 +74,10 @@ void	add_one(t_s_cmd *cmd, char *str)
 {
 	char *r;
 
-	r = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")], "/");
+	r = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], "/");
 	r = ft_strjoin(r, str);
-	//free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")]);
-	cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")] = ft_strdup(r);
+	//free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
+	cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
 	free(r);
 }
 
@@ -97,7 +97,7 @@ void	change_path(t_s_cmd *cmd)
 	// printf("%d\n", i);
 	/*if (cmd->big_cmd->env[i])
 		free(cmd->big_cmd->env[i]);*/
-	cmd->big_cmd->env[i] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")]);
+	cmd->big_cmd->env[i] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	i = 0;
 	while (tab[i])
 	{
@@ -133,10 +133,10 @@ int	find_it(char **str, char *s)
 	int i;
 
 	i = 0;
-	while (str[i] && ft_strncmp(str[i], s, ft_strlen(s)))
+	while (str[i] && (ft_strncmp(str[i], s, ft_strlen(s)) || (!ft_strncmp(str[i], s, ft_strlen(s)) && (str[i][ft_strlen(s)] != '=' && str[i][ft_strlen(s)] != 0))))
 		i++;
 	if (str[i] == NULL)
-		return (0);
+		return (-1);
 	return (i);
 }
 
@@ -145,13 +145,13 @@ void	open_directory(t_s_cmd *cmd)
 	char **str;
 	int j;
 
-	if (find_it(cmd->big_cmd->env, "PWD="))
+	if (find_it(cmd->big_cmd->env, "PWD"))
 	{
-		str = ft_split(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")], '/');
+		str = ft_split(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], '/');
 		j = double_size(str);
 		free_double(str);
 	}
-	if (cmd->args[2])
+	if (cmd->nb_args > 2)
 	{
 		printf("Minishell: cd: too many arguments\n");
 		cmd->big_cmd->err_var = 1;
@@ -159,19 +159,19 @@ void	open_directory(t_s_cmd *cmd)
 	}
 	if (!cmd->args[1])
 	{
-		if (find_it(cmd->big_cmd->env, "HOME=") == 0)
+		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
 			printf("Minishell: cd: HOME not set\n");
 			cmd->big_cmd->err_var = 1;
 			return ;
 		}
-			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME=")]));
+			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]));
             printf("%s\n", p);
 			if (chdir(p) == 0)
-				if (find_it(cmd->big_cmd->env, "PWD="))
+				if (find_it(cmd->big_cmd->env, "PWD"))
 				{
-					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "OLDPWD=")] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")]);
-					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD=")] = ft_strjoin("PWD=", p);
+					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "OLDPWD")] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
+					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strjoin("PWD=", p);
 				}
 			free(p);
 	}
@@ -181,7 +181,7 @@ void	open_directory(t_s_cmd *cmd)
 			reboot_pwd(cmd, j);
 		if (chdir(cmd->args[1]) == 0)
 		{
-			if (find_it(cmd->big_cmd->env, "PWD="))
+			if (find_it(cmd->big_cmd->env, "PWD"))
 				change_path(cmd);
 		}
 		else

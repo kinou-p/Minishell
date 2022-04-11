@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/10 21:45:17 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:49:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,17 @@ t_cmd	*set_cmd(char *input, char **env)
 	char	**cmds;
 
 	cmds = ft_split_with_quote(input, '|');
-	printf("-after split | -\n");
-	print_double_fd(cmds, 1);
+	//print_double_fd(cmds, 1);
 	if (!cmds)
 		return (0);
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (0);
-	cmd->s_cmds = malloc(sizeof(t_s_cmd) * double_size(cmds) + 1);
+	cmd->s_cmds = calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		return (0);
 	cmd->path = 0;
-	cmd->s_cmds[double_size(cmds)] = 0;	
+	//cmd->s_cmds[double_size(cmds)] = NULL;	
 	cmd->path = get_path(env);
 	cmd->env = env;
 	//set_quote_and_var;
