@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/11 17:39:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:54:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	reboot_pwd(t_s_cmd *cmd, int i)
 	free(str);
 }
 
-int	find_it(char **str, char *s)
+int    find_it(char **str, char *s)
 {
 	int i;
 
@@ -161,6 +161,7 @@ void	open_directory(t_s_cmd *cmd)
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
+			// printf("---->%s\n", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]);
 			printf("Minishell: cd: HOME not set\n");
 			cmd->big_cmd->err_var = 1;
 			return ;
@@ -208,5 +209,6 @@ void	ft_pwd(t_s_cmd *cmd)
 		ft_putstr_fd("Minishell: pwd: Not found\n", 2);
 	}
 	else
-		ft_putstr_fd(p, 1);
+		ft_putendl_fd(p, 1);
+
 }

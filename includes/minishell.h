@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/11 17:13:23 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:53:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		tab_len(char **tab);
 int		find_len(char *input, int i, char c);
 void	lone_export(t_s_cmd *cmd);
 void	find_variable(char *variable, t_s_cmd *cmd);
-int	find_it(char **str, char *s);
+int		find_it(char **str, char *s);
 
 //real builtin
 void	print_env(char **tab);
