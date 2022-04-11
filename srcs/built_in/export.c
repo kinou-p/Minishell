@@ -74,6 +74,7 @@ void	ft_export_variable(t_s_cmd *cmd, char *variable)
 	// printf("jojo\n");
 	dest = check_value(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
+	printf("%s\n", unset);
 	while (cmd->big_cmd->env[i] != NULL)
 	{
 		if (ft_strncmp(unset, cmd->big_cmd->env[i], ft_strlen(unset)) == 0)

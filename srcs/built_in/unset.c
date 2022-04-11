@@ -52,7 +52,7 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	cmd->big_cmd->env[a] = NULL;
 	if (tmp)
 		free_double(tmp);
-	printf("2-------------\n");
+
 
 }
 
@@ -65,7 +65,6 @@ void	find_variable(char *variable, t_s_cmd *cmd)
 	i = 0;
 	str = ft_strjoin(variable, "=");
 	j = 0;
-	// printf("variable == %s\n", variable);
 	while (str[j])
 		j++;
 	while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
@@ -74,7 +73,6 @@ void	find_variable(char *variable, t_s_cmd *cmd)
 		return ;
 	unset_variable(cmd, i);
 	free(str);
-	printf("%s\n", "3----------------");
 }
 
 void	ft_unset(t_s_cmd *cmd)
