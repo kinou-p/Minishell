@@ -200,20 +200,3 @@ void	open_directory(t_s_cmd *cmd)
 	}
 }
 
-void	ft_pwd(t_s_cmd *cmd)
-{
-	int	i;
-	char p[1024];
-	char *str;
-
-	i = 1;
-	str = getcwd(p, sizeof(p));
-	if (!str)
-	{
-		cmd->big_cmd->err_var = 1;
-		ft_putstr_fd("Minishell: pwd: Not found\n", 2);
-	}
-	else
-		ft_putendl_fd(p, 1);
-
-}

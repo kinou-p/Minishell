@@ -99,9 +99,10 @@ int		find_len(char *input, int i, char c);
 void	lone_export(t_s_cmd *cmd);
 void	find_variable(char *variable, t_s_cmd *cmd);
 int		find_it(char **str, char *s);
+int		check_variable(char *variable);
 
 //real builtin
-void	print_env(char **tab);
+void	print_env(t_cmd *cmd);
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);
 void	ft_export(t_s_cmd *cmd);

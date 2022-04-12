@@ -58,9 +58,9 @@ void	ft_export_variable(t_s_cmd *cmd, char *variable)
 	i = 0;
 	if (check_variable(variable) == 1)
 	{
-		ft_putstr_fd("Minishell: export: ", 2);
+		ft_putstr_fd("Minishell: export: `", 2);
 		ft_putstr_fd(variable, 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 		// 1
 		return ;
 	}

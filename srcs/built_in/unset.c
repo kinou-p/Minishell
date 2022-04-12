@@ -65,6 +65,14 @@ void	find_variable(char *variable, t_s_cmd *cmd)
 	i = find_it(cmd->big_cmd->env, variable);
 	// str = ft_strjoin(variable, "=");
 	j = 0;
+	if (check_variable(variable) == 1)
+	{
+		ft_putstr_fd("Minishell: unset: `", 2);
+		ft_putstr_fd(variable, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		// 2
+		return ;
+	}
 	// while (str[j])
 	// 	j++;
 	// while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
