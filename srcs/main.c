@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/11 17:47:41 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/13 00:09:42 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	print_prompt(char **path)
 		}
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
-			
 			cmd = set_cmd(input, path);
 			if (cmd)
 			{

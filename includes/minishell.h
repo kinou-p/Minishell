@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/11 17:53:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/12 23:42:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void free_cmd(t_cmd *cmd);
 void exit_shell(t_cmd *cmd);
 
 //set_quote.c
+int		is_in_quote(char *str, int index);
+int		is_quote_good(char *str);
 char	**ft_split_with_quote(char const *s, char c);
 
 //redirection.c set redirection and input good
@@ -85,6 +87,9 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index);
 char	next_space(char *str, int i);
 
 //uitls redirection
+int		parse_quote(t_cmd *cmd);
+char	*get_str(char *str, int start, int end);
+char	*cut_str(char *str, int start, int end);
 int	double_size(char **tab);
 void	print_double_fd(char **tab, int fd);
  void	free_double(char **tab);

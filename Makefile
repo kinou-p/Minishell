@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/11 17:14:26 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/12 23:31:57 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ SRCS	= srcs/main.c\
 		srcs/built_in/export2.c\
 		srcs/built_in/env.c\
 		srcs/set_quote/split_with_quote.c\
+		srcs/set_quote/set_quote.c\
 		srcs/built_in/choose_builtin.c
-#		srcs/set_quote/set_quote.c\
+		
 		
 		
 OBJS	= ${SRCS:.c=.o}

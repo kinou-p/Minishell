@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/10 18:13:00 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/12 04:29:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,17 +239,23 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 	{
 		if(line[i] == '<')
 		{
-			line = ft_input(line, cmd, i);
-			if (cmd->in_type == 1)
-				wait_prompt(cmd, index);
-			i = 0;
+			if (!is_in_quote(line, i))
+			{
+				line = ft_input(line, cmd, i);
+				if (cmd->in_type == 1)
+					wait_prompt(cmd, index);
+				i = 0;
+			}
 		}
 		else if(line[i] == '>')
 		{
-			line = ft_output(line, cmd, i);
-			//if (cmd->in_type == 0)
+			if (!is_in_quote(line, i))
+			{
+				line = ft_output(line, cmd, i);
+				//if (cmd->in_type == 0)
 				set_file(cmd->outfile);
-			i = 0;
+				i = 0;
+			}
 		}
 		else
 			i++;

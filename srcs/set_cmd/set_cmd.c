@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/11 17:49:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:28:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
+t_s_cmd	*set_s_cmd(char *line, int index)
 {
 	t_s_cmd	*s_cmd;
 	char	**split_line;
@@ -33,11 +33,17 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
 	//printf("before redirect\n");
 	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
 	split_line = ft_split_with_quote(line, ' ');
+	//parse_quote(cmd);
 	//print_double_fd(split_line, 0);
-	if (!is_builtin(split_line[0]))
+
+	
+	/*if (!is_builtin(split_line[0]))
 		s_cmd->cmd = ft_strdup(get_command(split_line, cmd->path));
 	else
-		s_cmd->cmd = ft_strdup(split_line[0]);
+		s_cmd->cmd = ft_strdup(split_line[0]);*/
+
+
+
 	/*if (!s_cmd->cmd)
 	{
 		free(line);
@@ -45,11 +51,8 @@ t_s_cmd	*set_s_cmd(char *line, t_cmd *cmd, int index)
 		free(s_cmd);
 		return (0);
 	}*/
-	if (s_cmd->cmd)
-	{
 		s_cmd->nb_args = double_size(split_line);
 		s_cmd->args = split_line;
-	}
 	free(line);
 	return (s_cmd);
 }
@@ -61,7 +64,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 	i = 0;
 	while (cmds[i])
 	{
-		cmd->s_cmds[i] = set_s_cmd(cmds[i], cmd, i);
+		cmd->s_cmds[i] = set_s_cmd(cmds[i], i);
 		if (!cmd->s_cmds[i])
 		{
 			printf("invalid command\n");
@@ -80,7 +83,9 @@ t_cmd	*set_cmd(char *input, char **env)
 {
 	t_cmd	*cmd;
 	char	**cmds;
-
+	
+	if (!is_quote_good(input))
+		return (0);
 	cmds = ft_split_with_quote(input, '|');
 	//print_double_fd(cmds, 1);
 	if (!cmds)
@@ -96,12 +101,11 @@ t_cmd	*set_cmd(char *input, char **env)
 	cmd->path = get_path(env);
 	cmd->env = env;
 	//set_quote_and_var;
-	
 	//cmd->err_var = 0;
-	//cmd->outfile = 0;
-	//cmd->infile = 0;
 	cmd->nb_s_cmd = double_size(cmds);
 	cmd = split_cmd(cmd, cmds); //split each cmd into args in s_cmd
+	parse_quote(cmd);
+	//printf("after parse quote -%s-\n", cmd->s_cmds[0]->cmd);
 	free(cmds);
 	if (cmd)
 	{
