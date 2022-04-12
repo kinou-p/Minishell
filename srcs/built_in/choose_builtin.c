@@ -32,7 +32,7 @@ int	is_builtin(char *cmd)
 void	call_builtin(t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "env"))
-		print_env(cmd->env);
+		print_env(cmd);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "export"))
 		ft_export(cmd->current_s_cmd);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "unset"))
