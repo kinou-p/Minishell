@@ -21,3 +21,16 @@ int	find_len(char *input, int i, char c)
 		j++;
 	return (j);
 }
+
+
+int    find_it(char **str, char *s)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && (ft_strncmp(str[i], s, ft_strlen(s)) || (!ft_strncmp(str[i], s, ft_strlen(s)) && (str[i][ft_strlen(s)] != '=' && str[i][ft_strlen(s)] != 0))))
+		i++;
+	if (str[i] == NULL)
+		return (-1);
+	return (i);
+}

@@ -20,22 +20,14 @@ void	ft_ls(char *input)
 	struct dirent *sd;
 
 	i = ft_strlen("ls");
-	// if (input[i] == ' ')
-	// {
-	//printf("ici\n");
-		while (input[i] && input[i] != ' ')
-			i++;
-	// }
-	// printf("[%c]\n", input[i]);
-	// printf("[%c]\n", input[i+1]);
-
+	while (input[i] && input[i] != ' ')
+		i++;
 	dir = opendir(".");
 	if (dir == NULL)
 	{
 		printf("stop\n");
 		return ;
 	}
-	// printf("dir --> %s\n", dir[0]);
 	while ((sd=readdir(dir)) != NULL)
 	{
 		printf(" >> %s\n", sd->d_name);
@@ -52,14 +44,9 @@ void	del_one(t_s_cmd *cmd)
 	{
 
 	i = ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
-	// printf("%s\n", cmd->args[6]);
-	// while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")][i])
-	// 	i++;
 	while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")][i] != '/')
 		i--;
 	r = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], 0, i);
-	// printf ("-->%s\n", r);
-	// free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	if (r)
 		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
 	else
@@ -73,12 +60,14 @@ void	del_one(t_s_cmd *cmd)
 void	add_one(t_s_cmd *cmd, char *str)
 {
 	char *r;
+	char *s;
 
-	r = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], "/");
-	r = ft_strjoin(r, str);
+	s = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], "/");
+	r = ft_strjoin(s, str);
 	//free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
 	free(r);
+	free(s);
 }
 
 void	change_path(t_s_cmd *cmd)
@@ -86,29 +75,22 @@ void	change_path(t_s_cmd *cmd)
 	char **tab;
 	int i;
 
-	i = 0;
 	tab = ft_split(cmd->args[1], '/');
-	while (cmd->big_cmd->env[i])
-	{
-		if (ft_strncmp(cmd->big_cmd->env[i], "OLDPWD=", 7) == 0)
-			break ;
-		i++;
-	}
-	// printf("%d\n", i);
-	/*if (cmd->big_cmd->env[i])
-		free(cmd->big_cmd->env[i]);*/
+	i = find_it(cmd->big_cmd->env, "OLDPWD");
+	// while (cmd->big_cmd->env[i])
+	// {
+	// 	if (ft_strncmp(cmd->big_cmd->env[i], "OLDPWD=", 7) == 0)
+	// 		break ;
+	// 	i++;
+	// }
 	cmd->big_cmd->env[i] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
 	i = 0;
 	while (tab[i])
 	{
-		// printf("%d -> %s\n", tab_len(tab), tab[i]);
-		// if (tab_len(tab) < 2)
-		// 	break ;
 		if (ft_strcmp(tab[i], "..") == 0)
 			del_one(cmd);
 		else
 			add_one(cmd, tab[i]);
-
 		i++;
 	}
 	if (tab)
@@ -130,18 +112,6 @@ void	reboot_pwd(t_s_cmd *cmd, int i)
 	free(str);
 }
 
-int    find_it(char **str, char *s)
-{
-	int i;
-
-	i = 0;
-	while (str[i] && (ft_strncmp(str[i], s, ft_strlen(s)) || (!ft_strncmp(str[i], s, ft_strlen(s)) && (str[i][ft_strlen(s)] != '=' && str[i][ft_strlen(s)] != 0))))
-		i++;
-	if (str[i] == NULL)
-		return (-1);
-	return (i);
-}
-
 void	open_directory(t_s_cmd *cmd)
 {
 	char **str;
@@ -156,20 +126,17 @@ void	open_directory(t_s_cmd *cmd)
 	if (cmd->nb_args > 2)
 	{
 		printf("Minishell: cd: too many arguments\n");
-		cmd->big_cmd->err_var = 1;
-		return ;
+		// return (1);
 	}
 	if (!cmd->args[1])
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
-			// printf("---->%s\n", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]);
 			printf("Minishell: cd: HOME not set\n");
 			cmd->big_cmd->err_var = 1;
-			return ;
+			// return (1);
 		}
 			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]));
-            // printf("%s\n", p);
 			if (chdir(p) == 0)
 				if (find_it(cmd->big_cmd->env, "PWD") != -1)
 				{
@@ -185,17 +152,14 @@ void	open_directory(t_s_cmd *cmd)
 		if (chdir(cmd->args[1]) == 0)
 		{
 			if (find_it(cmd->big_cmd->env, "PWD") != -1)
-			{
 				change_path(cmd);
-
-			}
 		}
 		else
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			ft_putstr_fd(cmd->args[1], 2);
 			ft_putstr_fd(": No such directory\n", 2);
-			cmd->big_cmd->err_var = 1;
+			// return (1);
 		}
 	}
 }
