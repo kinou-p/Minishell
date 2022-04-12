@@ -23,12 +23,8 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	tmp = malloc(sizeof(char *) * tab_len(cmd->big_cmd->env));
 	if (!tmp)
 		printf("no tmp\n");
-		//ft_exit(cmd);
 	while (cmd->big_cmd->env[a])
 	{
-		// if (a == i)
-		// 	a++;
-		// printf("%s\n", cmd->big_cmd->env[a]);
 		if (a != i)
 		{
 			tmp[b] = ft_substr(cmd->big_cmd->env[a], 0, ft_strlen(cmd->big_cmd->env[a]));
@@ -39,58 +35,51 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	tmp[b] = NULL;
 	free_double(cmd->big_cmd->env);
 	a = 0;
-	cmd->big_cmd->env = malloc(sizeof(char *) * (tab_len(tmp) + 1));
+	// cmd->big_cmd->env = malloc(sizeof(char *) * (tab_len(tmp) + 1));
 	if (!cmd->big_cmd->env)
 		printf("no env\n");
-		//ft_exit(cmd);
-	while (tmp[a])
-	{
-		cmd->big_cmd->env[a] = ft_strdup(tmp[a]);
-		// printf("%s\n", cmd->big_cmd->env[a]);
-		a++;
-	}
-	cmd->big_cmd->env[a] = NULL;
+	cmd->big_cmd->env = ft_dup_double(tmp);
+	// while (tmp[a])
+	// {
+	// 	cmd->big_cmd->env[a] = ft_strdup(tmp[a]);
+	// 	a++;
+	// }
+	// cmd->big_cmd->env[a] = NULL;
 	if (tmp)
 		free_double(tmp);
-
-
 }
 
-void	find_variable(char *variable, t_s_cmd *cmd)
+int	find_variable(char *variable, t_s_cmd *cmd)
 {
-	// char	*str;
 	int	i;
 	int	j;
 
 	i = find_it(cmd->big_cmd->env, variable);
-	// str = ft_strjoin(variable, "=");
 	j = 0;
 	if (check_variable(variable) == 1)
 	{
 		ft_putstr_fd("Minishell: unset: `", 2);
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		// 2
-		return ;
+		return (2);
 	}
-	// while (str[j])
-	// 	j++;
-	// while (cmd->big_cmd->env[i] && !(ft_strncmp(cmd->big_cmd->env[i], str, j) == 0))
-	// 	i++;
 	if (i == tab_len(cmd->big_cmd->env))
-		return ;
+		return (2);
 	unset_variable(cmd, i);
-	// free(str);
+	return (0);
 }
 
 void	ft_unset(t_s_cmd *cmd)
 {
 	int	i;
+	int	j;
 
 	i = 1;
+	j = 0;
 	while (cmd->args[i])
 	{
-		find_variable(cmd->args[i], cmd);
+		j = find_variable(cmd->args[i], cmd);
 		i++;
 	}
+	// return (j);
 }

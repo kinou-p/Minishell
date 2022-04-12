@@ -22,7 +22,7 @@ void	print_env(t_cmd *cmd)
 		ft_putstr_fd("Minishell: env: '", 2);
 		ft_putstr_fd(cmd->current_s_cmd->args[1], 2);
 		ft_putstr_fd("': No such file or directory\n", 2);
-		// 127
+		// return (127);
 	}
 	else if (cmd->env)
 	{
@@ -33,10 +33,12 @@ void	print_env(t_cmd *cmd)
 			i++;
 		}
 	}
+	// return (0);
 }
 
 void	ft_pwd(t_s_cmd *cmd)
 {
+	(void)cmd;
 	int	i;
 	char p[1024];
 	char *str;
@@ -45,9 +47,10 @@ void	ft_pwd(t_s_cmd *cmd)
 	str = getcwd(p, sizeof(p));
 	if (!str)
 	{
-		cmd->big_cmd->err_var = 1;
 		ft_putstr_fd("Minishell: pwd: Not found\n", 2);
+		// return (1);
 	}
 	else
 		ft_putendl_fd(p, 1);
+	// return (0);
 }

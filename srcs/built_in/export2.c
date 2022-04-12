@@ -27,21 +27,17 @@ void	sort_tab(char **av)
 	int x;
 
 	i = 0;
-	// if (ac > 1)
-	// {
-		while (av[i])
+	while (av[i])
+	{
+		x = i;
+		while (av[x])
 		{
-			x = i;
-			while (av[x])
-			{
-				if (ft_strcmp(av[i], av[x]) > 0)
-					ft_swap(&av[i], &av[x]);
-				x++;
-			}
-			i++;
+			if (ft_strcmp(av[i], av[x]) > 0)
+				ft_swap(&av[i], &av[x]);
+			x++;
 		}
-	// }
-	// return (av);
+		i++;
+	}
 }
 
 void	print_export(char *tmp)
@@ -66,7 +62,6 @@ void	print_export(char *tmp)
 void	lone_export(t_s_cmd *cmd)
 {
 	char	**tmp;
-
 	int i;
 
 	i = 0;
