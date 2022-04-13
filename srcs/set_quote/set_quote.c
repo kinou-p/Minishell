@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/13 01:27:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/13 02:12:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,14 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	i = *index + 1;
 	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_'))
 		i++;
-	swap = ft_substr(cmd, *index + 1, i - *index);
+	swap = ft_substr(cmd, *index + 1, i - *index - 1);
 	//printf("swap= -%s-\n", swap);
 	var = get_var(big_cmd->env, swap);
+	//printf("var -%s-\n", var);
 	swap2 = ft_strdup(cmd + i);
 	cmd[*index] = 0;
 	ret = ft_strjoin(var, 0);
+	*index += ft_strlen(var) - 1;
 	free(var);
 	var = ret;
 	ret = ft_strjoin(ret, swap2);
@@ -180,8 +182,12 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 			{
 				while (cmd[i] != '"')
 				{	
-					if (cmd[i++] == '$')
+					if (cmd[i] == '$')
+					{
 						cmd = change_var(big_cmd, cmd, &i);	
+						//printf("i= %d et cmd= -%s-\n", i, cmd);
+					}
+					i++;
 				}
 				cmd = del_char(cmd, &i);
 			}
