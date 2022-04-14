@@ -107,9 +107,12 @@ void	init_s_cmd(t_s_cmd *cmd, char **env);
 int		tab_len(char **tab);
 int		find_len(char *input, int i, char c);
 void	lone_export(t_s_cmd *cmd);
-int	find_variable(char *variable, t_s_cmd *cmd);
+int		find_variable(char *variable, t_s_cmd *cmd);
 int		find_it(char **str, char *s);
 int		check_variable(char *variable);
+int		cd_error_simple(char *str, int i);
+int		msg_error(char *cmd, char *entry, char *error, int i);
+int		size_path(char **str);
 
 //real builtin
 void	print_env(t_cmd *cmd);

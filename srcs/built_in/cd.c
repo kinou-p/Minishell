@@ -112,38 +112,52 @@ void	reboot_pwd(t_s_cmd *cmd, int i)
 	free(str);
 }
 
+void	check_home(t_s_cmd *cmd, char *p)
+{
+	int home;
+	int len_home;
+	int old_pwd;
+	int pwd;
+
+	home = find_it(cmd->big_cmd->env, "HOME");
+	len_home = ft_strlen(cmd->big_cmd->env[home]);
+	old_pwd = find_it(cmd->big_cmd->env, "OLDPWD");
+	pwd = find_it(cmd->big_cmd->env, "PWD");
+
+	p = ft_substr(cmd->big_cmd->env[home], 5, ft_strlen(cmd->big_cmd->env[len_home]));
+	if (chdir(p) == 0)
+		if (find_it(cmd->big_cmd->env, "PWD") != -1)
+		{
+			cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
+			cmd->big_cmd->env[pwd] = ft_strjoin("PWD=", p);
+		}
+	free(p);
+}
+
 void	open_directory(t_s_cmd *cmd)
 {
 	char **str;
+	char *p;
 	int j;
 
+	p = NULL;
 	if (find_it(cmd->big_cmd->env, "PWD") != -1)
-	{
-		str = ft_split(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], '/');
-		j = double_size(str);
-		free_double(str);
-	}
+		j = size_path(cmd->big_cmd->env);
 	if (cmd->nb_args > 2)
 	{
-		printf("Minishell: cd: too many arguments\n");
-		// return (1);
+		ft_putstr_fd("Minishell: cd: too many arguments\n", 2);
+		return ;
+		// return (cd_erreur("Minishell: cd: too many arguments", 1));
 	}
 	if (!cmd->args[1])
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
-			printf("Minishell: cd: HOME not set\n");
-			cmd->big_cmd->err_var = 1;
-			// return (1);
+			ft_putstr_fd("Minishell: cd: HOME not set", 2);
+			return ;
+			// return (cd_erreur("Minishell: cd: HOME not set", 1));
 		}
-			char *p = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")], 5, ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "HOME")]));
-			if (chdir(p) == 0)
-				if (find_it(cmd->big_cmd->env, "PWD") != -1)
-				{
-					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "OLDPWD")] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
-					cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strjoin("PWD=", p);
-				}
-			free(p);
+		check_home(cmd, p);
 	}
 	if (tab_len(cmd->args) == 2)
 	{
@@ -156,10 +170,11 @@ void	open_directory(t_s_cmd *cmd)
 		}
 		else
 		{
+			// return (msg_error("Minishell: cd: ", cmd->args[1], ": No such directory\n", 1));
 			ft_putstr_fd("Minishell: cd: ", 2);
 			ft_putstr_fd(cmd->args[1], 2);
 			ft_putstr_fd(": No such directory\n", 2);
-			// return (1);
+			return ;//(1);
 		}
 	}
 }
