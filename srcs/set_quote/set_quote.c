@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/13 02:19:46 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 12:31:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,20 @@ char	*del_char(char *str, int *index)
 	return (str);
 }
 
-char	*get_var(char **env, char *var_name)
+char	*get_var(t_cmd	*cmd, char *var_name)
 {
 	char	*line;
 	char	**split_line;
 	int		index;
 
 	line = 0;
-	index = find_it(env, var_name);
+	if (!ft_strcmp(var_name, "?"))
+		return (ft_itoa(cmd->err_var));
+	printf("var_name -%s-\n", var_name);
+	index = find_it(cmd->env, var_name);
 	if (index >= 0)
 	{
-		line = env[index];
+		line = cmd->env[index];
 		split_line = ft_split(line, '=');
 		if (split_line[1])
 			line = ft_strdup(split_line[1]);
@@ -135,11 +138,11 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	char	*var;
 	
 	i = *index + 1;
-	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_'))
+	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_' || cmd[i] == '?'))
 		i++;
 	swap = ft_substr(cmd, *index + 1, i - *index - 1);
 	//printf("swap= -%s-\n", swap);
-	var = get_var(big_cmd->env, swap);
+	var = get_var(big_cmd, swap);
 	//printf("var -%s-\n", var);
 	swap2 = ft_strdup(cmd + i);
 	cmd[*index] = 0;
