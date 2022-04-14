@@ -35,19 +35,19 @@ int    find_it(char **str, char *s)
 	return (i);
 }
 
-int	 cd_error_simple(char *str, int i)
+int	 cd_error(t_s_cmd *cmd, char *str, int i)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
-	return (i);
+	return (check_return(cmd, i));
 }
 
-int msg_error(char *cmd, char *entry, char *error, int i)
+int msg_error(t_s_cmd *cmd, char *cm, char *entry, char *error, int i)
 {
-	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(cm, 2);
 	ft_putstr_fd(entry, 2);
 	ft_putstr_fd(error, 2);
-	return (i);
+	return (check_return(cmd, i));
 }
 
 int	size_path(char **str)
@@ -61,4 +61,15 @@ int	size_path(char **str)
 	j = double_size(s);
 	free_double(s);
 	return (j);
+}
+
+int		check_return(t_s_cmd *cmd, int var)
+{
+	if (cmd->big_cmd->current_s_cmd->child)
+	{
+		cmd->big_cmd->err_var = var;
+		return (var);
+	}
+	else
+		exit(var);
 }
