@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/14 10:58:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 12:32:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ t_cmd	*set_cmd(char *input, char **env)
 	if (cmd)
 	{
 		cmd->current_s_cmd = cmd->s_cmds[0];//set first s_cmd
+		cmd->err_var = 0;
 		return (cmd);
 	}
 	return (0);
