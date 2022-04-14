@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/11 17:49:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 11:27:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	wait_exit(t_cmd *cmd)
 			else if (WIFSIGNALED(status))
 			{
 				cmd->err_var = WTERMSIG(status);
-				if (cmd->err_var == 2)
-					ft_putstr_fd("\b\b\b\b\b", 1);
+				//if (cmd->err_var == 2)
+				ft_putstr_fd("\b\b\b\b\b", 1);
 			}
 			i++;
         }

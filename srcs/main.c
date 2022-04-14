@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/13 00:09:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:35:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 void crtl_c(int num)
 {
-	int tmpin;
-
-	tmpin = dup(0);
 	num = 0;
-	
-	close(0);
-	dup2(tmpin, 0);
-	close(tmpin);
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	//ft_putstr_fd("test\n", 0);
 }
 
 void	sig_quit(int num)

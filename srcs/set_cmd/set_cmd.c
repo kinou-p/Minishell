@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/13 01:28:18 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:58:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 	s_cmd->outfile = 0;
 	//printf("before redirect\n");
 	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
+	if (!line)
+		return (0);
 	split_line = ft_split_with_quote(line, ' ');
 	//parse_quote(cmd);
 	//print_double_fd(split_line, 0);
@@ -67,7 +69,6 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		cmd->s_cmds[i] = set_s_cmd(cmds[i], i);
 		if (!cmd->s_cmds[i])
 		{
-			printf("invalid command\n");
 			free_cmd(cmd);
 			return (0);
 		}
@@ -104,6 +105,8 @@ t_cmd	*set_cmd(char *input, char **env)
 	//cmd->err_var = 0;
 	cmd->nb_s_cmd = double_size(cmds);
 	cmd = split_cmd(cmd, cmds); //split each cmd into args in s_cmd
+	if (!cmd)
+		return (0);
 	parse_quote(cmd);
 	//printf("after parse quote -%s-\n", cmd->s_cmds[0]->cmd);
 	free(cmds);

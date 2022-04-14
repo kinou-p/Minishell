@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/12 04:29:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/14 11:28:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	next_space(char *str, int i)
 {
-	i++;
+	//i++;
 	while (str[i] == ' ')
 		i++;
 	return (str[i]);
@@ -49,7 +49,7 @@ char	*get_word(char *str, int start)
 	while (new[i] && new[i] != ' ' && new[i] != '>' && new[i] != '<')
 		i++;
 	new[i] = 0;
-	printf("get word= %s\n", new);
+	//printf("get word= %s\n", new);
 	return (new);
 }
 
@@ -75,6 +75,7 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
 	cmd->infile = get_word(line, word_index);
+	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -95,6 +96,7 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
 	cmd->outfile = get_word(line, index);
+	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -106,11 +108,11 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 	char	next;
 
 	i = index;
-	next = next_space(line, i);
+	next = next_space(line, i + 1);
 	if (line[i + 1] == '<')
 	{
 		cmd->in_type = 1;
-		next = next_space(line, i + 1);
+		next = next_space(line, i + 2);
 	}
 	else
 		cmd->in_type = 0;
@@ -126,11 +128,11 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index)
 	char	next;
 
 	i = index;
-	next = next_space(line, i);
+	next = next_space(line, i + 1);
 	if (line[i + 1] == '>')
 	{
 		cmd->in_type = 1;
-		next = next_space(line, i + 1);
+		next = next_space(line, i + 2);
 	}
 	else
 		cmd->in_type = 0;
@@ -178,6 +180,11 @@ char	**add_line(char **tab, char *line)
 	return(ret);
 }
 
+/*void	del_heredoc()
+{
+	
+}*/
+
 char	*set_heredoc(int index, char **in)
 {
 	char	*nbr_file;
@@ -203,30 +210,71 @@ char	*set_heredoc(int index, char **in)
 	return (file_name);
 }
 
-void	wait_prompt(t_s_cmd *cmd, int index)
+void	sig_heredoc(int num)
+{
+	num = 0;
+	struct	sigaction base;
+	
+	base.sa_handler = &crtl_c;
+	base.sa_flags = 0;
+	//printf("sig_heredoc\n");
+	if (sigaction(SIGINT, &base, 0) == -1)
+	{
+		printf("sigaction error2\n");
+		return ;
+	}
+}
+
+int	wait_prompt(t_s_cmd *cmd, int index)
 {
 	char	*input;
+	int		i;
 	char	**history;
+	char	*in;
+	char	*dup;
+	struct	sigaction test;
+	
 
+	test.sa_handler = &sig_heredoc;
+	test.sa_flags = 0;
+	
+
+	in = ft_strjoin(cmd->infile, "\n");
+	free(cmd->infile);
+	cmd->infile = 0;
+	if (sigaction(SIGINT, &test, 0) == -1)
+	{
+		printf("sigaction error\n");
+		exit(1);
+	}
+	//printf("wait_prompt\n");
 	history = 0;
 	input = 0;
-	while (ft_strcmp(input, cmd->infile))
+	i = 0;
+	while (i == 0 || (input && ft_strlen(input) && ft_strcmp(input, in)))
 	{
+		i = 1;
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
 		//input = readline("");
-		printf("input= %s\n", input);
+		//printf("input= -%s-", input);
 		if (!input)
-			return ;
-		input[ft_strlen(input) - 1] = 0;
-		if (ft_strcmp(input, cmd->infile))
-			history = add_line(history, input);
+			return (0);
+		//input[ft_strlen(input) - 1] = 0;
+		if (ft_strcmp(input, in))
+		{
+			dup = ft_strdup(input);
+			dup[ft_strlen(input) - 1] = 0;
+			dup = set_var(cmd->big_cmd, dup);
+			history = add_line(history, dup);
+		}
 	}
 	free(input);
-	free(cmd->infile);
-	cmd->infile = 0;//option?
+	//free(cmd->infile);
+	//cmd->infile = 0;//option?
 	cmd->infile = set_heredoc(index, history);
 	cmd->in_type = 0;
+	return (1);
 }
 
 char	*set_redirection(t_s_cmd *cmd, char *line, int index)
@@ -243,7 +291,10 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 			{
 				line = ft_input(line, cmd, i);
 				if (cmd->in_type == 1)
-					wait_prompt(cmd, index);
+				{
+					if (!wait_prompt(cmd, index))
+						return (0);
+				}
 				i = 0;
 			}
 		}
