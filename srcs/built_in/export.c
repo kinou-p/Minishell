@@ -59,7 +59,8 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 		ft_putstr_fd("Minishell: export: `", 2);
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
+		return (check_return(cmd, 1));
+
 	}
 	dest = ft_strdup(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
@@ -67,17 +68,18 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 	{
 		cmd->big_cmd->env[find_it(cmd->big_cmd->env, unset)] = dest;
 		free(unset);
-		return (0);
+		return (check_return(cmd, 0));
 	}
 	register_env(cmd, dest);
 	if (dest)
 		free(dest);
 	if (unset)
 		free(unset);
-	return (0);
+	return (check_return(cmd, 0));
+
 }
 
-void	ft_export(t_s_cmd *cmd)
+int	ft_export(t_s_cmd *cmd)
 {
 	int	i;
 	int j;
@@ -92,4 +94,5 @@ void	ft_export(t_s_cmd *cmd)
 			j = ft_export_variable(cmd, cmd->args[i]);
 			i++;
 		}
+	return (j);
 }

@@ -14,8 +14,8 @@
 
 void	unset_variable(t_s_cmd *cmd, int i)
 {
-	int	a;
-	int	b;
+	int		a;
+	int		b;
 	char	**tmp;
 
 	a = 0;
@@ -39,12 +39,6 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	if (!cmd->big_cmd->env)
 		printf("no env\n");
 	cmd->big_cmd->env = ft_dup_double(tmp);
-	// while (tmp[a])
-	// {
-	// 	cmd->big_cmd->env[a] = ft_strdup(tmp[a]);
-	// 	a++;
-	// }
-	// cmd->big_cmd->env[a] = NULL;
 	if (tmp)
 		free_double(tmp);
 }
@@ -61,15 +55,16 @@ int	find_variable(char *variable, t_s_cmd *cmd)
 		ft_putstr_fd("Minishell: unset: `", 2);
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (2);
+		return (check_return(cmd, 2));
+
 	}
 	if (i == tab_len(cmd->big_cmd->env))
-		return (2);
+		return (check_return(cmd, 2));
 	unset_variable(cmd, i);
-	return (0);
+	return (check_return(cmd, 1));
 }
 
-void	ft_unset(t_s_cmd *cmd)
+int	ft_unset(t_s_cmd *cmd)
 {
 	int	i;
 	int	j;
@@ -81,5 +76,5 @@ void	ft_unset(t_s_cmd *cmd)
 		j = find_variable(cmd->args[i], cmd);
 		i++;
 	}
-	// return (j);
+	return (j);
 }

@@ -134,7 +134,7 @@ void	check_home(t_s_cmd *cmd, char *p)
 	free(p);
 }
 
-void	open_directory(t_s_cmd *cmd)
+int	open_directory(t_s_cmd *cmd)
 {
 	char *p;
 	int j;
@@ -144,17 +144,17 @@ void	open_directory(t_s_cmd *cmd)
 		j = size_path(cmd->big_cmd->env);
 	if (cmd->nb_args > 2)
 	{
-		ft_putstr_fd("Minishell: cd: too many arguments\n", 2);
-		return ;
-		// return (cd_erreur("Minishell: cd: too many arguments", 1));
+		// ft_putstr_fd("Minishell: cd: too many arguments\n", 2);
+		// return ;
+		return (cd_error(cmd, "Minishell: cd: too many arguments", 1));
 	}
 	if (!cmd->args[1])
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
-			ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
-			return ;
-			// return (cd_erreur("Minishell: cd: HOME not set", 1));
+			// ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
+			// return ;
+			return (cd_error(cmd, "Minishell: cd: HOME not set", 1));
 		}
 		check_home(cmd, p);
 	}
@@ -169,12 +169,13 @@ void	open_directory(t_s_cmd *cmd)
 		}
 		else
 		{
-			// return (msg_error("Minishell: cd: ", cmd->args[1], ": No such directory\n", 1));
-			ft_putstr_fd("Minishell: cd: ", 2);
-			ft_putstr_fd(cmd->args[1], 2);
-			ft_putstr_fd(": No such directory\n", 2);
-			return ;//(1);
+			return (msg_error(cmd, "Minishell: cd: ", cmd->args[1], ": No such directory\n", 1));
+			// ft_putstr_fd("Minishell: cd: ", 2);
+			// ft_putstr_fd(cmd->args[1], 2);
+			// ft_putstr_fd(": No such directory\n", 2);
+			// return ;//(1);
 		}
 	}
+	return (check_return(cmd, 0));
 }
 

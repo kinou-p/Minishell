@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	print_env(t_cmd *cmd)
+int	print_env(t_cmd *cmd)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ void	print_env(t_cmd *cmd)
 		ft_putstr_fd("Minishell: env: '", 2);
 		ft_putstr_fd(cmd->current_s_cmd->args[1], 2);
 		ft_putstr_fd("': No such file or directory\n", 2);
-		// return (127);
+		return (check_return(cmd, 127));
 	}
 	else if (cmd->env)
 	{
@@ -33,10 +33,10 @@ void	print_env(t_cmd *cmd)
 			i++;
 		}
 	}
-	// return (0);
+	return (check_return(cmd, 0));
 }
 
-void	ft_pwd(t_s_cmd *cmd)
+int	ft_pwd(t_s_cmd *cmd)
 {
 	(void)cmd;
 	int	i;
@@ -48,9 +48,9 @@ void	ft_pwd(t_s_cmd *cmd)
 	if (!str)
 	{
 		ft_putstr_fd("Minishell: pwd: Not found\n", 2);
-		// return (1);
+		return (check_return(cmd, 1));
 	}
 	else
 		ft_putendl_fd(p, 1);
-	// return (0);
+	return (check_return(cmd, 0));
 }
