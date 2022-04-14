@@ -58,7 +58,6 @@ typedef struct	s_command {
 	int					err_var;
 	struct	s_simple	*current_s_cmd;
 	char				**path;
-	int					pid;
 }						t_cmd;
 
 //main.c
