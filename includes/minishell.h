@@ -58,6 +58,7 @@ typedef struct	s_command {
 	int					err_var;
 	struct	s_simple	*current_s_cmd;
 	char				**path;
+	int					pid;
 }						t_cmd;
 
 //main.c
@@ -113,6 +114,7 @@ int		check_variable(char *variable);
 int		cd_error_simple(char *str, int i);
 int		msg_error(char *cmd, char *entry, char *error, int i);
 int		size_path(char **str);
+int		check_return(t_s_cmd *cmd, int var);
 
 //real builtin
 void	print_env(t_cmd *cmd);
