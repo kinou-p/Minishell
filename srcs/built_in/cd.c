@@ -136,7 +136,6 @@ void	check_home(t_s_cmd *cmd, char *p)
 
 void	open_directory(t_s_cmd *cmd)
 {
-	char **str;
 	char *p;
 	int j;
 
@@ -153,7 +152,7 @@ void	open_directory(t_s_cmd *cmd)
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 		{
-			ft_putstr_fd("Minishell: cd: HOME not set", 2);
+			ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
 			return ;
 			// return (cd_erreur("Minishell: cd: HOME not set", 1));
 		}
