@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/14 11:27:29 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 01:10:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,22 @@ int	wait_exit(t_cmd *cmd)
             {
 				close(cmd->s_cmds[i]->fd[0]);
 				close(cmd->s_cmds[i]->fd[1]);
-            }
 			if (WIFEXITED(status))
 			{
-				if (!cmd->err_var)
-					cmd->err_var = WEXITSTATUS(status);
+				//printf("return normally cmd = -%s-\n", cmd->s_cmds[i]->cmd);
+				//if (!cmd->err_var)
+				cmd->err_var = WEXITSTATUS(status);
+				//printf("err_var= %d\n", cmd->err_var);
 				//printf("code= %d\n", cmd->err_var);
 			}
 			else if (WIFSIGNALED(status))
 			{
-				cmd->err_var = WTERMSIG(status);
+				//printf("return by signal cmd = -%s-\n", cmd->s_cmds[i]->cmd);
+				if (WTERMSIG(status) != 13)
+					cmd->err_var = WTERMSIG(status);
 				//if (cmd->err_var == 2)
 				ft_putstr_fd("\b\b\b\b\b", 1);
+			}
 			}
 			i++;
         }
@@ -120,6 +124,7 @@ void	execute(t_cmd *cmd, char **env)
 		fdin=dup(tmpin);
 	while(cmd->current_s_cmd)
 	{
+		cmd->current_s_cmd->child = 0;
 		fdout = 0;
 		if (i > 0 && cmd->current_s_cmd->infile)
 		{

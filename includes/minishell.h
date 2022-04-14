@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/14 10:30:52 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 00:20:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@
 // Describes a simple command and arguments
 typedef struct	s_simple {
 	struct s_command	*big_cmd;
-	int		fd[2];
-	int		pipe[2];
-	int		last;
-	int 	last_pipe[2];
-	int		child;
-	int		nb_args;
-	char	*infile;
-	int		in_type;
-	int		out_type;
-	char	*outfile;
-	char	**args;
-	char	*cmd;
+	int					fd[2];
+	int					pipe[2];
+	int					last;
+	int 				last_pipe[2];
+	int					child;
+	int					nb_args;
+	char				*infile;
+	int					in_type;
+	int					out_type;
+	char				*outfile;
+	char				**args;
+	char				*cmd;
 }				t_s_cmd;
 
 // Describes a complete command with the multiple pipes if any
@@ -86,6 +86,7 @@ char	**ft_split_with_quote(char const *s, char c);
 
 //signals
 void crtl_c(int num);
+void	sig_heredoc(int num);
 
 //redirection.c set redirection and input good
 char	*set_redirection(t_s_cmd *cmd, char *line, int index);
@@ -95,7 +96,7 @@ char	next_space(char *str, int i);
 int		parse_quote(t_cmd *cmd);
 char	*get_str(char *str, int start, int end);
 char	*cut_str(char *str, int start, int end);
-int	double_size(char **tab);
+int		double_size(char **tab);
 void	print_double_fd(char **tab, int fd);
  void	free_double(char **tab);
 
