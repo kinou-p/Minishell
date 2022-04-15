@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/14 12:31:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 02:41:29 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*get_var(t_cmd	*cmd, char *var_name)
 	line = 0;
 	if (!ft_strcmp(var_name, "?"))
 		return (ft_itoa(cmd->err_var));
-	printf("var_name -%s-\n", var_name);
+	//printf("var_name -%s-\n", var_name);
 	index = find_it(cmd->env, var_name);
 	if (index >= 0)
 	{
