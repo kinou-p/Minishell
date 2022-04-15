@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/12 23:31:57 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/15 05:49:45 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ OBJS	= ${SRCS:.c=.o}
 CC		= clang
 CFLAGS	= -Wall -Wextra -g
 LIB		= -lreadline
-#CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -rf
 LIBFT	= ./libft
 

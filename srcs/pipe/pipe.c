@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 02:37:34 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 06:29:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
     }
 	else if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 		cmd->err_var = 127;
+	else
+		cmd->err_var = 126;
 }
 
 void	execute(t_cmd *cmd, char **env)

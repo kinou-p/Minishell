@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 00:13:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 06:01:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	print_prompt(char **path)
 				free_cmd(cmd);
 				cmd = 0;
 			}
+			else
+				ft_putstr_fd("Minishell: error while parsing command\n", 2);
 		}
 		free(input);
 	}
