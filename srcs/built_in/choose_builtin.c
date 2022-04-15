@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:12:52 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 21:24:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 12:35:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(char *cmd)
 {
+	if (!ft_strcmp(cmd, "exit"))
+		return (1);
 	if (!ft_strcmp(cmd, "env"))
 		return (1);
 	if (!ft_strcmp(cmd, "export"))
@@ -26,11 +28,13 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (!ft_strcmp(cmd, "pwd"))
 		return (1);
-	return (0);
+	return (0); 
 }
 
 void	call_builtin(t_cmd *cmd)
 {
+	if (!ft_strcmp(cmd->current_s_cmd->cmd, "exit"))
+		ft_exit(cmd->current_s_cmd);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "env"))
 		print_env(cmd);
 	if (!ft_strcmp(cmd->current_s_cmd->cmd, "export"))

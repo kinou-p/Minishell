@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 00:20:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 12:33:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_command(char **exec, char **env);
 
 //free_cmd
 void free_cmd(t_cmd *cmd);
-void exit_shell(t_cmd *cmd);
+void exit_shell(t_cmd *cmd, int ret);
 
 //set_quote.c
 char	*set_var(t_cmd *big_cmd, char *cmd);
@@ -117,6 +117,7 @@ int		size_path(char **str);
 int		check_return(t_s_cmd *cmd, int var);
 
 //real builtin
+void 	ft_exit(t_s_cmd *cmd);
 int		print_env(t_cmd *cmd);
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);

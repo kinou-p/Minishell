@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 06:01:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/15 12:34:32 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	print_prompt(char **path)
 	{
 		i = 0;
 		input = readline("\033[1;31m~$ \033[0m");
-		if (!input)
-			exit_shell(cmd);
+		/*if (!input)
+			exit_shell(cmd);*/
 		add_history(input);	
-		if (!ft_strcmp("exit", input) && input)
+		/*if (!ft_strcmp("exit", input) && input)
 		{
 			free(input);
 			exit_shell(cmd);
-		}
+		}*/
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
 			cmd = set_cmd(input, path);
