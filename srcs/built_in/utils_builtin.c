@@ -65,7 +65,7 @@ int	size_path(char **str)
 
 int		check_return(t_s_cmd *cmd, int var)
 {
-	if (cmd->big_cmd->current_s_cmd->child)
+	if (cmd->child)
 	{
 		cmd->big_cmd->err_var = var;
 		return (var);
