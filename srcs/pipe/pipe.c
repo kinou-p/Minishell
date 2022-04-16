@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 06:29:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 04:34:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 			ft_putstr_fd("Minishell: command not found: ", 2);
 			ft_putstr_fd(cmd->current_s_cmd->cmd + 1, 2);
 			ft_putstr_fd("\n", 2);
-			exit(0);
+			exit(127);
 		}
         if (-1 == execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, env))
 			ft_putstr_fd("Minishell: exec error\n", 2);
-        exit(0);
+        exit(126);
     }
 	else if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 		cmd->err_var = 127;
@@ -112,6 +112,7 @@ void	execute(t_cmd *cmd, char **env)
 	int tmpout;
 	int i;
 
+	//printf("exec\n");
 	i = 0;
 	fdpipe[1] = -1;
 	tmpin = dup(0);
@@ -120,7 +121,7 @@ void	execute(t_cmd *cmd, char **env)
 	{
 		fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 		if (fdin < 0)
-			printf("Minishell: open error\n");
+			printf("Minishell: open : bad file descriptor\n");
 	}
 	else
 		fdin=dup(tmpin);
@@ -132,7 +133,7 @@ void	execute(t_cmd *cmd, char **env)
 		{
 			fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 			if (fdin < 0)
-				printf("Minishell: open error\n");
+				printf("Minishell: open : bad file descriptor\n");
 		}
 		if (i == cmd->nb_s_cmd - 1)
 		{

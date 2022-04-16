@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 00:13:27 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 04:33:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,22 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 		i++;
 	cmd->infile = get_word(line, word_index);
 	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
+	i = open(cmd->infile, O_RDONLY);
+	if (i == -1)
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(cmd->infile, 2);
+		ft_putstr_fd(": no such file\n", 2);
+		return (0);
+	}
+	if (access(cmd->infile, R_OK))
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(cmd->infile, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (0);
+	}
+	close(i);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -96,7 +112,7 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
 	cmd->outfile = get_word(line, index);
-	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
+	cmd->outfile = set_var(cmd->big_cmd, cmd->outfile);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -117,8 +133,10 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 	else
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
-		error_redirect("problem in ft_input");
+		return (0);
 	line = set_input(line, cmd, i);
+	if (!line)
+		return (0);
 	return (line);
 }
 
@@ -137,21 +155,28 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index)
 	else
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
-		error_redirect("problem in ft_output");
+		return (0);
 	line = set_output(line, cmd, i);
 	return (line);
 }
 
-void	set_file(char *file)
+int	set_file(char *file)
 {
 	int fd;
 
-	printf("setfile= %s\n", file);
+	//printf("setfile= %s\n", file);
 	fd = open(file, O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
-		error_redirect("can't set file");
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (0);
+	}
+	//error_redirect("can't set file");
 	if (fd)
 		close(fd);
+	return (1);
 }
 
 char	**add_line(char **tab, char *line)
@@ -285,11 +310,14 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 //	printf("enter redirection\n");
 	while (line[i])
 	{
+		//printf("line[i] i= %d\n", i);
 		if(line[i] == '<')
 		{
 			if (!is_in_quote(line, i))
 			{
 				line = ft_input(line, cmd, i);
+				if (!line)
+					return (0);
 				if (cmd->in_type == 1)
 				{
 					if (!wait_prompt(cmd, index))
@@ -304,11 +332,14 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 			{
 				line = ft_output(line, cmd, i);
 				//if (cmd->in_type == 0)
-				set_file(cmd->outfile);
+				if (!set_file(cmd->outfile))
+					return (0);
 				i = 0;
 			}
 		}
-		else
+		if ((line[i] == '<' || line[i] == '>') && is_in_quote(line, i))
+			i++;
+		else if (line[i] != '<' && line[i] != '>')
 			i++;
 	}
 	return(line);

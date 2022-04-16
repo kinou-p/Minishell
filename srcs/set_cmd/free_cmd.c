@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 02:41:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 04:43:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->s_cmds[i])
+	while (cmd->s_cmds && cmd->s_cmds[i])
 	{
 		free_double(cmd->s_cmds[i]->args);
 		if (cmd->s_cmds[i]->cmd)
