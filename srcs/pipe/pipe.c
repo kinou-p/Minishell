@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 06:29:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:14:43 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,23 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 			ft_putstr_fd("Minishell: command not found: ", 2);
 			ft_putstr_fd(cmd->current_s_cmd->cmd + 1, 2);
 			ft_putstr_fd("\n", 2);
-			exit(0);
+			exit(127);
 		}
         if (-1 == execve(cmd->current_s_cmd->cmd, cmd->current_s_cmd->args, env))
 			ft_putstr_fd("Minishell: exec error\n", 2);
-        exit(0);
+        exit(126);
     }
 	else if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 		cmd->err_var = 127;
 	else
 		cmd->err_var = 126;
+	/*if (cmd->current_s_cmd->child)
+	{
+		if (cmd->current_s_cmd->infile)
+			close(cmd->current_s_cmd->infile);
+		if (cmd->current_s_cmd->outfile)
+			close(cmd->current_s_cmd->outfile);
+	}*/
 }
 
 void	execute(t_cmd *cmd, char **env)
@@ -108,31 +115,39 @@ void	execute(t_cmd *cmd, char **env)
 	int fdpipe[2];
 	int fdout;
 	int fdin;
-	int tmpin;
-	int tmpout;
+	int tmpin = -1;
+	int tmpout = -1;
 	int i;
+
+
 
 	i = 0;
 	fdpipe[1] = -1;
 	tmpin = dup(0);
 	tmpout = dup(1);
+	cmd->tmpin = tmpin;
+	cmd->tmpout = tmpout;
+	//printf("infile= %s\n", cmd->current_s_cmd->infile);
 	if (cmd->current_s_cmd->infile)
 	{
 		fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 		if (fdin < 0)
-			printf("Minishell: open error\n");
+			printf("Minishell: open : bad file descriptor\n");
 	}
 	else
-		fdin=dup(tmpin);
+		fdin = dup(tmpin);
 	while(cmd->current_s_cmd)
-	{
+	{	
+		if (i > 0)
+			close(fdout);
 		cmd->current_s_cmd->child = 1;
-		fdout = 0;
+		fdout = -1;
 		if (i > 0 && cmd->current_s_cmd->infile)
 		{
+			close(fdin);
 			fdin = open(cmd->current_s_cmd->infile, O_RDWR);
 			if (fdin < 0)
-				printf("Minishell: open error\n");
+				printf("Minishell: open : bad file descriptor\n");
 		}
 		if (i == cmd->nb_s_cmd - 1)
 		{
@@ -140,7 +155,7 @@ void	execute(t_cmd *cmd, char **env)
 			if (cmd->current_s_cmd->outfile)
 				fdout = open(cmd->current_s_cmd->outfile, O_RDWR | O_CREAT | O_APPEND, 0666);
 			else
-				fdout=dup(tmpout);
+				fdout = dup(tmpout);
 			cmd->current_s_cmd->fd[0] = fdin;
 			cmd->current_s_cmd->fd[1] = fdout;
 			if (i == 0 && is_builtin(cmd->current_s_cmd->cmd))
@@ -163,6 +178,7 @@ void	execute(t_cmd *cmd, char **env)
 			fdin=fdpipe[0];
 			exec_cmd(cmd, env, fdpipe);
 			close(cmd->current_s_cmd->fd[0]);
+			close(fdin);
 		}
 		if (fdpipe[1] > 0)
 			close(fdpipe[1]);
@@ -171,9 +187,13 @@ void	execute(t_cmd *cmd, char **env)
 		//printf("cmd->err_var= %d\n", cmd->err_var);
 	}
 	close_pipe(cmd);
-	wait_exit(cmd);
 	dup2(tmpin, 0);
-	dup2(tmpout, 1);
 	close(tmpin);
+	dup2(tmpout, 1);
 	close(tmpout);
+	wait_exit(cmd);
+	//close(tmpin);
+	//tmpin = -1;
+	//close(tmpout);
+	//tmpout = -1;
 }

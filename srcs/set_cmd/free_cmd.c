@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 02:41:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:13:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,19 @@ void exit_shell(t_cmd *cmd, int ret)
 	int i;
 	
 	i = 0;
-	if (cmd)
-		free_double(cmd->env);
+	//if (cmd)
+	//	free_double(cmd->env);
+	if (cmd->tmpin != -1)
+	{
+		dup2(cmd->tmpin, 0);
+		close(cmd->tmpin);
+	}
+	if (cmd->tmpout != -1)
+	{
+		dup2(cmd->tmpout, 1);
+		close(cmd->tmpout);
+	}
+	free_cmd(cmd);
 	clear_history();
 	//print_double_fd(cmd->s_cmds[0]->env, 1);
 	ft_putstr_fd("exit\n", 1);
@@ -33,7 +44,7 @@ void free_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->s_cmds[i])
+	while (cmd->s_cmds && cmd->s_cmds[i])
 	{
 		free_double(cmd->s_cmds[i]->args);
 		if (cmd->s_cmds[i]->cmd)
