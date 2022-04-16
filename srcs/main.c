@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 02:42:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:50:22 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	print_prompt(char **path)
 {
 	char	*input;
 	t_cmd	*cmd;
-	int		i;	
+	int		err_var;	
 	
 	input = 0;
-	i = 0;
+	err_var = 0;
 	cmd = 0;
 	while (1)
 	{
@@ -71,11 +71,12 @@ void	print_prompt(char **path)
 		}*/
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
-			cmd = set_cmd(input, path, i);
+			cmd = set_cmd(input, path, err_var);
 			if (cmd)
 			{
-				cmd->err_var = 0;
+				//cmd->err_var = 0;
 				execute(cmd, path);
+				err_var = cmd->err_var;
 				path = ft_dup_double(cmd->env);
 				free_cmd(cmd);
 				cmd = 0;
@@ -83,7 +84,6 @@ void	print_prompt(char **path)
 			else
 				ft_putstr_fd("Minishell: error while parsing command\n", 2);
 		}
-		i++;
 		free(input);
 	}
 }

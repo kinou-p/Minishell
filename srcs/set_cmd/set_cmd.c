@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 02:39:13 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:50:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	cmd->s_cmds = calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		return (0);
-	if (nb == 0)
-		cmd->err_var = 0;
+	cmd->err_var = nb;
 	cmd->path = 0;
 	//cmd->s_cmds[double_size(cmds)] = NULL;	
 	cmd->path = get_path(env);
