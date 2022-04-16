@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 04:33:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 11:03:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ char	*cut_str(char *str, int start, int end)
 	char	*swap;
 	char	*del;
 
+	swap = 0;
 	del = str;
-	swap = ft_strjoin(&str[end], 0);
+	if (str[end])
+		swap = ft_strjoin(&str[end], 0);
 	str[start] = 0;
 	str = ft_strjoin(str, swap);
 	free(del);
@@ -53,12 +55,6 @@ char	*get_word(char *str, int start)
 	return (new);
 }
 
-void	error_redirect(char *str)
-{
-	printf("error : %s\n", str);
-	exit(1);
-}
-
 char	*set_input(char *line, t_s_cmd *cmd, int index)
 {
 	int	i;
@@ -74,24 +70,18 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 		i++;
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
-	cmd->infile = get_word(line, word_index);
+	cmd->infile = get_word(line, index);
 	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
-	i = open(cmd->infile, O_RDONLY);
-	if (i == -1)
-	{
-		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(cmd->infile, 2);
-		ft_putstr_fd(": no such file\n", 2);
-		return (0);
-	}
 	if (access(cmd->infile, R_OK))
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(cmd->infile, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		if (access(cmd->infile, F_OK))
+			ft_putstr_fd(": no such file\n", 2);
+		else
+			ft_putstr_fd(": Permission denied\n", 2);
 		return (0);
 	}
-	close(i);
 	line = cut_str(line, index, i);
 	return (line);
 }
@@ -134,9 +124,11 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
 		return (0);
+	//printf("line bf set_input -%s-", line);
 	line = set_input(line, cmd, i);
 	if (!line)
 		return (0);
+	//printf("line -%s-\n", line);
 	return (line);
 }
 
@@ -157,6 +149,7 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index)
 	if (next == '<' || next == '>' || !next)
 		return (0);
 	line = set_output(line, cmd, i);
+	//printf("line -%s-\n", line);
 	return (line);
 }
 
@@ -242,6 +235,7 @@ void	sig_heredoc(int num)
 	
 	base.sa_handler = &crtl_c;
 	base.sa_flags = 0;
+	close(1);
 	//printf("sig_heredoc\n");
 	if (sigaction(SIGINT, &base, 0) == -1)
 	{
@@ -305,12 +299,13 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 {
 	int i;
-
-	i = 0;
+	
+	i= 0;
 //	printf("enter redirection\n");
 	while (line[i])
 	{
 		//printf("line[i] i= %d\n", i);
+		//printf("-%s-\n", line);
 		if(line[i] == '<')
 		{
 			if (!is_in_quote(line, i))
@@ -337,9 +332,9 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 				i = 0;
 			}
 		}
-		if ((line[i] == '<' || line[i] == '>') && is_in_quote(line, i))
+		if (line[i] && (line[i] == '<' || line[i] == '>') && is_in_quote(line, i))
 			i++;
-		else if (line[i] != '<' && line[i] != '>')
+		else if (line[i] && line[i] != '<' && line[i] != '>')
 			i++;
 	}
 	return(line);

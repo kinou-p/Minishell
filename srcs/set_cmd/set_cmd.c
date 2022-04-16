@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 04:33:32 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:11:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,12 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (0);
-	cmd->s_cmds = calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
+	cmd->s_cmds = ft_calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		//free(cmd);
 		return (0);
+	cmd->tmpin = -1;
+	cmd->tmpout = -1;
 	cmd->err_var = nb;	
 	cmd->path = get_path(env);
 	cmd->env = ft_dup_double(env);

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 02:39:21 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:10:54 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct	s_simple {
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
 typedef struct	s_command {
+	int					tmpin;
+	int					tmpout;
 	char				**env;
 	int					nb_s_cmd;
 	struct	s_simple	**s_cmds;
