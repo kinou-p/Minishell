@@ -19,9 +19,7 @@ int	print_env(t_cmd *cmd)
 	i = 0;
 	if (cmd->current_s_cmd->nb_args > 1)
 	{
-		ft_putstr_fd("Minishell: env: '", 2);
-		ft_putstr_fd(cmd->current_s_cmd->args[1], 2);
-		ft_putstr_fd("': No such file or directory\n", 2);
+		ft_putstr_fd("Minishell: env: too many arguments\n", 2);
 		return (check_return(cmd->current_s_cmd, 127));
 	}
 	else if (cmd->env)
@@ -38,11 +36,9 @@ int	print_env(t_cmd *cmd)
 
 int	ft_pwd(t_s_cmd *cmd)
 {
-	int	i;
 	char p[1024];
 	char *str;
 
-	i = 1;
 	str = getcwd(p, sizeof(p));
 	if (!str)
 	{
