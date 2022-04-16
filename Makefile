@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/15 12:36:24 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/16 02:25:09 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRCS	= srcs/main.c\
 		srcs/set_cmd/set_cmd.c\
 		srcs/set_redirection/redirection.c\
 		srcs/set_redirection/utils.c\
-		srcs/built_in/exit.c\
 		srcs/built_in/unset.c\
 		srcs/built_in/cd.c\
 		srcs/built_in/echo.c\
@@ -27,6 +26,7 @@ SRCS	= srcs/main.c\
 		srcs/built_in/init_builtin.c\
 		srcs/built_in/export2.c\
 		srcs/built_in/env.c\
+		srcs/built_in/exit.c\
 		srcs/set_quote/split_with_quote.c\
 		srcs/set_quote/set_quote.c\
 		srcs/built_in/choose_builtin.c

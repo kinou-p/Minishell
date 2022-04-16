@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 12:34:32 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:42:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,9 @@ void	print_prompt(char **path)
 	cmd = 0;
 	while (1)
 	{
-		i = 0;
 		input = readline("\033[1;31m~$ \033[0m");
-		/*if (!input)
-			exit_shell(cmd);*/
+		if (!input)
+			exit_shell(cmd, 0);
 		add_history(input);	
 		/*if (!ft_strcmp("exit", input) && input)
 		{
@@ -72,7 +71,7 @@ void	print_prompt(char **path)
 		}*/
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
-			cmd = set_cmd(input, path);
+			cmd = set_cmd(input, path, i);
 			if (cmd)
 			{
 				cmd->err_var = 0;
@@ -84,6 +83,7 @@ void	print_prompt(char **path)
 			else
 				ft_putstr_fd("Minishell: error while parsing command\n", 2);
 		}
+		i++;
 		free(input);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 06:00:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:39:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	is_pipe_good(char *str)
 	return (1);
 }
 
-t_cmd	*set_cmd(char *input, char **env)
+t_cmd	*set_cmd(char *input, char **env, int nb)
 {
 	t_cmd	*cmd;
 	char	**cmds;
@@ -115,9 +115,12 @@ t_cmd	*set_cmd(char *input, char **env)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (0);
+	//cmd->err_var = 0;
 	cmd->s_cmds = calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
 	if (!cmd->s_cmds)
 		return (0);
+	if (nb == 0)
+		cmd->err_var = 0;
 	cmd->path = 0;
 	//cmd->s_cmds[double_size(cmds)] = NULL;	
 	cmd->path = get_path(env);

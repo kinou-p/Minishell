@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/15 12:33:26 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:39:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**ft_dup_double(char **env);
 void	execute(t_cmd *cmd, char **env);
 
 //set_cmd.c
-t_cmd	*set_cmd(char *input, char **path);
+t_cmd	*set_cmd(char *input, char **path, int nb);
 
 //pipex_utils.c
 char	**get_path(char **env);
@@ -117,7 +117,7 @@ int		size_path(char **str);
 int		check_return(t_s_cmd *cmd, int var);
 
 //real builtin
-void 	ft_exit(t_s_cmd *cmd);
+void	ft_exit(t_s_cmd *cmd);
 int		print_env(t_cmd *cmd);
 void	ft_env(t_s_cmd *cmd, char **env);
 void	ft_exit(t_s_cmd *cmd);
