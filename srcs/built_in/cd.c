@@ -138,7 +138,8 @@ void	check_home(t_s_cmd *cmd, char *p)
 	if (chdir(p) == 0)
 		if (find_it(cmd->big_cmd->env, "PWD") != -1)
 		{
-			cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
+			if (find_it(cmd->big_cmd->env, "OLDPWD") != -1)
+				cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
 			cmd->big_cmd->env[pwd] = ft_strjoin("PWD=", p);
 		}
 	free(p);

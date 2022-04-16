@@ -49,7 +49,9 @@ void	print_export(char *tmp)
 	i = 0;
 	str1 = ft_substr(tmp, 0, find_len(tmp, i, '='));
 	i = find_len(tmp, 0, '=') + 1;
-	str2 = ft_substr(tmp, i, find_len(tmp, i, '\0'));
+	str2 = ft_substr(tmp, i, ft_strlen(tmp));
+
+	// str2 = ft_substr(tmp, i, find_len(tmp, i, '\0'));
 	printf("declare -x %s", str1);
 	if (next_space(str2, 0) != '\0')
 		printf("=\"%s\"", str2);
