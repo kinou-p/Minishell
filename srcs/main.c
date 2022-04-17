@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 13:54:16 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 02:13:41 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ int	main(int ac, char **av, char **path)
 {
 	char **env;
 
+	if (!isatty(0))
+	{
+		printf("Not today\n");
+		return (0);
+	}
 	env = ft_dup_double(path);
 	av = 0;
 	if (ac != 1)

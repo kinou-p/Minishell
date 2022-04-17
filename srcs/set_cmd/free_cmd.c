@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 16:13:46 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 02:11:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void exit_shell(t_cmd *cmd, int ret)
 		dup2(cmd->tmpout, 1);
 		close(cmd->tmpout);
 	}
+	if (cmd->current_s_cmd->fd[0] != -1)
+		close(cmd->current_s_cmd->fd[0]);
+	if (cmd->current_s_cmd->fd[1] != -1)
+		close(cmd->current_s_cmd->fd[1]);
 	free_cmd(cmd);
 	clear_history();
 	//print_double_fd(cmd->s_cmds[0]->env, 1);

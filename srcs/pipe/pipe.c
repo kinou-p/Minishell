@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 16:14:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 02:09:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,9 @@ void	execute(t_cmd *cmd, char **env)
 			fdin=fdpipe[0];
 			exec_cmd(cmd, env, fdpipe);
 			close(cmd->current_s_cmd->fd[0]);
-			close(fdin);
+			//close(fdin); //bad thing
 		}
-		if (fdpipe[1] > 0)
+		if (fdpipe[1] != -1)
 			close(fdpipe[1]);
 		i++;
 		cmd->current_s_cmd = cmd->s_cmds[i];
@@ -188,8 +188,8 @@ void	execute(t_cmd *cmd, char **env)
 	}
 	close_pipe(cmd);
 	dup2(tmpin, 0);
-	close(tmpin);
 	dup2(tmpout, 1);
+	close(tmpin);
 	close(tmpout);
 	wait_exit(cmd);
 	//close(tmpin);
