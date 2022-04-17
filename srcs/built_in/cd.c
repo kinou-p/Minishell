@@ -38,63 +38,73 @@ void	ft_ls(char *input)
 void	del_one(t_s_cmd *cmd)
 {
 	int	i;
+	int	j;
 	char *r;
 
-	if (find_it(cmd->big_cmd->env, "PWD"))
+	if (find_it(cmd->big_cmd->env, "PWD") != -1)
 	{
-
-	i = ft_strlen(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
-	while (cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")][i] != '/')
-		i--;
-	r = ft_substr(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], 0, i);
-	if (r)
-		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
-	else
-		cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup("PWD=/");
+		j = find_it(cmd->big_cmd->env, "PWD");
+		i = ft_strlen(cmd->big_cmd->env[j]);
+		while (cmd->big_cmd->env[j][i] && cmd->big_cmd->env[j][i] != '/')
+			i--;
+		r = ft_substr(cmd->big_cmd->env[j], 0, i);
+		free (cmd->big_cmd->env[j]);
+		if (r)
+			cmd->big_cmd->env[j] = ft_strdup(r);
+		else
+			cmd->big_cmd->env[j] = ft_strdup("PWD=/");
 
 	if (r)
 		free(r);
 	}
 }
 
-void	add_one(t_s_cmd *cmd, char *str)
+void	add_one(t_s_cmd *cmd)
 {
-	char *r;
-	char *s;
+	// char *r;
+	// char *s;
 
-	s = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], "/");
-	r = ft_strjoin(s, str);
-	//free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
-	cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
-	free(r);
-	free(s);
+	// s = ft_strjoin(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")], "/");
+	// r = ft_strjoin(s, str);
+	// // free(cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
+	// cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")] = ft_strdup(r);
+	// free(r);
+	// free(s);
+	char p[1024];
+	char *str;
+	int i;
+
+	i = find_it(cmd->big_cmd->env, "PWD");
+	str = getcwd(p, sizeof(p));
+	cmd->big_cmd->env[i] = ft_strjoin("PWD=", p);
 }
 
 void	change_path(t_s_cmd *cmd)
 {
-	char **tab;
-	int i;
+	// char **tab;
+	int old;
+	int pwd;
 
-	tab = ft_split(cmd->args[1], '/');
-	i = find_it(cmd->big_cmd->env, "OLDPWD");
-	// while (cmd->big_cmd->env[i])
-	// {
-	// 	if (ft_strncmp(cmd->big_cmd->env[i], "OLDPWD=", 7) == 0)
-	// 		break ;
-	// 	i++;
-	// }
-	cmd->big_cmd->env[i] = ft_strjoin("OLD", cmd->big_cmd->env[find_it(cmd->big_cmd->env, "PWD")]);
-	i = 0;
-	while (tab[i])
+	// tab = ft_split(cmd->args[1], '/');
+	if (find_it(cmd->big_cmd->env, "OLDPWD") != -1)
 	{
-		if (ft_strcmp(tab[i], "..") == 0)
-			del_one(cmd);
-		else
-			add_one(cmd, tab[i]);
-		i++;
+		pwd = find_it(cmd->big_cmd->env, "PWD");
+		old = find_it(cmd->big_cmd->env, "OLDPWD");
+		cmd->big_cmd->env[old] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
+		// old = 0;
+		// while (tab[old])
+		// {
+		// 	if (ft_strcmp(tab[old], "..") == 0)
+		// 		del_one(cmd);
+		// 	else
+		// 	old++;
+		// }
 	}
-	if (tab)
-		free_double(tab);
+	add_one(cmd);
+
+
+	// if (tab)
+	// 	free_double(tab);
 }
 
 void	reboot_pwd(t_s_cmd *cmd, int i)
@@ -128,7 +138,8 @@ void	check_home(t_s_cmd *cmd, char *p)
 	if (chdir(p) == 0)
 		if (find_it(cmd->big_cmd->env, "PWD") != -1)
 		{
-			cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
+			if (find_it(cmd->big_cmd->env, "OLDPWD") != -1)
+				cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
 			cmd->big_cmd->env[pwd] = ft_strjoin("PWD=", p);
 		}
 	free(p);
