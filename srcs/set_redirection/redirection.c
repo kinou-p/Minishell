@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 10:25:03 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:50:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,9 +233,10 @@ void	sig_heredoc(int num)
 	num = 0;
 	struct	sigaction base;
 	
+	memset(&base, 0, sizeof(base));
 	base.sa_handler = &crtl_c;
 	base.sa_flags = 0;
-	close(1);
+	//close(1);
 	//printf("sig_heredoc\n");
 	if (sigaction(SIGINT, &base, 0) == -1)
 	{
@@ -251,9 +252,10 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 	char	**history;
 	char	*in;
 	char	*dup;
+	char	*del;
 	struct	sigaction test;
 	
-
+	memset(&test, 0, sizeof(test));
 	test.sa_handler = &sig_heredoc;
 	test.sa_flags = 0;
 	
@@ -273,21 +275,32 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 	while (i == 0 || (input && ft_strlen(input) && ft_strcmp(input, in)))
 	{
 		i = 1;
+		if (input)
+			free(input);
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
 		//input = readline("");
 		//printf("input= -%s-", input);
 		if (!input)
+		{
+			free(in);
+			free_double(history);
 			return (0);
+		}
 		//input[ft_strlen(input) - 1] = 0;
 		if (ft_strcmp(input, in))
 		{
 			dup = ft_strdup(input);
 			dup[ft_strlen(input) - 1] = 0;
+			del = dup;
 			dup = set_var(cmd->big_cmd, dup);
 			history = add_line(history, dup);
+			if (dup != del)
+				free(del);
+			free(dup);
 		}
 	}
+	free(in);
 	free(input);
 	//free(cmd->infile);
 	//cmd->infile = 0;//option?
@@ -316,7 +329,11 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 				if (cmd->in_type == 1)
 				{
 					if (!wait_prompt(cmd, index))
+					{
+						free(line);
+						//printf("no waitpromt\n");
 						return (0);
+					}
 				}
 				i = 0;
 			}

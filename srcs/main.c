@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 19:26:30 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 09:24:25 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,18 @@ void	sig_quit(int num)
 {
 	num = 0;
 	ft_putstr_fd("\b \b\b \b", 1);
-	printf("quit num= %d\n", num);
+	//printf("quit num= %d\n", num);
+	//exit(0);
+}
+
+void	sig_quit2(int num)
+{
+	num = 0;
+	//ft_putchar_fd(127, 1);
+	//ft_putchar_fd(127, 1);
+	ft_putstr_fd("\b \b\b \b", 1);
+	ft_putstr_fd("sigquit2\n", 1);
+	//printf("sig_quit2\n");
 	//exit(0);
 }
 
@@ -53,11 +64,24 @@ void	print_prompt(char **path)
 {
 	char	*input;
 	t_cmd	*cmd;
-	int		err_var;	
+	//int		tmpin = dup(0);
+	//int		tmpout = dup(1);
+	int		err_var;
+	struct	sigaction test;
 	
+	memset(&test, 0, sizeof(test));
+	test.sa_handler = &sig_quit;
+	test.sa_flags = 0;
 	input = 0;
 	err_var = 0;
 	cmd = 0;
+	if (sigaction(SIGQUIT, &test, 0) == -1)
+	{
+		printf("Minishell: sigaction error\n");
+		exit(1);
+	}
+	/*else
+		printf("sigaction good\n");*/
 	while (1)
 	{
 		input = readline("\033[1;31m~$ \033[0m");
@@ -67,18 +91,14 @@ void	print_prompt(char **path)
 			exit_shell(cmd, 0);
 		}
 		add_history(input);	
-		/*if (!ft_strcmp("exit", input) && input)
-		{
-			free(input);
-			exit_shell(cmd);
-		}*/
 		if (ft_strlen(input) && next_space(input, 0) && input)
 		{
 			cmd = set_cmd(input, path, err_var);
 			//path = ft_dup_double(path);
-			free_double(path);
+			
 			if (cmd)
 			{
+				free_double(path);
 				//cmd->err_var = 0;
 				execute(cmd, cmd->env);
 				err_var = cmd->err_var;
@@ -88,7 +108,13 @@ void	print_prompt(char **path)
 				cmd = 0;
 			}
 			else
+			{
+				/*close(0);
+				close(1);
+				dup2(tmpin, 0);
+				dup2(tmpout, 1);*/
 				ft_putstr_fd("Minishell: error while parsing command\n", 2);
+			}
 		}
 		free(input);
 	}
@@ -97,7 +123,7 @@ void	print_prompt(char **path)
 int	main(int ac, char **av, char **path)
 {
 	char **env;
-
+	
 	if (!isatty(0))
 	{
 		printf("Not today\n");
@@ -112,7 +138,7 @@ int	main(int ac, char **av, char **path)
 	}
 	printf("---MINISHELL  START---\n"); 
 	signal(SIGINT, crtl_c);
-	 
+	//signal(SIGQUIT, sig_quit);
 	print_prompt(env);
 	return (0);
 }
