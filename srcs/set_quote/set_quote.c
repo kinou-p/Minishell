@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 13:47:49 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 06:43:23 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,23 +141,24 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_' || cmd[i] == '?'))
 		i++;
 	swap = ft_substr(cmd, *index + 1, i - *index - 1);
-	//printf("swap= -%s-\n", swap);
 	var = get_var(big_cmd, swap);
-	//printf("var -%s-\n", var);
+	free(swap);
 	swap2 = ft_strdup(cmd + i);
 	cmd[*index] = 0;
 	ret = ft_strjoin(cmd, var);
+	free(cmd);
 	*index += ft_strlen(var) - 1;
 	free(var);
 	var = ret;
 	ret = ft_strjoin(ret, swap2);
-	//printf("change_var -%s-\n", ret);
+	free(swap2);
 	return (ret);
 }
 
 char	*set_var(t_cmd *big_cmd, char *cmd)
 {
 	int i;
+	char *del;
 
 	//printf("set_var\n");
 	i = 0;
@@ -192,7 +193,9 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 					}
 					i++;
 				}
+				del = cmd;
 				cmd = del_char(cmd, &i);
+				free(cmd);
 			}
 			
 			//i++;
@@ -210,14 +213,18 @@ int parse_quote(t_cmd *cmd)
 {
 	int i;
 	int j;
-
+	char	*swap;
+	
 	i = 0;
 	while (cmd->s_cmds[i])
 	{
 		j = -1;
 		while (cmd->s_cmds[i]->args[++j])
 		{
+			swap = cmd->s_cmds[i]->args[j];
 			cmd->s_cmds[i]->args[j] = set_var(cmd, cmd->s_cmds[i]->args[j]);
+			if (cmd->s_cmds[i]->args[j] != swap)
+				free(swap);
 		}
 		//printf("parse quote -%s-\n", cmd->s_cmds[i]->args[0]);
 		if (!is_builtin(cmd->s_cmds[i]->args[0]))
