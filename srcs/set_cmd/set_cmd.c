@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 02:08:41 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 13:22:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 	//printf("before redirect\n");
 	line = set_redirection(s_cmd, line, index);//SET REDIRECTION
 	if (!line)
+	{
+		free(s_cmd);
 		return (0);
+	}
 	split_line = ft_split_with_quote(line, ' ');
 	//parse_quote(cmd);
 	//print_double_fd(split_line, 0);
@@ -69,6 +72,7 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		cmd->s_cmds[i] = set_s_cmd(cmds[i], i);
 		if (!cmd->s_cmds[i])
 		{
+			printf("no cmd in splitcmd\n"); 
 			free_cmd(cmd);
 			return (0);
 		}
@@ -126,8 +130,11 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	cmd = split_cmd(cmd, cmds); //split each cmd into args in s_cmd
 	//printf("end split cdm\n");
 	if (!cmd)
-		//free_cmd(cmd);
+	{
+		free(cmds);
+		//printf("no cmd\n");
 		return (0);
+	} 
 	parse_quote(cmd);
 	free(cmds);
 	if (cmd)
