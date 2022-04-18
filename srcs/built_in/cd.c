@@ -6,34 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/15 02:44:25 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 10:05:05 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_ls(char *input)
-{
-	int	i;
-
-	DIR *dir;
-	struct dirent *sd;
-
-	i = ft_strlen("ls");
-	while (input[i] && input[i] != ' ')
-		i++;
-	dir = opendir(".");
-	if (dir == NULL)
-	{
-		printf("stop\n");
-		return ;
-	}
-	while ((sd=readdir(dir)) != NULL)
-	{
-		printf(" >> %s\n", sd->d_name);
-	}
-	closedir(dir);
-}
 
 void	del_one(t_s_cmd *cmd)
 {
@@ -76,6 +53,7 @@ void	add_one(t_s_cmd *cmd)
 
 	i = find_it(cmd->big_cmd->env, "PWD");
 	str = getcwd(p, sizeof(p));
+	free(cmd->big_cmd->env[i]);
 	cmd->big_cmd->env[i] = ft_strjoin("PWD=", p);
 }
 
@@ -90,6 +68,7 @@ void	change_path(t_s_cmd *cmd)
 	{
 		pwd = find_it(cmd->big_cmd->env, "PWD");
 		old = find_it(cmd->big_cmd->env, "OLDPWD");
+		free(cmd->big_cmd->env[old]);
 		cmd->big_cmd->env[old] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
 		// old = 0;
 		// while (tab[old])

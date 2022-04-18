@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 02:11:56 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 11:05:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void exit_shell(t_cmd *cmd, int ret)
 	i = 0;
 	//if (cmd)
 	//	free_double(cmd->env);
+	if (!cmd)
+		exit(ret);
 	if (cmd->tmpin != -1)
 	{
 		dup2(cmd->tmpin, 0);

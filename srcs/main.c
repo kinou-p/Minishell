@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 02:13:41 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/17 19:26:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	sig_quit(int num)
 {
 	num = 0;
 	ft_putstr_fd("\b \b\b \b", 1);
-	//printf("quit num= %d\n", num);
+	printf("quit num= %d\n", num);
 	//exit(0);
 }
 
@@ -62,7 +62,10 @@ void	print_prompt(char **path)
 	{
 		input = readline("\033[1;31m~$ \033[0m");
 		if (!input)
+		{
+			free_double(path);
 			exit_shell(cmd, 0);
+		}
 		add_history(input);	
 		/*if (!ft_strcmp("exit", input) && input)
 		{
@@ -81,8 +84,8 @@ void	print_prompt(char **path)
 				err_var = cmd->err_var;
 				
 				path = ft_dup_double(cmd->env);
-				//cmd = 0;
 				free_cmd(cmd);
+				cmd = 0;
 			}
 			else
 				ft_putstr_fd("Minishell: error while parsing command\n", 2);
@@ -109,7 +112,7 @@ int	main(int ac, char **av, char **path)
 	}
 	printf("---MINISHELL  START---\n"); 
 	signal(SIGINT, crtl_c);
-	signal(SIGQUIT, sig_quit);
+	 
 	print_prompt(env);
 	return (0);
 }
