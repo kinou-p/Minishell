@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/17 02:09:44 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 03:16:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	execute(t_cmd *cmd, char **env)
 		fdin = dup(tmpin);
 	while(cmd->current_s_cmd)
 	{	
-		if (i > 0)
+		if (i > 0 )
 			close(fdout);
 		cmd->current_s_cmd->child = 1;
 		fdout = -1;

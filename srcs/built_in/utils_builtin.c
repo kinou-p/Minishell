@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:04:12 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/15 02:37:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 03:15:44 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,14 @@ int		check_return(t_s_cmd *cmd, int var)
 	if (cmd->child)
 	{
 		cmd->big_cmd->err_var = var;
+		
 		return (var);
 	}
 	else
+	{
+		close(cmd->big_cmd->tmpin);
+		close(cmd->big_cmd->tmpout);
+		free_cmd(cmd->big_cmd);
 		exit(var);
+	}
 }
