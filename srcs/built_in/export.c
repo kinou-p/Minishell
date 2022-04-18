@@ -53,6 +53,7 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 {
 	char *dest;
 	char *unset;
+	int index;
 
 	if (check_variable(variable) == 1)
 	{
@@ -64,9 +65,11 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 	}
 	dest = ft_strdup(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
-	if (find_it(cmd->big_cmd->env, unset) != -1)
+	index = find_it(cmd->big_cmd->env, unset);
+	if (index != -1)
 	{
-		cmd->big_cmd->env[find_it(cmd->big_cmd->env, unset)] = dest;
+		free (cmd->big_cmd->env[index]);
+		cmd->big_cmd->env[index] = dest;
 		free(unset);
 		return (check_return(cmd, 0));
 	}
@@ -76,7 +79,6 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 	if (unset)
 		free(unset);
 	return (check_return(cmd, 0));
-
 }
 
 int	ft_export(t_s_cmd *cmd)
