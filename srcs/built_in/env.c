@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:09:47 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 21:23:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 03:10:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	print_env(t_cmd *cmd)
 	if (cmd->current_s_cmd->nb_args > 1)
 	{
 		ft_putstr_fd("Minishell: env: too many arguments\n", 2);
-		return (check_return(cmd->current_s_cmd, 127));
+		return (check_return(cmd->current_s_cmd, 1));
 	}
 	else if (cmd->env)
 	{
