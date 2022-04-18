@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/16 16:10:54 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:39:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct	s_command {
 	struct	s_simple	*current_s_cmd;
 	char				**path;
 }						t_cmd;
+
+char	*error_parsing(void);
 
 //main.c
 int	main();//int ac, char **av, char **path);

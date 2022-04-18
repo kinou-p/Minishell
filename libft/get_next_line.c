@@ -14,14 +14,9 @@
 
 char	*ft_free(char *save, int *end)
 {
-	if (!*end)
-	{
-		free(save);
-		free(end);
-		return (0);
-	}
+	free(save);
 	free(end);
-	return (save);
+	return (0);
 }
 
 char	*set_line(char *line, char *save)
@@ -75,7 +70,7 @@ char	*next_line(char *save, int *end, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*save = NULL;
+	char	*save = NULL;
 	int			*end;
 	char		*line;
 
@@ -84,8 +79,7 @@ char	*get_next_line(int fd)
 		return (0);
 	end = malloc(sizeof(int *));
 	*end = 1;
-	if (save == NULL)
-		save = ft_calloc(1, 1);
+	save = ft_calloc(1, 1);
 	save = next_line(save, end, fd);
 	line = set_line(line, save);
 	if (ft_strlen(line) > 0)

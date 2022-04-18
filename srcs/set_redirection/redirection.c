@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/18 12:50:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:48:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void	sig_heredoc(int num)
 	base.sa_handler = &crtl_c;
 	base.sa_flags = 0;
 	//close(1);
-	//printf("sig_heredoc\n");
+	ft_putchar_fd('\n', 1);
 	if (sigaction(SIGINT, &base, 0) == -1)
 	{
 		printf("sigaction error2\n");
@@ -258,8 +258,6 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 	memset(&test, 0, sizeof(test));
 	test.sa_handler = &sig_heredoc;
 	test.sa_flags = 0;
-	
-
 	in = ft_strjoin(cmd->infile, "\n");
 	free(cmd->infile);
 	cmd->infile = 0;
@@ -279,15 +277,12 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 			free(input);
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
-		//input = readline("");
-		//printf("input= -%s-", input);
 		if (!input)
 		{
 			free(in);
 			free_double(history);
-			return (0);
+			return (-1);
 		}
-		//input[ft_strlen(input) - 1] = 0;
 		if (ft_strcmp(input, in))
 		{
 			dup = ft_strdup(input);
@@ -302,8 +297,6 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 	}
 	free(in);
 	free(input);
-	//free(cmd->infile);
-	//cmd->infile = 0;//option?
 	cmd->infile = set_heredoc(index, history);
 	cmd->in_type = 0;
 	return (1);
@@ -325,10 +318,10 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 			{
 				line = ft_input(line, cmd, i);
 				if (!line)
-					return (0);
+					return (error_parsing());
 				if (cmd->in_type == 1)
 				{
-					if (!wait_prompt(cmd, index))
+					if (wait_prompt(cmd, index) == -1)
 					{
 						free(line);
 						//printf("no waitpromt\n");

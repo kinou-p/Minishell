@@ -6,13 +6,17 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/18 13:22:46 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/18 15:44:32 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
+char	*error_parsing(void)
+{
+	ft_putstr_fd("Minishell: error while parsing command\n", 2);
+	return (0);
+}
 
 t_s_cmd	*set_s_cmd(char *line, int index)
 {
@@ -47,8 +51,6 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 	else
 		s_cmd->cmd = ft_strdup(split_line[0]);*/
 
-
-
 	/*if (!s_cmd->cmd)
 	{
 		free(line);
@@ -72,7 +74,6 @@ t_cmd *split_cmd(t_cmd *cmd, char **cmds)
 		cmd->s_cmds[i] = set_s_cmd(cmds[i], i);
 		if (!cmd->s_cmds[i])
 		{
-			printf("no cmd in splitcmd\n"); 
 			free_cmd(cmd);
 			return (0);
 		}
@@ -109,7 +110,10 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	char	**cmds;
 	
 	if (!is_quote_good(input) || !is_pipe_good(input))
+	{
+		ft_putstr_fd("Minishell: error while parsing command\n", 2);
 		return (0);
+	}
 	cmds = ft_split_with_quote(input, '|');
 	if (!cmds)
 		return (0);
