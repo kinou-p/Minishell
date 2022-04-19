@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:35:26 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:46:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 {
 	t_cmd	*cmd;
 	char	**cmds;
-	
+
 	if (!is_quote_good(input) || !is_pipe_good(input))
 	{
 		ft_putstr_fd("Minishell: error while parsing command\n", 2);
@@ -98,7 +98,6 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	cmds = ft_split_with_quote(input, '|');
 	if (!cmds)
 		return (0);
-	
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (0);
@@ -107,7 +106,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 		return (0);
 	cmd->tmpin = -1;
 	cmd->tmpout = -1;
-	cmd->err_var = nb;	
+	cmd->err_var = nb;
 	cmd->path = get_path(env);
 	cmd->env = ft_dup_double(env);
 	cmd->nb_s_cmd = double_size(cmds);
@@ -116,7 +115,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	{
 		free(cmds);
 		return (0);
-	} 
+	}
 	parse_quote(cmd);
 	free(cmds);
 	if (cmd)

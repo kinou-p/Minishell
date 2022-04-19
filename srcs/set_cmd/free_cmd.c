@@ -6,16 +6,16 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:01:16 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:46:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void exit_shell(t_cmd *cmd, int ret)
+void	exit_shell(t_cmd *cmd, int ret)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	ft_putstr_fd("exit\n", 1);
 	if (!cmd)
@@ -40,7 +40,7 @@ void exit_shell(t_cmd *cmd, int ret)
 	exit(ret);
 }
 
-void free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
 	int	i;
 
