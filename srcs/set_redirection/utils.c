@@ -6,11 +6,34 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:35:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 13:07:55 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:47:21 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*cut_str(char *str, int start, int end)
+{
+	char	*swap;
+	char	*del;
+
+	swap = 0;
+	del = str;
+	if (str[end])
+		swap = ft_strjoin(&str[end], 0);
+	str[start] = 0;
+	str = ft_strjoin(str, swap);
+	free(del);
+	free(swap);
+	return (str);
+}
+
+char	next_space(char *str, int i)
+{
+	while (str[i] == ' ')
+		i++;
+	return (str[i]);
+}
 
 int	double_size(char **tab)
 {

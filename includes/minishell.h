@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:18:26 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:05:51 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,24 @@ void	crtl_c(int num);
 void	sig_heredoc(int num);
 
 //redirection.c set redirection and input good
+char	*get_word(char *str, int start);
+char	**add_line(char **tab, char *line);
 char	*set_redirection(t_s_cmd *cmd, char *line, int index);
 char	next_space(char *str, int i);
 
-//uitls redirection
+//set_heredoc
+int		wait_prompt(t_s_cmd *cmd, int index);
+
+//set_input.c
+char	*ft_input(char *line, t_s_cmd *cmd, int index);
+
+//set_output.c
+char	*ft_output(char *line, t_s_cmd *cmd, int index);
+
+//set_var.c
+char	*set_var(t_cmd *big_cmd, char *cmd);
+
+//utils redirection
 int		parse_quote(t_cmd *cmd);
 char	*get_str(char *str, int start, int end);
 char	*cut_str(char *str, int start, int end);

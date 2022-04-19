@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:46:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:40:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 	cmd = split_cmd(cmd, cmds);
 	if (!cmd)
 	{
-		free(cmds);
+		free_double(cmds);
 		return (0);
 	}
 	parse_quote(cmd);

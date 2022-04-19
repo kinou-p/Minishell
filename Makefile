@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/16 09:58:10 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/19 15:05:18 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ SRCS	= srcs/main.c\
 		srcs/set_cmd/set_cmd.c\
 		srcs/set_redirection/redirection.c\
 		srcs/set_redirection/utils.c\
+		srcs/set_redirection/set_heredoc.c\
+		srcs/set_redirection/set_input.c\
+		srcs/set_redirection/set_output.c\
 		srcs/built_in/unset.c\
 		srcs/built_in/cd.c\
 		srcs/built_in/echo.c\
@@ -29,9 +32,8 @@ SRCS	= srcs/main.c\
 		srcs/built_in/exit.c\
 		srcs/set_quote/split_with_quote.c\
 		srcs/set_quote/set_quote.c\
+		srcs/set_quote/set_var.c\
 		srcs/built_in/choose_builtin.c
-		
-		
 		
 OBJS	= ${SRCS:.c=.o}
 CC		= clang
