@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/18 15:48:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:04:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	next_space(char *str, int i)
 {
-	//i++;
 	while (str[i] == ' ')
 		i++;
 	return (str[i]);
@@ -51,7 +50,6 @@ char	*get_word(char *str, int start)
 	while (new[i] && new[i] != ' ' && new[i] != '>' && new[i] != '<')
 		i++;
 	new[i] = 0;
-	//printf("get word= %s\n", new);
 	return (new);
 }
 
@@ -107,7 +105,6 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 	return (line);
 }
 
-//choose type of redirection, check error
 char	*ft_input(char *line, t_s_cmd *cmd, int index)
 {
 	int i;
@@ -124,11 +121,9 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
 		return (0);
-	//printf("line bf set_input -%s-", line);
 	line = set_input(line, cmd, i);
 	if (!line)
 		return (0);
-	//printf("line -%s-\n", line);
 	return (line);
 }
 
@@ -149,7 +144,6 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index)
 	if (next == '<' || next == '>' || !next)
 		return (0);
 	line = set_output(line, cmd, i);
-	//printf("line -%s-\n", line);
 	return (line);
 }
 
@@ -157,7 +151,6 @@ int	set_file(char *file)
 {
 	int fd;
 
-	//printf("setfile= %s\n", file);
 	fd = open(file, O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
@@ -166,7 +159,6 @@ int	set_file(char *file)
 		ft_putstr_fd(": Permission denied\n", 2);
 		return (0);
 	}
-	//error_redirect("can't set file");
 	if (fd)
 		close(fd);
 	return (1);
@@ -197,11 +189,6 @@ char	**add_line(char **tab, char *line)
 		free_double(tab);
 	return(ret);
 }
-
-/*void	del_heredoc()
-{
-	
-}*/
 
 char	*set_heredoc(int index, char **in)
 {
@@ -236,7 +223,6 @@ void	sig_heredoc(int num)
 	memset(&base, 0, sizeof(base));
 	base.sa_handler = &crtl_c;
 	base.sa_flags = 0;
-	//close(1);
 	ft_putchar_fd('\n', 1);
 	if (sigaction(SIGINT, &base, 0) == -1)
 	{
@@ -266,7 +252,6 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 		printf("sigaction error\n");
 		exit(1);
 	}
-	//printf("wait_prompt\n");
 	history = 0;
 	input = 0;
 	i = 0;
@@ -307,11 +292,8 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 	int i;
 	
 	i= 0;
-//	printf("enter redirection\n");
 	while (line[i])
 	{
-		//printf("line[i] i= %d\n", i);
-		//printf("-%s-\n", line);
 		if(line[i] == '<')
 		{
 			if (!is_in_quote(line, i))
@@ -324,7 +306,6 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 					if (wait_prompt(cmd, index) == -1)
 					{
 						free(line);
-						//printf("no waitpromt\n");
 						return (0);
 					}
 				}
@@ -336,7 +317,6 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 			if (!is_in_quote(line, i))
 			{
 				line = ft_output(line, cmd, i);
-				//if (cmd->in_type == 0)
 				if (!set_file(cmd->outfile))
 					return (0);
 				i = 0;

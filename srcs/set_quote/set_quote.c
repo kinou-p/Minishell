@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 10:37:55 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:03:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,7 @@ int	is_quote_good(char *str)
 		i++;
 	}
 	if (simple_quote % 2 || double_quote % 2)
-	{
-		printf("bad quote\n");
 		return (0); 
-	}
-	//printf("good_quote\n");
 	return (1);
 }
 
@@ -86,22 +82,12 @@ char	*del_char(char *str, int *index)
 	char *swap2;
 
 	swap = 0;
-	//printf("index= %d\n", *index);
-	//printf("before del char -%s-\n", str);
-//	if (ft_strlen(str) > 1)
-		swap = ft_strdup(str + *index + 1);
-//	else 
-//		swap = 
-	//printf("in del char after dup -%s-\n", swap);
-//	if (str)
+	swap = ft_strdup(str + *index + 1);
 	str[*index] = 0;
 	swap2 = str;
 	str = ft_strjoin(str, swap);
 	free(swap2);
 	free(swap);
-	//if (*index)
-	//	(*index)--;
-	//printf("after del char -%s-\n", str);
 	return (str);
 }
 
@@ -114,7 +100,6 @@ char	*get_var(t_cmd	*cmd, char *var_name)
 	line = 0;
 	if (!ft_strcmp(var_name, "?"))
 		return (ft_itoa(cmd->err_var));
-	//printf("var_name -%s-\n", var_name);
 	index = find_it(cmd->env, var_name);
 	if (index >= 0)
 	{
@@ -126,8 +111,6 @@ char	*get_var(t_cmd	*cmd, char *var_name)
 			return (0);
 		free_double(split_line);
 	}
-	
-	//printf("get_var line= -%s-\n", line);
 	return (line);
 }
 
@@ -153,6 +136,7 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	free(var);
 	var = ret;
 	ret = ft_strjoin(ret, swap2);
+	free(var);
 	free(swap2);
 	return (ret);
 }
@@ -162,18 +146,12 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 	int i;
 	char *del;
 
-	//printf("set_var\n");
 	i = 0;
 	while (cmd[i])
 	{
-		//printf("set var str= %s  et i= %d\n", cmd, i);
-		//printf("char= -%c-\n", cmd[i]);
 		if (cmd[i] == '\'')
 		{	
-			//del = cmd;
 			cmd = del_char(cmd, &i);
-			//free(del);
-			//printf("i= %d char= -%c- str= -%s-\n", i, cmd[i], cmd);
 			if (cmd[i])
 			{
 				while (cmd[i] != '\'')
@@ -185,38 +163,23 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 		}
 		else if (cmd[i] == '"')
 		{
-			//del = cmd;
 			cmd = del_char(cmd, &i);
-			//free(del);
-			//printf("cmd after del char= %s\n", cmd);
-			//printf("i= %d char= -%c-\n", i, cmd[i]);
 			if (cmd[i])
 			{
 				while (cmd[i] != '"')
 				{	
 					if (cmd[i] == '$')
-					{
 						cmd = change_var(big_cmd, cmd, &i);	
-						//printf("i= %d et cmd= -%s-\n", i, cmd);
-					}
 					i++;
 				}
-				//del = cmd;
-				//printf("cmd before del char2= %s\n", cmd);
 				cmd = del_char(cmd, &i);
-				//printf("cmd after del char2= %s\n", cmd);
-				//free(del);
 			}
-			//printf("cmd after \"= %s\n", cmd);
-			//printf("i= %d char= -%c-\n", i, cmd[i]);
-			//i++;
 		}
 		else if (cmd[i] == '$')
 			cmd = change_var(big_cmd, cmd, &i);
 		else
 			i++;
 	}
-	//printf("after all -%s-\n", cmd);
 	return (cmd);
 }
 
@@ -231,16 +194,11 @@ int parse_quote(t_cmd *cmd)
 	{
 		
 		j = -1;
-		//print_double_fd(cmd->s_cmds[i]->args, 1);
 		while (cmd->s_cmds[i]->args[++j])
 		{
-			//printf("parse quote args= -%s-\n", cmd->s_cmds[i]->args[j]);
 			swap = cmd->s_cmds[i]->args[j];
 			cmd->s_cmds[i]->args[j] = set_var(cmd, cmd->s_cmds[i]->args[j]);
-			//if (cmd->s_cmds[i]->args[j] != swap)
-			//	free(swap);
 		}
-		//printf("parse quote -%s-\n", cmd->s_cmds[i]->args[0]);
 		if (!is_builtin(cmd->s_cmds[i]->args[0]))
 		{
 			cmd->s_cmds[i]->cmd = get_command(cmd->s_cmds[i]->args, cmd->path);
@@ -251,17 +209,6 @@ int parse_quote(t_cmd *cmd)
 			cmd->s_cmds[i]->cmd = ft_strdup(cmd->s_cmds[i]->args[0]);
 		if (!cmd->s_cmds[i]->cmd)
 			cmd->s_cmds[i]->cmd = ft_strdup(cmd->s_cmds[i]->args[0]);
-		// else
-		// {
-		// 	swap = cmd->s_cmds[i]->cmd;
-		// 	cmd->s_cmds[i]->cmd = ft_strdup(cmd->s_cmds[i]->cmd);
-		// 	free(swap)
-		// }
-
-		
-		//free(cmd->s_cmds[i]->cmd);
-		//cmd->s_cmds[i]->cmd = ft_strdup(cmd->s_cmds[i]->args[0]);
-		//printf("parse quote -%s-\n", cmd->s_cmds[i]->cmd);
 		i++;
 	}
 	return (0);

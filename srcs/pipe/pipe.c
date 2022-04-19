@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 08:26:07 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:00:46 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,13 @@ int	wait_exit(t_cmd *cmd)
 				close(cmd->s_cmds[i]->fd[0]);
 				close(cmd->s_cmds[i]->fd[1]);
 			if (WIFEXITED(status))
-			{
-				//printf("return normally cmd = -%s-\n", cmd->s_cmds[i]->cmd);
-				//if (!cmd->err_var)
 				cmd->err_var = WEXITSTATUS(status);
-				//printf("err_var= %d\n", cmd->err_var);
-				//printf("code= %d\n", cmd->err_var);
-			}
 			else if (WIFSIGNALED(status))
 			{
-				//printf("return by signal cmd = -%s-\n", cmd->s_cmds[i]->cmd);
-				//printf("signal= %d\n", WTERMSIG(status));
 				if (WTERMSIG(status) != 13)
 					cmd->err_var = WTERMSIG(status);
 				if (WTERMSIG(status) == 3)
 					ft_putstr_fd("^\\Quit", 1);	
-				//if (cmd->err_var == 2)
 				ft_putstr_fd("\b\b\b\b\b", 1);
 			}
 			}
@@ -108,14 +99,7 @@ void    exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 	else if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 		cmd->err_var = 127;
 	else
-		cmd->err_var = 126;
-	/*if (cmd->current_s_cmd->child)
-	{
-		if (cmd->current_s_cmd->infile)
-			close(cmd->current_s_cmd->infile);
-		if (cmd->current_s_cmd->outfile)
-			close(cmd->current_s_cmd->outfile);
-	}*/
+		cmd->err_var = 131;
 }
 
 void	execute(t_cmd *cmd, char **env)
@@ -135,7 +119,6 @@ void	execute(t_cmd *cmd, char **env)
 	tmpout = dup(1);
 	cmd->tmpin = tmpin;
 	cmd->tmpout = tmpout;
-	//printf("infile= %s\n", cmd->current_s_cmd->infile);
 	if (cmd->current_s_cmd->infile)
 	{
 		fdin = open(cmd->current_s_cmd->infile, O_RDWR);
@@ -146,8 +129,6 @@ void	execute(t_cmd *cmd, char **env)
 		fdin = dup(tmpin);
 	while(cmd->current_s_cmd)
 	{	
-		//if (i != 0)
-		//	close(fdout);
 		cmd->current_s_cmd->child = 1;
 		fdout = -1;
 		if (i > 0 && cmd->current_s_cmd->infile)
@@ -186,13 +167,11 @@ void	execute(t_cmd *cmd, char **env)
 			fdin=fdpipe[0];
 			exec_cmd(cmd, env, fdpipe);
 			close(cmd->current_s_cmd->fd[0]);
-			//close(fdin); //bad thing
 		}
 		if (fdpipe[1] != -1)
 			close(fdpipe[1]);
 		i++;
 		cmd->current_s_cmd = cmd->s_cmds[i];
-		//printf("cmd->err_var= %d\n", cmd->err_var);
 	}
 	close_pipe(cmd);
 	dup2(tmpin, 0);
@@ -200,8 +179,4 @@ void	execute(t_cmd *cmd, char **env)
 	close(tmpin);
 	close(tmpout);
 	wait_exit(cmd);
-	//close(tmpin);
-	//tmpin = -1;
-	//close(tmpout);
-	//tmpout = -1;
 }

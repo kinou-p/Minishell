@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 19:50:50 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/10 21:50:37 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:03:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int	fill_tab(char *s, char c, char **dest, size_t index)
 	int		size;
 
 	i = 0;
-	//printf("split: s= %s\n", s);
 	while (s[i] != c && s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
@@ -58,7 +57,6 @@ static int	fill_tab(char *s, char c, char **dest, size_t index)
 		else
 			i++;
 	}
-	//printf("split: size= %d\n", i);
 	dest[index] = (char *)ft_calloc(i + 1, sizeof(char));
 	if (dest[index] == 0)
 		return (0);
@@ -110,7 +108,6 @@ char	**ft_split_with_quote(char const *s, char c)
 	i = next_quote(s, i);
 	if (i)
 		j++;
-	//printf("j= %d\n", j);
 	while (s[i] == c && s[i])
 		i++;
 	while (s[i])
@@ -126,11 +123,10 @@ char	**ft_split_with_quote(char const *s, char c)
 		while (s[i] == c && s[i])
 			i++;
 	}
-	dest = (char **)ft_calloc(sizeof(char *), (1 + j));//modif i + j en 1 + j
+	dest = (char **)ft_calloc(sizeof(char *), (1 + j));
 	if (!dest)
 		return (0);
 	dest[j] = 0;
-	//printf("split: j= %d\n", j);
 	call((char *)s, c, dest, j);
 	return (dest);
 }

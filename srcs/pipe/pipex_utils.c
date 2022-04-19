@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 08:09:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:01:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,12 @@ char	**get_path(char **env)
 	return (0);
 }
 
-
-//verify access with cmd access
 char	*does_access(char **path, char **exec)
 {
 	int		i;
 	char	*cmd;
 	char	*swap;
 
-	// if (!path)
-	// {
-	// 	ft_putstr_fd("Minishell: no PATH\n", 2);
-	// 	return (0);
-	// }
 	swap = 0;
 	cmd = 0;
 	i = 0;
@@ -84,10 +77,7 @@ char	*get_command(char **exec, char **path)
 	if (!path)
 		return (0);
 	if ((exec[0][0] == '/' || exec[0][0] == '.') && !access(exec[0], F_OK))
-	{
-		//free_double(path);
 		return (exec[0]);
-	}
 	else if (exec[0][0] == '/')
 		return(0);
 	swap = does_access(path, exec);
