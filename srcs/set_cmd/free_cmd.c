@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:33:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:46:46 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:30:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ void	free_cmd(t_cmd *cmd)
 	free_double(cmd->path);
 	free(cmd->s_cmds);
 	free(cmd);
+}
+
+void	check_heredoc()
+{
+	int i;
+	char *str;
+
+	while (i <= 2147483647)
+	{
+		str = ft_strjoin(".heredoc", ft_itoa(i));
+		if (access(str, F_OK) == 0)
+		{
+			unlink(str);
+			free(str);
+			return ;
+		}
+		i++;
+	}
+	free(str);
 }
