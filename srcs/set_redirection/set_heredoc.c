@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:46:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 14:51:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:36:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,16 @@ char	*set_heredoc(int index, char **in)
 	return (file_name);
 }
 
-void	sig_heredoc(int num)
+int	wait_prompt(t_s_cmd *cmd, int index, int i, char *input)
 {
-	struct sigaction	base;
-
-	(void)num;
-	memset(&base, 0, sizeof(base));
-	base.sa_handler = &crtl_c;
-	base.sa_flags = 0;
-	ft_putchar_fd('\n', 1);
-	if (sigaction(SIGINT, &base, 0) == -1)
-	{
-		printf("sigaction error2\n");
-		return ;
-	}
-}
-
-int	wait_prompt(t_s_cmd *cmd, int index)
-{
-	char				*input;
-	int					i;
 	char				**history;
 	char				*in;
-	char				*dup;
-	char				*del;
-	struct sigaction	test;
 
-	memset(&test, 0, sizeof(test));
-	test.sa_handler = &sig_heredoc;
-	test.sa_flags = 0;
+	change_signal();
 	in = ft_strjoin(cmd->infile, "\n");
 	free(cmd->infile);
 	cmd->infile = 0;
-	if (sigaction(SIGINT, &test, 0) == -1)
-	{
-		printf("sigaction error\n");
-		exit(1);
-	}
 	history = 0;
-	input = 0;
-	i = 0;
 	while (i == 0 || (input && ft_strlen(input) && ft_strcmp(input, in)))
 	{
 		i = 1;
@@ -85,22 +55,8 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 		ft_putstr_fd("> ", 0);
 		input = get_next_line(0);
 		if (!input)
-		{
-			free(in);
-			free_double(history);
-			return (-1);
-		}
-		if (ft_strcmp(input, in))
-		{
-			dup = ft_strdup(input);
-			dup[ft_strlen(input) - 1] = 0;
-			del = dup;
-			dup = set_var(cmd->big_cmd, dup);
-			history = add_line(history, dup);
-			if (dup != del)
-				free(del);
-			free(dup);
-		}
+			return (free_wait_prompt(in, history));
+		history = fill_history(cmd, input, in, history);
 	}
 	free(in);
 	free(input);

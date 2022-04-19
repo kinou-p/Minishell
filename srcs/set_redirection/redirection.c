@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 14:56:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:15:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,34 @@ char	**add_line(char **tab, char *line)
 	return (ret);
 }
 
-char	*set_redirection(t_s_cmd *cmd, char *line, int index)
+int	set_redirect_in(t_s_cmd *cmd, char **line, int *i, int index)
 {
-	int	i;
+	if (!is_in_quote(*line, *i))
+	{
+		*line = ft_input(*line, cmd, *i);
+		if (!(*line))
+			return (error_parsing());
+		if (cmd->in_type == 1)
+		{
+			if (wait_prompt(cmd, index, 0, 0) == -1)
+			{
+				free(*line);
+				return (0);
+			}
+		}
+		*i = 0;
+	}
+	return (1);
+}
 
-	i = 0;
+char	*set_redirection(t_s_cmd *cmd, char *line, int index, int i)
+{
 	while (line[i])
 	{
 		if (line[i] == '<')
 		{
-			if (!is_in_quote(line, i))
-			{
-				line = ft_input(line, cmd, i);
-				if (!line)
-					return (error_parsing());
-				if (cmd->in_type == 1)
-				{
-					if (wait_prompt(cmd, index) == -1)
-					{
-						free(line);
-						return (0);
-					}
-				}
-				i = 0;
-			}
+			if (!set_redirect_in(cmd, &line, &i, index))
+				return (0);
 		}
 		else if (line[i] == '>')
 		{
@@ -108,7 +112,8 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 				i = 0;
 			}
 		}
-		if (line[i] && (line[i] == '<' || line[i] == '>') && is_in_quote(line, i))
+		if (line[i] && (line[i] == '<' || line[i] == '>')
+			&& is_in_quote(line, i))
 			i++;
 		else if (line[i] && line[i] != '<' && line[i] != '>')
 			i++;

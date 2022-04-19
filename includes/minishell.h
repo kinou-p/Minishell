@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 15:05:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:33:31 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ typedef struct s_command {
 	int					err_var;
 	struct s_simple		*current_s_cmd;
 	char				**path;
-}						t_cmd;
-
-char	*error_parsing(void);
+}				t_cmd;
 
 //main.c
 int		main(int ac, char **av, char **path);
@@ -70,9 +68,18 @@ char	**ft_dup_double(char **env);
 void	execute(t_cmd *cmd, char **env);
 
 //set_cmd.c
+int		error_parsing(void);
 t_cmd	*set_cmd(char *input, char **path, int nb);
 
+//exec_utils.c
+int		wait_exit(t_cmd *cmd);
+void	exit_child(t_cmd *cmd, int exit_pid, int status, int i);
+void	check_access(t_cmd *cmd);
+void	close_pipe(t_cmd *cmd);
+
 //pipex_utils.c
+void	set_fdin(t_cmd *cmd, int *fdin);
+void	reset_fds(t_cmd *cmd);
 char	**get_path(char **env);
 char	*get_command(char **exec, char **env);
 
@@ -89,15 +96,23 @@ char	**ft_split_with_quote(char const *s, char c);
 //signals
 void	crtl_c(int num);
 void	sig_heredoc(int num);
+void	sig_quit(int num);
 
 //redirection.c set redirection and input good
 char	*get_word(char *str, int start);
 char	**add_line(char **tab, char *line);
-char	*set_redirection(t_s_cmd *cmd, char *line, int index);
+char	*set_redirection(t_s_cmd *cmd, char *line, int index, int i);
 char	next_space(char *str, int i);
 
 //set_heredoc
-int		wait_prompt(t_s_cmd *cmd, int index);
+int		wait_prompt(t_s_cmd *cmd, int index, int i, char *input);
+
+//heredoc_utils.c
+void	sig_heredoc(int num);
+int		free_wait_prompt(char *in, char**history);
+void	change_signal(void);
+void	sig_heredoc(int num);
+char	**fill_history(t_s_cmd *cmd, char *input, char *in, char **history);
 
 //set_input.c
 char	*ft_input(char *line, t_s_cmd *cmd, int index);
@@ -107,6 +122,8 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index);
 
 //set_var.c
 char	*set_var(t_cmd *big_cmd, char *cmd);
+
+//set_signals.c
 
 //utils redirection
 int		parse_quote(t_cmd *cmd);

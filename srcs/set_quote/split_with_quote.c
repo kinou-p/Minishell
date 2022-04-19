@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 19:50:50 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:58:16 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:15:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	next_quote(const char *s, int i)
 			double_quote = 1;
 		else if (s[i] == '\'')
 			simple_quote = 1;
-		else
-			printf("qu'es tu fous ?\n");
 		i++;
 		if (simple_quote)
 		{
@@ -38,9 +36,8 @@ int	next_quote(const char *s, int i)
 			while (s[i] != '"')
 				i++;
 		}
-		i++;
 	}
-	return (i);
+	return (i + 1);
 }
 
 static int	fill_tab(char *s, char c, char **dest, size_t index)
@@ -94,6 +91,23 @@ static void	call(char *s, char c, char **dest, int j)
 	}
 }
 
+void	count_word(const char *s, int *i, int *j, char c)
+{
+	while (s[*i])
+	{
+		while (s[*i] != c && s[*i])
+		{
+			if (s[*i] == '"' || s[*i] == '\'')
+				*i = next_quote(s, *i);
+			else
+				(*i)++;
+		}
+		(*j)++;
+		while (s[*i] == c && s[*i])
+			(*i)++;
+	}
+}
+
 char	**ft_split_with_quote(char const *s, char c)
 {
 	int		i;
@@ -109,19 +123,7 @@ char	**ft_split_with_quote(char const *s, char c)
 		j++;
 	while (s[i] == c && s[i])
 		i++;
-	while (s[i])
-	{
-		while (s[i] != c && s[i])
-		{
-			if (s[i] == '"' || s[i] == '\'')
-				i = next_quote(s, i);
-			else
-				i++;
-		}
-		j++;
-		while (s[i] == c && s[i])
-			i++;
-	}
+	count_word(s, &i, &j, c);
 	dest = (char **)ft_calloc(sizeof(char *), (1 + j));
 	if (!dest)
 		return (0);

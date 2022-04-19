@@ -6,11 +6,33 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:34:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:11:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	set_fdin(t_cmd *cmd, int *fdin)
+{
+	if (cmd->current_s_cmd->infile)
+	{
+		*fdin = open(cmd->current_s_cmd->infile, O_RDWR);
+		if (*fdin < 0)
+			printf("Minishell: open : bad file descriptor\n");
+	}
+	else
+		*fdin = dup(cmd->tmpin);
+}
+
+void	reset_fds(t_cmd *cmd)
+{
+	close_pipe(cmd);
+	dup2(cmd->tmpin, 0);
+	dup2(cmd->tmpout, 1);
+	close(cmd->tmpin);
+	close(cmd->tmpout);
+	wait_exit(cmd);
+}
 
 char	**get_path(char **env)
 {
