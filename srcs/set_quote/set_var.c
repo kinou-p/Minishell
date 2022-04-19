@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 15:04:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:52:00 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,21 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	return (ret);
 }
 
+void	check_quote(t_cmd *big_cmd, char *cmd, int *i)
+{
+	cmd = del_char(cmd, i);
+	if (cmd[*i])
+	{
+		while (cmd[*i] != '"')
+		{	
+			if (cmd[*i] == '$')
+				cmd = change_var(big_cmd, cmd, i);
+			(*i)++;
+		}
+		cmd = del_char(cmd, i);
+	}	
+}
+
 char	*set_var(t_cmd *big_cmd, char *cmd)
 {
 	int	i;
@@ -90,26 +105,12 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 			if (cmd[i])
 			{
 				while (cmd[i] != '\'')
-				{
 					i++;
-				}
 				cmd = del_char(cmd, &i);
 			}
 		}
 		else if (cmd[i] == '"')
-		{
-			cmd = del_char(cmd, &i);
-			if (cmd[i])
-			{
-				while (cmd[i] != '"')
-				{	
-					if (cmd[i] == '$')
-						cmd = change_var(big_cmd, cmd, &i);
-					i++;
-				}
-				cmd = del_char(cmd, &i);
-			}
-		}
+			check_quote(big_cmd, cmd, &i);
 		else if (cmd[i] == '$')
 			cmd = change_var(big_cmd, cmd, &i);
 		else

@@ -6,17 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 14:40:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:30:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*error_parsing(void)
-{
-	ft_putstr_fd("Minishell: error while parsing command\n", 2);
-	return (0);
-}
 
 t_s_cmd	*set_s_cmd(char *line, int index)
 {
@@ -33,7 +27,7 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 	s_cmd->args = 0;
 	s_cmd->infile = 0;
 	s_cmd->outfile = 0;
-	line = set_redirection(s_cmd, line, index);
+	line = set_redirection(s_cmd, line, index, 0);
 	if (!line)
 	{
 		free(s_cmd);
@@ -85,25 +79,8 @@ int	is_pipe_good(char *str)
 	return (1);
 }
 
-t_cmd	*set_cmd(char *input, char **env, int nb)
+t_cmd	*initialize_cmd(t_cmd *cmd, char **env, char **cmds, int nb)
 {
-	t_cmd	*cmd;
-	char	**cmds;
-
-	if (!is_quote_good(input) || !is_pipe_good(input))
-	{
-		ft_putstr_fd("Minishell: error while parsing command\n", 2);
-		return (0);
-	}
-	cmds = ft_split_with_quote(input, '|');
-	if (!cmds)
-		return (0);
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (0);
-	cmd->s_cmds = ft_calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
-	if (!cmd->s_cmds)
-		return (0);
 	cmd->tmpin = -1;
 	cmd->tmpout = -1;
 	cmd->err_var = nb;
@@ -125,4 +102,26 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 		return (cmd);
 	}
 	return (0);
+}
+
+t_cmd	*set_cmd(char *input, char **env, int nb)
+{
+	t_cmd	*cmd;
+	char	**cmds;
+
+	if (!is_quote_good(input) || !is_pipe_good(input))
+	{
+		ft_putstr_fd("Minishell: error while parsing command\n", 2);
+		return (0);
+	}
+	cmds = ft_split_with_quote(input, '|');
+	if (!cmds)
+		return (0);
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (0);
+	cmd->s_cmds = ft_calloc(sizeof(t_s_cmd), double_size(cmds) + 1);
+	if (!cmd->s_cmds)
+		return (0);
+	return (initialize_cmd(cmd, env, cmds, nb));
 }

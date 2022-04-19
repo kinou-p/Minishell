@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 15:07:01 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 17:19:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ int	is_in_quote(char *str, int index)
 	return (open);
 }
 
+void	count_quote(char c, int *open, int *simple_quote, int *double_quote)
+{
+	if (c == '\'' && *open != 2)
+	{
+		if (!(*open))
+			(*open) = 1;
+		else if ((*open) == 1)
+			(*open) = 0;
+		(*simple_quote)++;
+	}
+	else if (c == '"' && (*open) != 1)
+	{
+		if (!(*open))
+			(*open) = 2;
+		else if ((*open) == 2)
+			(*open) = 0;
+		(*double_quote)++;
+	}
+}
+
 int	is_quote_good(char *str)
 {
 	int	simple_quote;
@@ -53,22 +73,7 @@ int	is_quote_good(char *str)
 	double_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' && open != 2)
-		{
-			if (!open)
-				open = 1;
-			else if (open == 1)
-				open = 0;
-			simple_quote++;
-		}
-		else if (str[i] == '"' && open != 1)
-		{
-			if (!open)
-				open = 2;
-			else if (open == 2)
-				open = 0;
-			double_quote++;
-		}
+		count_quote(str[i], &open, &simple_quote, &double_quote);
 		i++;
 	}
 	if (simple_quote % 2 || double_quote % 2)

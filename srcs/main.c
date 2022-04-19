@@ -6,26 +6,26 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:22:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:02:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	crtl_c(int num)
-{
-	num = 0;
-	printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
+// void	crtl_c(int num)
+// {
+// 	num = 0;
+// 	printf("\n");
+// 	rl_replace_line("", 0);
+// 	rl_on_new_line();
+// 	rl_redisplay();
+// }
 
-void	sig_quit(int num)
-{
-	(void)num;
-	ft_putstr_fd("\b \b\b \b", 1);
-}
+// void	sig_quit(int num)
+// {
+// 	(void)num;
+// 	ft_putstr_fd("\b \b\b \b", 1);
+// }
 
 char	**ft_dup_double(char **env)
 {
@@ -48,48 +48,39 @@ char	**ft_dup_double(char **env)
 	return (new_tab);
 }
 
-void	print_prompt(char **path)
+char	**read_line(char **path, char *input, t_cmd *cmd, int *err_var)
 {
-	char				*input;
-	t_cmd				*cmd;
-	int					err_var;
-	struct sigaction	test;
-
-	memset(&test, 0, sizeof(test));
-	test.sa_handler = &sig_quit;
-	test.sa_flags = 0;
-	input = 0;
-	err_var = 0;
-	cmd = 0;
-	if (sigaction(SIGQUIT, &test, 0) == -1)
+	input = readline("\033[1;31m~$ \033[0m");
+	if (!input)
 	{
-		printf("Minishell: sigaction error\n");
-		exit(1);
+		free_double(path);
+		exit_shell(cmd, 0);
 	}
-	while (1)
+	add_history(input);
+	if (ft_strlen(input) && next_space(input, 0) && input && path)
 	{
-		input = readline("\033[1;31m~$ \033[0m");
-		if (!input)
+		cmd = set_cmd(input, path, *err_var);
+		if (cmd)
 		{
 			free_double(path);
-			exit_shell(cmd, 0);
+			execute(cmd, cmd->env);
+			*err_var = cmd->err_var;
+			path = ft_dup_double(cmd->env);
+			free_cmd(cmd);
+			cmd = 0;
 		}
-		add_history(input);
-		if (ft_strlen(input) && next_space(input, 0) && input && path)
-		{
-			cmd = set_cmd(input, path, err_var);
-			if (cmd)
-			{
-				free_double(path);
-				execute(cmd, cmd->env);
-				err_var = cmd->err_var;
-				path = ft_dup_double(cmd->env);
-				free_cmd(cmd);
-				cmd = 0;
-			}
-		}
-		free(input);
 	}
+	free(input);
+	return (path);
+}
+
+void	print_prompt(char **path)
+{
+	int	err_var;
+
+	err_var = 0;
+	while (1)
+		path = read_line(path, 0, 0, &err_var);
 }
 
 int	main(int ac, char **av, char **path)
@@ -110,6 +101,7 @@ int	main(int ac, char **av, char **path)
 	}
 	printf("---MINISHELL  START---\n");
 	signal(SIGINT, crtl_c);
+	signal(SIGQUIT, sig_quit);
 	if (env)
 		ft_shlvl(env);
 	print_prompt(env);
