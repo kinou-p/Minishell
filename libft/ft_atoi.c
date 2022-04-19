@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 00:09:17 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 08:44:19 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:11:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long long	ft_atoi(const char *nptr)
 {
-	int		i;
+	int			i;
 	long long	nbr;
 	long long	minus;
 

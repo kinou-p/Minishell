@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 08:37:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:18:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@
 // Command Data Structure
 
 // Describes a simple command and arguments
-typedef struct	s_simple {
+typedef struct s_simple {
 	struct s_command	*big_cmd;
 	int					fd[2];
 	int					pipe[2];
 	int					last;
-	int 				last_pipe[2];
+	int					last_pipe[2];
 	int					child;
 	int					nb_args;
 	char				*infile;
@@ -49,23 +49,21 @@ typedef struct	s_simple {
 
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
-typedef struct	s_command {
+typedef struct s_command {
 	int					tmpin;
 	int					tmpout;
 	char				**env;
 	int					nb_s_cmd;
-	struct	s_simple	**s_cmds;
-	//char				*outfile;
-	//char				*infile;
+	struct s_simple		**s_cmds;
 	int					err_var;
-	struct	s_simple	*current_s_cmd;
+	struct s_simple		*current_s_cmd;
 	char				**path;
 }						t_cmd;
 
 char	*error_parsing(void);
 
 //main.c
-int	main();//int ac, char **av, char **path);
+int		main(int ac, char **av, char **path);
 char	**ft_dup_double(char **env);
 
 //pipe.c
@@ -79,8 +77,8 @@ char	**get_path(char **env);
 char	*get_command(char **exec, char **env);
 
 //free_cmd
-void free_cmd(t_cmd *cmd);
-void exit_shell(t_cmd *cmd, int ret);
+void	free_cmd(t_cmd *cmd);
+void	exit_shell(t_cmd *cmd, int ret);
 
 //set_quote.c
 char	*set_var(t_cmd *big_cmd, char *cmd);
@@ -89,7 +87,7 @@ int		is_quote_good(char *str);
 char	**ft_split_with_quote(char const *s, char c);
 
 //signals
-void crtl_c(int num);
+void	crtl_c(int num);
 void	sig_heredoc(int num);
 
 //redirection.c set redirection and input good
@@ -102,7 +100,7 @@ char	*get_str(char *str, int start, int end);
 char	*cut_str(char *str, int start, int end);
 int		double_size(char **tab);
 void	print_double_fd(char **tab, int fd);
- void	free_double(char **tab);
+void	free_double(char **tab);
 
 //builtins utils
 void	ft_shlvl(char **env);
@@ -117,7 +115,6 @@ int		find_variable(char *variable, t_s_cmd *cmd);
 int		find_it(char **str, char *s);
 int		check_variable(char *variable);
 int		cd_error(t_s_cmd *cmd, char *str, int i);
-int		msg_error(t_s_cmd *cmd, char *cm, char *entry, char *error, int i);
 int		size_path(char **str);
 int		check_return(t_s_cmd *cmd, int var);
 
@@ -133,7 +130,7 @@ int		ft_pwd(t_s_cmd *cmd);
 int		open_directory(t_s_cmd *cmd);//cd
 
 //parse builtin
-int	is_builtin(char *cmd);
+int		is_builtin(char *cmd);
 void	call_builtin(t_cmd *cmd);
 
 #endif

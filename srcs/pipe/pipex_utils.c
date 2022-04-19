@@ -6,13 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:01:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:34:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 char	**get_path(char **env)
 {
@@ -79,7 +77,7 @@ char	*get_command(char **exec, char **path)
 	if ((exec[0][0] == '/' || exec[0][0] == '.') && !access(exec[0], F_OK))
 		return (exec[0]);
 	else if (exec[0][0] == '/')
-		return(0);
+		return (0);
 	swap = does_access(path, exec);
 	return (swap);
 }

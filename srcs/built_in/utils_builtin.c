@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:04:12 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/18 03:15:44 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:18:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ int	 cd_error(t_s_cmd *cmd, char *str, int i)
 {
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
-	return (check_return(cmd, i));
-}
-
-int msg_error(t_s_cmd *cmd, char *cm, char *entry, char *error, int i)
-{
-	ft_putstr_fd(cm, 2);
-	ft_putstr_fd(entry, 2);
-	ft_putstr_fd(error, 2);
 	return (check_return(cmd, i));
 }
 

@@ -6,13 +6,13 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:05:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:22:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void crtl_c(int num)
+void	crtl_c(int num)
 {
 	num = 0;
 	printf("\n");
@@ -30,31 +30,31 @@ void	sig_quit(int num)
 char	**ft_dup_double(char **env)
 {
 	char	**new_tab;
-    int		i;
+	int		i;
 
-    i = 0;
+	i = 0;
 	if (!env)
 		return (0);
-    while (env[i])
-        i++;
-    new_tab = ft_calloc(sizeof(char *), i + 1);
-    i = 0;
-    while (env[i])
-    {
-        new_tab[i] = ft_strjoin(env[i], 0);
-        i++;
-    }
-    new_tab[i] = NULL;
+	while (env[i])
+		i++;
+	new_tab = ft_calloc(sizeof(char *), i + 1);
+	i = 0;
+	while (env[i])
+	{
+		new_tab[i] = ft_strjoin(env[i], 0);
+		i++;
+	}
+	new_tab[i] = NULL;
 	return (new_tab);
 }
 
 void	print_prompt(char **path)
 {
-	char	*input;
-	t_cmd	*cmd;
-	int		err_var;
-	struct	sigaction test;
-	
+	char				*input;
+	t_cmd				*cmd;
+	int					err_var;
+	struct sigaction	test;
+
 	memset(&test, 0, sizeof(test));
 	test.sa_handler = &sig_quit;
 	test.sa_flags = 0;
@@ -77,13 +77,12 @@ void	print_prompt(char **path)
 		add_history(input);
 		if (ft_strlen(input) && next_space(input, 0) && input && path)
 		{
-			cmd = set_cmd(input, path, err_var);	
+			cmd = set_cmd(input, path, err_var);
 			if (cmd)
 			{
 				free_double(path);
 				execute(cmd, cmd->env);
 				err_var = cmd->err_var;
-				
 				path = ft_dup_double(cmd->env);
 				free_cmd(cmd);
 				cmd = 0;
@@ -95,8 +94,8 @@ void	print_prompt(char **path)
 
 int	main(int ac, char **av, char **path)
 {
-	char **env;
-	
+	char	**env;
+
 	if (!isatty(0))
 	{
 		printf("Not today\n");

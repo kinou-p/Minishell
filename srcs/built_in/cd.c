@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/17 10:05:05 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:32:13 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,11 +159,10 @@ int	open_directory(t_s_cmd *cmd)
 		}
 		else
 		{
-			return (msg_error(cmd, "Minishell: cd: ", cmd->args[1], ": No such directory\n", 1));
-			// ft_putstr_fd("Minishell: cd: ", 2);
-			// ft_putstr_fd(cmd->args[1], 2);
-			// ft_putstr_fd(": No such directory\n", 2);
-			// return ;//(1);
+			ft_putstr_fd("Minishell: cd: ", 2);
+			ft_putstr_fd(cmd->args[1], 2);
+			ft_putstr_fd(": No such directory\n", 2);
+			return (check_return(cmd, 1));
 		}
 	}
 	return (check_return(cmd, 0));

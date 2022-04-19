@@ -70,10 +70,11 @@ char	*next_line(char *save, int *end, int fd)
 
 char	*get_next_line(int fd)
 {
-	char	*save = NULL;
-	int			*end;
-	char		*line;
+	char	*save;
+	int		*end;
+	char	*line;
 
+	save = 0;
 	line = 0;
 	if (fd < 0)
 		return (0);
