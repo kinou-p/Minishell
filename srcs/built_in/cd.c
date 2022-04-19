@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syd <syd@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:15:09 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:56:35 by syd              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	del_one(t_s_cmd *cmd)
-{
-	int		i;
-	int		j;
-	char	*r;
-
-	if (find_it(cmd->big_cmd->env, "PWD") != -1)
-	{
-		j = find_it(cmd->big_cmd->env, "PWD");
-		i = ft_strlen(cmd->big_cmd->env[j]);
-		while (cmd->big_cmd->env[j][i] && cmd->big_cmd->env[j][i] != '/')
-			i--;
-		r = ft_substr(cmd->big_cmd->env[j], 0, i);
-		free (cmd->big_cmd->env[j]);
-		if (r)
-			cmd->big_cmd->env[j] = ft_strdup(r);
-		else
-			cmd->big_cmd->env[j] = ft_strdup("PWD=/");
-		if (r)
-			free(r);
-	}
-}
 
 void	add_one(t_s_cmd *cmd)
 {
@@ -62,51 +39,59 @@ void	change_path(t_s_cmd *cmd)
 	add_one(cmd);
 }
 
-void	reboot_pwd(t_s_cmd *cmd, int i)
-{
-	char	*str;
-
-	while (i > 3)
-	{
-		if (chdir("..") == 0)
-			del_one(cmd);
-		i--;
-	}
-	str = ft_substr(cmd->args[1], 2, ft_strlen(cmd->args[1]));
-	cmd->args[1] = ft_strdup(str);
-	free(str);
-}
-
-void	check_home(t_s_cmd *cmd, char *p)
+void	check_home(char *p, char **env)
 {
 	int	home;
 	int	len_home;
 	int	old_pwd;
 	int	pwd;
 
-	home = find_it(cmd->big_cmd->env, "HOME");
-	len_home = ft_strlen(cmd->big_cmd->env[home]);
-	old_pwd = find_it(cmd->big_cmd->env, "OLDPWD");
-	pwd = find_it(cmd->big_cmd->env, "PWD");
-	p = ft_substr(cmd->big_cmd->env[home], 5, ft_strlen(cmd->big_cmd->env[len_home]));
+	home = find_it(env, "HOME");
+	len_home = ft_strlen(env[home]);
+	old_pwd = find_it(env, "OLDPWD");
+	pwd = find_it(env, "PWD");
+	p = ft_substr(env[home], 5, ft_strlen(env[len_home]));
 	if (chdir(p) == 0)
 	{
-		if (find_it(cmd->big_cmd->env, "PWD") != -1)
+		if (find_it(env, "PWD") != -1)
 		{
-			if (find_it(cmd->big_cmd->env, "OLDPWD") != -1)
-				cmd->big_cmd->env[old_pwd] = ft_strjoin("OLD", cmd->big_cmd->env[pwd]);
-			cmd->big_cmd->env[pwd] = ft_strjoin("PWD=", p);
+			if (find_it(env, "OLDPWD") != -1)
+			{
+				free(env[old_pwd]);
+				env[old_pwd] = ft_strjoin("OLD", env[pwd]);
+			}
+			free(env[pwd]);
+			env[pwd] = ft_strjoin("PWD=", p);
 		}
 	}
 	free(p);
+}
+
+int	check_dir(t_s_cmd *cmd)
+{
+	if (chdir(cmd->args[1]) == 0)
+	{
+		if (find_it(cmd->big_cmd->env, "PWD") != -1)
+			change_path(cmd);
+	}
+	else
+	{
+		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd(": No such directory\n", 2);
+		return (check_return(cmd, 1));
+	}
+	return (check_return(cmd, 0));
 }
 
 int	open_directory(t_s_cmd *cmd)
 {
 	char	*p;
 	int		j;
+	int		i;
 
 	p = NULL;
+	i = 0;
 	if (find_it(cmd->big_cmd->env, "PWD") != -1)
 		j = size_path(cmd->big_cmd->env);
 	if (cmd->nb_args > 2)
@@ -115,24 +100,9 @@ int	open_directory(t_s_cmd *cmd)
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 			return (cd_error(cmd, "Minishell: cd: HOME not set", 1));
-		check_home(cmd, p);
+		check_home(p, cmd->big_cmd->env);
 	}
-	if (tab_len(cmd->args) == 2)
-	{
-		if (cmd->args[1][0] == '~')
-			reboot_pwd(cmd, j);
-		if (chdir(cmd->args[1]) == 0)
-		{
-			if (find_it(cmd->big_cmd->env, "PWD") != -1)
-				change_path(cmd);
-		}
-		else
-		{
-			ft_putstr_fd("Minishell: cd: ", 2);
-			ft_putstr_fd(cmd->args[1], 2);
-			ft_putstr_fd(": No such directory\n", 2);
-			return (check_return(cmd, 1));
-		}
-	}
-	return (check_return(cmd, 0));
+	else if (cmd->nb_args == 2)
+		i = check_dir(cmd);
+	return (check_return(cmd, i));
 }
