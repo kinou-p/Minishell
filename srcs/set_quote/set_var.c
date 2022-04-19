@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 16:52:00 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:55:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	return (ret);
 }
 
-void	check_quote(t_cmd *big_cmd, char *cmd, int *i)
+char	*check_quote(t_cmd *big_cmd, char *cmd, int *i)
 {
 	cmd = del_char(cmd, i);
 	if (cmd[*i])
@@ -89,7 +89,8 @@ void	check_quote(t_cmd *big_cmd, char *cmd, int *i)
 			(*i)++;
 		}
 		cmd = del_char(cmd, i);
-	}	
+	}
+	return (cmd);
 }
 
 char	*set_var(t_cmd *big_cmd, char *cmd)
@@ -110,7 +111,7 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 			}
 		}
 		else if (cmd[i] == '"')
-			check_quote(big_cmd, cmd, &i);
+			cmd = check_quote(big_cmd, cmd, &i);
 		else if (cmd[i] == '$')
 			cmd = change_var(big_cmd, cmd, &i);
 		else
