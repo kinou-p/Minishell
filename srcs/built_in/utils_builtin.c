@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:04:12 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:20:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 19:58:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	find_it(char **str, char *s)
 	int	i;
 
 	i = 0;
-	while (str[i] && (ft_strncmp(str[i], s, ft_strlen(s)) || (!ft_strncmp(str[i], s, ft_strlen(s)) && (str[i][ft_strlen(s)] != '=' && str[i][ft_strlen(s)] != 0))))
+	while (str[i] && (ft_strncmp(str[i], s, ft_strlen(s))
+			|| (!ft_strncmp(str[i], s, ft_strlen(s))
+				&& (str[i][ft_strlen(s)] != '=' && str[i][ft_strlen(s)] != 0))))
 		i++;
 	if (str[i] == NULL)
 		return (-1);
