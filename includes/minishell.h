@@ -105,6 +105,7 @@ void	print_double_fd(char **tab, int fd);
  void	free_double(char **tab);
 
 //builtins utils
+void	ft_shlvl(char **env);
 void	register_env(t_s_cmd *cmd, char *variable);
 void	ft_env(t_s_cmd *cmd, char **env);
 int		find_pwd(t_s_cmd *cmd);

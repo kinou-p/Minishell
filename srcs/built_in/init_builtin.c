@@ -12,28 +12,30 @@
 
 #include "../../includes/minishell.h"
 
-// void	join_variable(t_s_cmd *cmd, char **v_v, int size, char **tab)
-// {
-// 	char *str;
-// 	char *tmp;
-//
-// 	while (tab[size])
-// 	{
-// 		cmd->big_cmd->env[size] = ft_strdup(tab[size]);
-// 		// printf("tmp----%s\n", tmp[size]);
-// 		// printf("envy---%s\n", cmd->big_cmd->env[size]);
-// 		size++;
-// 	}
-// 	str = ft_strjoin(v_v[0], "=");
-// 	tmp = ft_strdup(str);
-// 	free(str);
-// 	str = ft_strjoin(tmp,v_v[1]);
-// 	cmd->big_cmd->env[size] = ft_strdup(str);
-// 	printf("ici\n");
-// 	free(str);
-// 	free(tmp);
-// 	cmd->big_cmd->env[size + 1] = NULL;
-// }
+void	ft_shlvl(char **env)
+{
+	int i;
+	int index;
+	char *str;
+
+	i = 0;
+	index = find_it(env, "SHLVL");
+	if (index != -1)
+	{
+		while (env[index][i] && env[index][i] != '=')
+			i++;
+		str = ft_substr(env[index], i + 1, ft_strlen(env[index]));
+		i = ft_atoi(str);
+		free (str);
+		i += 1;
+		str = ft_itoa(i);
+		free (env[index]);
+		env[index] = ft_strjoin("SHLVL=", str);
+		free (str);
+		printf("%s\n", env[index]);
+
+	}
+}
 
 void	register_env(t_s_cmd *cmd, char *variable)
 {
