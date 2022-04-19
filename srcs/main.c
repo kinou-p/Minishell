@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/18 15:19:51 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 06:46:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	**ft_dup_double(char **env)
     int		i;
 
     i = 0;
+	if (!env)
+		return (0);
     while (env[i])
         i++;
     new_tab = ft_calloc(sizeof(char *), i + 1);
@@ -90,8 +92,8 @@ void	print_prompt(char **path)
 			free_double(path);
 			exit_shell(cmd, 0);
 		}
-		add_history(input);	
-		if (ft_strlen(input) && next_space(input, 0) && input)
+		add_history(input);
+		if (ft_strlen(input) && next_space(input, 0) && input && path)
 		{
 			cmd = set_cmd(input, path, err_var);
 			//path = ft_dup_double(path);
@@ -129,6 +131,7 @@ int	main(int ac, char **av, char **path)
 		printf("Not today\n");
 		return (0);
 	}
+	//print_double_fd(path, 1);
 	env = ft_dup_double(path);
 	av = 0;
 	if (ac != 1)
@@ -136,7 +139,7 @@ int	main(int ac, char **av, char **path)
 		ft_putstr_fd("Error: too much arguments\n", 2);
 		return (0);
 	}
-	printf("---MINISHELL  START---\n"); 
+	printf("---MINISHELL  START---\n");
 	signal(SIGINT, crtl_c);
 	//signal(SIGQUIT, sig_quit);
 	print_prompt(env);
