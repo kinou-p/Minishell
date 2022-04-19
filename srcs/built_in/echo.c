@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 20:52:56 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:19:31 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_echo(t_s_cmd *d)
 {
-	int	i;
-	size_t j;
-	int	is_option;
+	int		i;
+	size_t	j;
+	int		is_option;
 
 	i = 1;
 	is_option = 0;
@@ -32,6 +32,7 @@ int	ft_echo(t_s_cmd *d)
 		i++;
 	}
 	if (d->args[i])
+	{
 		while (d->args[i])
 		{
 			printf("%s", d->args[i]);
@@ -39,6 +40,7 @@ int	ft_echo(t_s_cmd *d)
 				printf(" ");
 			i++;
 		}
+	}
 	if (is_option == 0)
 		printf("\n");
 	return (check_return(d, 0));

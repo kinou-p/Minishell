@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:09:47 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/18 03:10:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:22:34 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	print_env(t_cmd *cmd)
 
 int	ft_pwd(t_s_cmd *cmd)
 {
-	char p[1024];
-	char *str;
+	char	p[1024];
+	char	*str;
 
 	str = getcwd(p, sizeof(p));
 	if (!str)

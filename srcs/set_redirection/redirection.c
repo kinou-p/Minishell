@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:04:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:07:33 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*cut_str(char *str, int start, int end)
 
 char	*get_word(char *str, int start)
 {
-	char *new;
+	char	*new;
 	int		i;
 
 	i = 0;
@@ -56,7 +56,7 @@ char	*get_word(char *str, int start)
 char	*set_input(char *line, t_s_cmd *cmd, int index)
 {
 	int	i;
-	int word_index;
+	int	word_index;
 
 	word_index = 0;
 	i = index;
@@ -84,10 +84,10 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 	return (line);
 }
 
-char *set_output(char *line, t_s_cmd *cmd, int index)
+char	*set_output(char *line, t_s_cmd *cmd, int index)
 {
 	int	i;
-	int word_index;
+	int	word_index;
 
 	word_index = 0;
 	i = index;
@@ -107,7 +107,7 @@ char *set_output(char *line, t_s_cmd *cmd, int index)
 
 char	*ft_input(char *line, t_s_cmd *cmd, int index)
 {
-	int i;
+	int		i;
 	char	next;
 
 	i = index;
@@ -129,7 +129,7 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 
 char	*ft_output(char *line, t_s_cmd *cmd, int index)
 {
-	int i;
+	int		i;
 	char	next;
 
 	i = index;
@@ -149,7 +149,7 @@ char	*ft_output(char *line, t_s_cmd *cmd, int index)
 
 int	set_file(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
@@ -166,7 +166,7 @@ int	set_file(char *file)
 
 char	**add_line(char **tab, char *line)
 {
-	int size;
+	int		size;
 	char	**ret;
 	int		i;
 
@@ -175,7 +175,7 @@ char	**add_line(char **tab, char *line)
 	ret = 0;
 	if (tab)
 		size = double_size(tab);
-	ret = ft_calloc(size + 2, sizeof(char*));
+	ret = ft_calloc(size + 2, sizeof(char *));
 	if (!ret)
 		return (0);
 	while (tab && tab[i])
@@ -187,7 +187,7 @@ char	**add_line(char **tab, char *line)
 	ret[i + 1] = 0;
 	if (tab)
 		free_double(tab);
-	return(ret);
+	return (ret);
 }
 
 char	*set_heredoc(int index, char **in)
@@ -217,9 +217,9 @@ char	*set_heredoc(int index, char **in)
 
 void	sig_heredoc(int num)
 {
-	num = 0;
-	struct	sigaction base;
-	
+	struct sigaction	base;
+
+	(void)num;
 	memset(&base, 0, sizeof(base));
 	base.sa_handler = &crtl_c;
 	base.sa_flags = 0;
@@ -233,14 +233,14 @@ void	sig_heredoc(int num)
 
 int	wait_prompt(t_s_cmd *cmd, int index)
 {
-	char	*input;
-	int		i;
-	char	**history;
-	char	*in;
-	char	*dup;
-	char	*del;
-	struct	sigaction test;
-	
+	char				*input;
+	int					i;
+	char				**history;
+	char				*in;
+	char				*dup;
+	char				*del;
+	struct sigaction	test;
+
 	memset(&test, 0, sizeof(test));
 	test.sa_handler = &sig_heredoc;
 	test.sa_flags = 0;
@@ -289,12 +289,12 @@ int	wait_prompt(t_s_cmd *cmd, int index)
 
 char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 {
-	int i;
-	
-	i= 0;
+	int	i;
+
+	i = 0;
 	while (line[i])
 	{
-		if(line[i] == '<')
+		if (line[i] == '<')
 		{
 			if (!is_in_quote(line, i))
 			{
@@ -312,7 +312,7 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 				i = 0;
 			}
 		}
-		else if(line[i] == '>')
+		else if (line[i] == '>')
 		{
 			if (!is_in_quote(line, i))
 			{
@@ -327,5 +327,5 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index)
 		else if (line[i] && line[i] != '<' && line[i] != '>')
 			i++;
 	}
-	return(line);
+	return (line);
 }

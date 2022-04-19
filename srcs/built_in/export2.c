@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:58:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:18:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_swap(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -23,8 +23,8 @@ void	ft_swap(char **a, char **b)
 
 void	sort_tab(char **av)
 {
-	int i;
-	int x;
+	int	i;
+	int	x;
 
 	i = 0;
 	while (av[i])
@@ -50,21 +50,18 @@ void	print_export(char *tmp)
 	str1 = ft_substr(tmp, 0, find_len(tmp, i, '='));
 	i = find_len(tmp, 0, '=') + 1;
 	str2 = ft_substr(tmp, i, ft_strlen(tmp));
-
-	// str2 = ft_substr(tmp, i, find_len(tmp, i, '\0'));
 	printf("declare -x %s", str1);
 	if (next_space(str2, 0) != '\0')
 		printf("=\"%s\"", str2);
 	printf("\n");
 	free(str1);
 	free(str2);
-
 }
 
 void	lone_export(t_s_cmd *cmd)
 {
 	char	**tmp;
-	int i;
+	int		i;
 
 	i = 0;
 	tmp = cmd->big_cmd->env;

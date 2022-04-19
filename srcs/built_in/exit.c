@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 11:23:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 09:04:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:17:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_exit(t_s_cmd *cmd)
 	}
 	else if (cmd->nb_args == 1)
 		exit_shell(cmd->big_cmd, 0);
-	
 	while (cmd->args[1][++i])
 	{
 		if ((!ft_isdigit(cmd->args[1][i]) && !(cmd->args[1][i] == '-' && ft_isdigit(cmd->args[1][i + 1]))))

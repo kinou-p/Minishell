@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:26:29 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:59:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:18:52 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	tmp[b] = NULL;
 	free_double(cmd->big_cmd->env);
 	a = 0;
-	// cmd->big_cmd->env = malloc(sizeof(char *) * (tab_len(tmp) + 1));
 	if (!cmd->big_cmd->env)
 		printf("no env\n");
 	cmd->big_cmd->env = ft_dup_double(tmp);
@@ -56,7 +55,6 @@ int	find_variable(char *variable, t_s_cmd *cmd)
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (check_return(cmd, 2));
-
 	}
 	if (i == tab_len(cmd->big_cmd->env))
 		return (check_return(cmd, 2));

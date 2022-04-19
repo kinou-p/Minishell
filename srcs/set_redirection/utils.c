@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:35:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/09 19:16:39 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:07:55 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	double_size(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (tab == 0)

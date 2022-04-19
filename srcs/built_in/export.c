@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 23:26:59 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:59:38 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:22:08 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,22 @@ int	check_variable(char *variable)
 
 	i = 0;
 	if (!ft_isalpha(variable[i]) && variable[i] != '_')
-		return(1);
+		return (1);
 	i++;
-	while(variable[i] && variable[i] != '=')
+	while (variable[i] && variable[i] != '=')
 	{
-		if(!ft_isalnum(variable[i]) && variable[i] != '_')
-			return(1);
+		if (!ft_isalnum(variable[i]) && variable[i] != '_')
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
-
-// char	*check_value(char *value)
-// {
-// 	int	i;
-// 	char *dest;
-
-// 	i = find_len(value, 0, '=') + 1;
-// 	if (value[i] == '"')
-// 	{
-// 		printf("wait\n");
-// 		dest = ft_strdup(" ");
-// 		// dest = define_double_quotes(value);
-// 	}
-// 	else{
-// 		dest = ft_substr(value, 0, find_len(value, 0, ' '));
-// 		// printf("brrrrrrr------\n");
-
-// 	}
-// 	return (dest);
-// }
 
 int	ft_export_variable(t_s_cmd *cmd, char *variable)
 {
-	char *dest;
-	char *unset;
-	int index;
+	char	*dest;
+	char	*unset;
+	int		index;
 
 	if (check_variable(variable) == 1)
 	{
@@ -61,7 +41,6 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (check_return(cmd, 1));
-
 	}
 	dest = ft_strdup(variable);
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
@@ -84,17 +63,19 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 int	ft_export(t_s_cmd *cmd)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 1;
 	j = 0;
 	if (!cmd->args[i])
 		lone_export(cmd);
 	else if (cmd->args[i])
+	{
 		while (cmd->args[i])
 		{
 			j = ft_export_variable(cmd, cmd->args[i]);
 			i++;
 		}
+	}
 	return (j);
 }

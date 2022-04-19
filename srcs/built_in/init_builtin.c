@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:17:01 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/09 04:55:48 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:17:02 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_shlvl(char **env)
 {
-	int i;
-	int index;
-	char *str;
+	int		i;
+	int		index;
+	char	*str;
 
 	i = 0;
 	index = find_it(env, "SHLVL");
@@ -33,36 +33,27 @@ void	ft_shlvl(char **env)
 		env[index] = ft_strjoin("SHLVL=", str);
 		free (str);
 		printf("%s\n", env[index]);
-
 	}
 }
 
 void	register_env(t_s_cmd *cmd, char *variable)
 {
-	char	**tmp = NULL;
-	int i;
-	i = 0;
+	char	**tmp;
+	int		i;
 
-	// tmp = NULL;
-	// printf("TABLEN %d", tab_len(cmd->big_cmd->env));
+	i = 0;
+	tmp = NULL;
 	tmp = (char **)malloc(sizeof(char *) * (tab_len(cmd->big_cmd->env) + 2));
-	if(!tmp)
+	if (!tmp)
 		printf("no tmp\n");
 	while (cmd->big_cmd->env[i])
 	{
 		tmp[i] = ft_strdup(cmd->big_cmd->env[i]);
-		// printf("ici\n");
-		// printf("%s\n", "let me in");
 		i++;
 	}
-	// printf("i: %d %s\n",i,tmp[i]);
-	// printf("%s\n", "brrrrrrr");
 	tmp[i] = ft_strdup(variable);
 	tmp[i + 1] = NULL;
-	// printf("debut %p\n", tmp[2]);
-	// printf("1--------------------\n");
 	free_double(cmd->big_cmd->env);
-	// printf("1--------------------\n");
 	cmd->big_cmd->env = (char **)malloc(sizeof(char *) * (tab_len(tmp) + 1));
 	if (!cmd->big_cmd->env)
 		printf("no env\n");
@@ -70,27 +61,11 @@ void	register_env(t_s_cmd *cmd, char *variable)
 	while (tmp[i])
 	{
 		cmd->big_cmd->env[i] = ft_strdup(tmp[i]);
-		// if (tmp[size])
-		// 	free(tmp[size]);
-		// printf("tmp----%s\n", tmp[size]);
-		// printf("envy---%s\n", cmd->big_cmd->env[size]);
 		i++;
 	}
 	cmd->big_cmd->env[i] = NULL;
-	// printf("2--------------------\n");
 	if (tmp)
 		free_double(tmp);
-	// printf("2--------------------\n");
-	// int i = 0;
-	// while (tmp[i])
-	// {
-	// 	printf("nano");
-	// 	free(tmp[i]);
-	// 	i++;
-	// }
-	// if(tmp)
-	// 	free(tmp);
-	// join_variable(cmd, variable, size, tmp);
 }
 
 void	ft_env(t_s_cmd *cmd, char **env)
@@ -110,16 +85,6 @@ void	ft_env(t_s_cmd *cmd, char **env)
 	cmd->big_cmd->env[i] = NULL;
 }
 
-// int		find_pwd(t_s_cmd *cmd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (cmd->big_cmd->env[i] && ft_strncmp(cmd->big_cmd->env[i], "PWD=", 4) != 0)
-// 		i++;
-// 	return (i);
-// }
-
 void	init_s_cmd(t_s_cmd *cmd, char **env)
 {
 	ft_env(cmd, env);
@@ -127,7 +92,7 @@ void	init_s_cmd(t_s_cmd *cmd, char **env)
 
 int	tab_len(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])

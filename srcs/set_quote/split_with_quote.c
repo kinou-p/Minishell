@@ -6,22 +6,21 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 19:50:50 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:03:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:58:16 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int next_quote(const char *s, int i)
+int	next_quote(const char *s, int i)
 {
-	int simple_quote;
-	int double_quote;
+	int	simple_quote;
+	int	double_quote;
 
 	simple_quote = 0;
 	double_quote = 0;
 	if (s[i] == '"' || s[i] == '\'')
 	{
-		
 		if (s[i] == '"')
 			double_quote = 1;
 		else if (s[i] == '\'')

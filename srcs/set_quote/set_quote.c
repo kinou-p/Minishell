@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 12:03:24 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:00:38 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_in_quote(char *str, int index)
 {
-	int i;
+	int	i;
 	int	open;
 
 	open = 0;
@@ -42,7 +42,7 @@ int	is_in_quote(char *str, int index)
 
 int	is_quote_good(char *str)
 {
-	int simple_quote;
+	int	simple_quote;
 	int	double_quote;
 	int	open;
 	int	i;
@@ -72,14 +72,14 @@ int	is_quote_good(char *str)
 		i++;
 	}
 	if (simple_quote % 2 || double_quote % 2)
-		return (0); 
+		return (0);
 	return (1);
 }
 
 char	*del_char(char *str, int *index)
 {
-	char *swap;
-	char *swap2;
+	char	*swap;
+	char	*swap2;
 
 	swap = 0;
 	swap = ft_strdup(str + *index + 1);
@@ -116,12 +116,12 @@ char	*get_var(t_cmd	*cmd, char *var_name)
 
 char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 {
-	int	i;
+	int		i;
 	char	*swap;
 	char	*swap2;
 	char	*ret;
 	char	*var;
-	
+
 	i = *index + 1;
 	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_' || cmd[i] == '?'))
 		i++;
@@ -143,8 +143,8 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 
 char	*set_var(t_cmd *big_cmd, char *cmd)
 {
-	int i;
-	char *del;
+	int		i;
+	char	*del;
 
 	i = 0;
 	while (cmd[i])
@@ -169,7 +169,7 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 				while (cmd[i] != '"')
 				{	
 					if (cmd[i] == '$')
-						cmd = change_var(big_cmd, cmd, &i);	
+						cmd = change_var(big_cmd, cmd, &i);
 					i++;
 				}
 				cmd = del_char(cmd, &i);
@@ -183,16 +183,15 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 	return (cmd);
 }
 
-int parse_quote(t_cmd *cmd)
+int	parse_quote(t_cmd *cmd)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 	char	*swap;
-	
+
 	i = 0;
 	while (cmd->s_cmds[i])
-	{
-		
+	{		
 		j = -1;
 		while (cmd->s_cmds[i]->args[++j])
 		{
