@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 16:58:40 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 07:01:35 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 08:09:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*does_access(char **path, char **exec)
 		swap = ft_strjoin(swap, exec[0]);
 		free(cmd);
 	}
-	//if (path[i])
+	if (path[i])
 		return (swap);
 	free(swap);
 	return (0);

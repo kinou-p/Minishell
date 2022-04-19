@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/11 03:21:27 by apommier          #+#    #+#             */
-/*   Updated: 2022/02/14 00:27:42 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 08:44:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strjoin(char *save, char *s2);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
-long			ft_atoi(const char *nptr);
+long long		ft_atoi(const char *nptr);
 void			*ft_calloc(size_t nmenb, size_t size);
 char			*ft_strdup(const char *s);
 

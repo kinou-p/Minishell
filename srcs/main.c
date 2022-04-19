@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 07:24:47 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 08:23:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void crtl_c(int num)
 
 void	sig_quit(int num)
 {
-	num = 0;
+	(void)num;
 	ft_putstr_fd("\b \b\b \b", 1);
 	//printf("quit num= %d\n", num);
 	//exit(0);

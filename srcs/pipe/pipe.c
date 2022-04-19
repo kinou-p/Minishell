@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 07:01:19 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 08:26:07 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ int	wait_exit(t_cmd *cmd)
 			else if (WIFSIGNALED(status))
 			{
 				//printf("return by signal cmd = -%s-\n", cmd->s_cmds[i]->cmd);
+				//printf("signal= %d\n", WTERMSIG(status));
 				if (WTERMSIG(status) != 13)
 					cmd->err_var = WTERMSIG(status);
+				if (WTERMSIG(status) == 3)
+					ft_putstr_fd("^\\Quit", 1);	
 				//if (cmd->err_var == 2)
 				ft_putstr_fd("\b\b\b\b\b", 1);
 			}
