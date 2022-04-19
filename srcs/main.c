@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 06:46:37 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 07:24:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ int	main(int ac, char **av, char **path)
 	printf("---MINISHELL  START---\n");
 	signal(SIGINT, crtl_c);
 	//signal(SIGQUIT, sig_quit);
-	ft_shlvl(env);
+	if (env)
+		ft_shlvl(env);
 	print_prompt(env);
 	return (0);
 }
