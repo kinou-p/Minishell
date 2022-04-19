@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syd <syd@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:17:01 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:17:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 23:27:08 by syd              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,7 @@ void	register_env(t_s_cmd *cmd, char *variable)
 	tmp[i] = ft_strdup(variable);
 	tmp[i + 1] = NULL;
 	free_double(cmd->big_cmd->env);
-	cmd->big_cmd->env = (char **)malloc(sizeof(char *) * (tab_len(tmp) + 1));
-	if (!cmd->big_cmd->env)
-		printf("no env\n");
-	i = 0;
-	while (tmp[i])
-	{
-		cmd->big_cmd->env[i] = ft_strdup(tmp[i]);
-		i++;
-	}
-	cmd->big_cmd->env[i] = NULL;
+	cmd->big_cmd->env = ft_dup_double(tmp);
 	if (tmp)
 		free_double(tmp);
 }

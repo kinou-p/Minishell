@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syd <syd@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 23:26:59 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:22:08 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 23:11:33 by syd              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ int	check_variable(char *variable)
 	return (0);
 }
 
+int	reatribute_variable(t_s_cmd *cmd, int index, char *dest, char *unset)
+{
+	free (cmd->big_cmd->env[index]);
+	cmd->big_cmd->env[index] = dest;
+	free(unset);
+	return (check_return(cmd, 0));
+}
+
 int	ft_export_variable(t_s_cmd *cmd, char *variable)
 {
 	char	*dest;
@@ -46,12 +54,7 @@ int	ft_export_variable(t_s_cmd *cmd, char *variable)
 	unset = ft_substr(dest, 0, find_len(dest, 0, '='));
 	index = find_it(cmd->big_cmd->env, unset);
 	if (index != -1)
-	{
-		free (cmd->big_cmd->env[index]);
-		cmd->big_cmd->env[index] = dest;
-		free(unset);
-		return (check_return(cmd, 0));
-	}
+		return (reatribute_variable(cmd, index, dest, unset));
 	register_env(cmd, dest);
 	if (dest)
 		free(dest);

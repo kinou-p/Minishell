@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syd <syd@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:26:29 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:18:52 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/19 23:59:16 by syd              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,13 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	{
 		if (a != i)
 		{
-			tmp[b] = ft_substr(cmd->big_cmd->env[a], 0, ft_strlen(cmd->big_cmd->env[a]));
+			tmp[b] = ft_strdup(cmd->big_cmd->env[a]);
 			b++;
 		}
 		a++;
 	}
 	tmp[b] = NULL;
 	free_double(cmd->big_cmd->env);
-	a = 0;
-	if (!cmd->big_cmd->env)
-		printf("no env\n");
 	cmd->big_cmd->env = ft_dup_double(tmp);
 	if (tmp)
 		free_double(tmp);
