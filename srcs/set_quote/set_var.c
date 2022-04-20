@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 19:55:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:36:18 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*set_var(t_cmd *big_cmd, char *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while (cmd[0] && cmd[i])
 	{
 		if (cmd[i] == '\'')
 		{	
