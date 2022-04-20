@@ -6,26 +6,11 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 04:45:06 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:53:03 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// void	crtl_c(int num)
-// {
-// 	num = 0;
-// 	printf("\n");
-// 	rl_replace_line("", 0);
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// }
-
-// void	sig_quit(int num)
-// {
-// 	(void)num;
-// 	ft_putstr_fd("\b \b\b \b", 1);
-// }
 
 char	**ft_dup_double(char **env)
 {

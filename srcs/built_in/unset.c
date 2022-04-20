@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:26:29 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 00:31:56 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:56:12 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	unset_variable(t_s_cmd *cmd, int i)
 	b = 0;
 	tmp = malloc(sizeof(char *) * tab_len(cmd->big_cmd->env));
 	if (!tmp)
-		printf("no tmp\n");
+		return ;
 	while (cmd->big_cmd->env[a])
 	{
 		if (a != i)

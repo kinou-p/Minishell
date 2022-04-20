@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 17:17:01 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 00:31:45 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:56:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_shlvl(char **env)
 		free (env[index]);
 		env[index] = ft_strjoin("SHLVL=", str);
 		free (str);
-		printf("%s\n", env[index]);
 	}
 }
 
@@ -45,7 +44,7 @@ void	register_env(t_s_cmd *cmd, char *variable)
 	tmp = NULL;
 	tmp = (char **)malloc(sizeof(char *) * (tab_len(cmd->big_cmd->env) + 2));
 	if (!tmp)
-		printf("no tmp\n");
+		return ;
 	while (cmd->big_cmd->env[i])
 	{
 		tmp[i] = ft_strdup(cmd->big_cmd->env[i]);

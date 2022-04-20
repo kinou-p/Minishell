@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:25:16 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 19:36:02 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:55:14 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sig_heredoc(int num)
 	ft_putchar_fd('\n', 1);
 	if (sigaction(SIGINT, &base, 0) == -1)
 	{
-		printf("sigaction error2\n");
+		printf("Minishell: sigaction error2\n");
 		return ;
 	}
 }
@@ -37,7 +37,7 @@ void	change_signal(void)
 	test.sa_flags = 0;
 	if (sigaction(SIGINT, &test, 0) == -1)
 	{
-		printf("sigaction error\n");
+		printf("Minishell: sigaction error\n");
 		exit(1);
 	}
 }
