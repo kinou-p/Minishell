@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
+#    By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/20 16:58:56 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/20 17:39:51 by sadjigui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS	= srcs/main.c\
 		srcs/set_redirection/set_output.c\
 		srcs/built_in/unset.c\
 		srcs/built_in/cd.c\
-		srcs/built_in/cd_erreur.c\
+		srcs/built_in/cd_utils.c\
 		srcs/built_in/echo.c\
 		srcs/built_in/export.c\
 		srcs/built_in/utils_builtin.c\
