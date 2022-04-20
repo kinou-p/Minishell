@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 14:36:18 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:48:26 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	char	*var;
 
 	i = *index + 1;
-	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_' || cmd[i] == '?'))
+	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_' || cmd[i] == '?' || cmd[i] == '$'))
 		i++;
 	swap = ft_substr(cmd, *index + 1, i - *index - 1);
 	var = get_var(big_cmd, swap);
