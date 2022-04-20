@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 16:35:37 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 14:29:10 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:49:47 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ char	*cut_str(char *str, int start, int end)
 		swap = ft_strjoin(&str[end], 0);
 	str[start] = 0;
 	str = ft_strjoin(str, swap);
-	//free(del);
-	free(swap);
+	free(del);
+	if (swap)
+		free(swap);
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 13:52:56 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:22:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	set_file(char *file, int type)
 	int	fd;
 	
 	if (type)
-		fd = open(file, O_APPEND | O_CREAT, 0644);
+		fd = open(file, O_APPEND | O_CREAT, 0666);
 	else
-		fd = open(file, O_TRUNC | O_CREAT, 0644);
+		fd = open(file, O_TRUNC | O_CREAT, 0666);
 	if (fd == -1)
 	{
 		ft_putstr_fd("Minishell: ", 2);
