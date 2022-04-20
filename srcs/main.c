@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 16:02:18 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:45:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**read_line(char **path, char *input, t_cmd *cmd, int *err_var)
 		if (cmd)
 		{
 			free_double(path);
-			execute(cmd, cmd->env);
+			execute(cmd);
 			*err_var = cmd->err_var;
 			path = ft_dup_double(cmd->env);
 			free_cmd(cmd);

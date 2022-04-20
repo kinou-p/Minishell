@@ -6,13 +6,13 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/19 19:29:06 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/20 04:44:00 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 SRCS	= srcs/main.c\
-		srcs/pipe/pipe.c\
+		srcs/pipe/execution.c\
 		srcs/pipe/pipex_utils.c\
 		srcs/pipe/exec_utils.c\
 		srcs/set_cmd/free_cmd.c\

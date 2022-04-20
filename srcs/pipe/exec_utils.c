@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:36:53 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 18:13:29 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:50:19 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exit_child(t_cmd *cmd, int exit_pid, int status, int i)
 				cmd->err_var = WTERMSIG(status);
 			ft_putstr_fd("\b\b\b\b\b", 1);
 			if (WTERMSIG(status) == 3)
-				ft_putstr_fd("^\\Quit", 1);
+				ft_putstr_fd("^\\Quit\n", 1);
 		}
 	}
 }
@@ -59,7 +59,8 @@ void	check_access(t_cmd *cmd)
 	if (!cmd->current_s_cmd->cmd || access(cmd->current_s_cmd->cmd, F_OK))
 	{
 		ft_putstr_fd("Minishell: command not found: ", 2);
-		ft_putstr_fd(cmd->current_s_cmd->cmd, 2);
+		if (cmd->current_s_cmd->cmd)
+			ft_putstr_fd(cmd->current_s_cmd->cmd, 2);
 		ft_putstr_fd("\n", 2);
 		close(0);
 		close(1);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/02 18:51:31 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 18:12:19 by apommier         ###   ########.fr       */
+/*   Created: 2022/04/20 04:43:32 by apommier          #+#    #+#             */
+/*   Updated: 2022/04/20 04:44:20 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	set_fdin_not_first(t_cmd *cmd, int *fdin)
 		printf("Minishell: open : bad file descriptor\n");
 }
 
-void	execute(t_cmd *cmd, char **env)
+void	execute(t_cmd *cmd)
 {
 	int	fdpipe[2];
 	int	fdout;

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:04:12 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 00:36:10 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/20 04:42:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 int	find_len(char *input, int i, char c)
 {
