@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 16:49:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:05:09 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_word(char *str, int start)
 int	set_file(char *file, int type)
 {
 	int	fd;
-	
+
 	if (type)
 		fd = open(file, O_APPEND | O_CREAT, 0666);
 	else
