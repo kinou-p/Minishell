@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 18:30:14 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:30:49 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 	split_line = ft_split_with_quote(line, ' ');
 		s_cmd->nb_args = double_size(split_line);
 		s_cmd->args = split_line;
-	free(line);
+	//free(line);
 	return (s_cmd);
 }
 
@@ -94,7 +94,7 @@ t_cmd	*initialize_cmd(t_cmd *cmd, char **env, char **cmds, int nb)
 		return (0);
 	}
 	parse_quote(cmd);
-	free(cmds);
+	free_double(cmds);
 	if (cmd)
 	{
 		cmd->current_s_cmd = cmd->s_cmds[0];
