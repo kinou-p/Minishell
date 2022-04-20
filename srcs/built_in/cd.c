@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 15:52:57 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:09:32 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ int	check_home(t_s_cmd *cmd, char *p, char **env)
 	p = ft_substr(env[home], 5, ft_strlen(env[len_home]));
 	if (chdir(p) == 0)
 	{
-		change_oldpwd(env, old_pwd, pwd, p);	
+		change_oldpwd(env, old_pwd, pwd, p);
 		free(p);
-		return (check_return(cmd, 0));	
+		return (check_return(cmd, 0));
 	}
 	else
 	{
 		ft_putstr_fd("Minishell: cd: ", 2);
 		ft_putstr_fd(p, 2);
 		ft_putstr_fd(": No such directory\n", 2);
-		free(p);		
+		free(p);
 		return (check_return(cmd, 1));
 	}		
 }
@@ -100,7 +100,7 @@ int	open_directory(t_s_cmd *cmd)
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 			return (cd_error(cmd, "Minishell: cd: HOME not set", 1));
-		return(check_home(cmd, p, cmd->big_cmd->env));
+		return (check_home(cmd, p, cmd->big_cmd->env));
 	}
 	else if (cmd->nb_args == 2)
 		i = check_dir(cmd);

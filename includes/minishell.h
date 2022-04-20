@@ -6,7 +6,7 @@
 /*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 15:41:57 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:10:27 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int		check_variable(char *variable);
 int		cd_error(t_s_cmd *cmd, char *str, int i);
 int		size_path(char **str);
 int		check_return(t_s_cmd *cmd, int var);
-void    change_oldpwd(char **env, int old_pwd, int pwd, char *p);
+void	change_oldpwd(char **env, int old_pwd, int pwd, char *p);
 
 //real builtin
 void	ft_exit(t_s_cmd *cmd);
