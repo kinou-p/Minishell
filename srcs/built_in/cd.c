@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syd <syd@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 16:56:35 by syd              ###   ########.fr       */
+/*   Updated: 2022/04/20 16:09:32 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	change_path(t_s_cmd *cmd)
 	add_one(cmd);
 }
 
-void	check_home(char *p, char **env)
+int	check_home(t_s_cmd *cmd, char *p, char **env)
 {
 	int	home;
 	int	len_home;
@@ -53,18 +53,18 @@ void	check_home(char *p, char **env)
 	p = ft_substr(env[home], 5, ft_strlen(env[len_home]));
 	if (chdir(p) == 0)
 	{
-		if (find_it(env, "PWD") != -1)
-		{
-			if (find_it(env, "OLDPWD") != -1)
-			{
-				free(env[old_pwd]);
-				env[old_pwd] = ft_strjoin("OLD", env[pwd]);
-			}
-			free(env[pwd]);
-			env[pwd] = ft_strjoin("PWD=", p);
-		}
+		change_oldpwd(env, old_pwd, pwd, p);
+		free(p);
+		return (check_return(cmd, 0));
 	}
-	free(p);
+	else
+	{
+		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd(p, 2);
+		ft_putstr_fd(": No such directory\n", 2);
+		free(p);
+		return (check_return(cmd, 1));
+	}		
 }
 
 int	check_dir(t_s_cmd *cmd)
@@ -100,7 +100,7 @@ int	open_directory(t_s_cmd *cmd)
 	{
 		if (find_it(cmd->big_cmd->env, "HOME") < 0)
 			return (cd_error(cmd, "Minishell: cd: HOME not set", 1));
-		check_home(p, cmd->big_cmd->env);
+		return (check_home(cmd, p, cmd->big_cmd->env));
 	}
 	else if (cmd->nb_args == 2)
 		i = check_dir(cmd);
