@@ -6,11 +6,28 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:45:10 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 14:09:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:45:06 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	check_access_output(t_s_cmd *cmd)
+{
+	if (access(cmd->outfile, W_OK))
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(cmd->outfile, 2);
+		if (access(cmd->outfile, F_OK))
+			ft_putstr_fd(": no such file\n", 2);
+		else
+			ft_putstr_fd(": Permission denied\n", 2);
+		free(cmd->outfile);
+		return (0);
+	}
+	return (1);
+}
+
 
 char	*set_output(char *line, t_s_cmd *cmd, int index)
 {
@@ -31,6 +48,11 @@ char	*set_output(char *line, t_s_cmd *cmd, int index)
 		free(cmd->outfile);
 	cmd->outfile = get_word(line, index);
 	cmd->outfile = set_var(cmd->big_cmd, cmd->outfile);
+	if (!check_access_output(cmd))
+	{
+			free(line);
+			return (0);
+	}
 	line = cut_str(line, index, i);
 	return (line);
 }

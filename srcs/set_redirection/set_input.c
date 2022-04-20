@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:44:22 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 18:20:56 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:50:37 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ char	*set_input(char *line, t_s_cmd *cmd, int index)
 		free(cmd->infile);
 	cmd->infile = get_word(line, index);
 	cmd->infile = set_var(cmd->big_cmd, cmd->infile);
-	if (cmd->in_type == 0)
+	if (cmd->in_type == 0 && !check_access_input(cmd))
 	{
-		if (!check_access_input(cmd))
-			return (0);
+		free(line);
+		return (0);
 	}
 	line = cut_str(line, index, i);
 	return (line);
@@ -70,7 +70,7 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 	else
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
-		return (0);
+		return (error_parsing());
 	line = set_input(line, cmd, i);
 	if (!line)
 		return (0);

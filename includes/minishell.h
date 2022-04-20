@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 04:44:53 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:52:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**ft_dup_double(char **env);
 void	execute(t_cmd *cmd);
 
 //set_cmd.c
-int		error_parsing(void);
+char	*error_parsing(void);
 t_cmd	*set_cmd(char *input, char **path, int nb);
 
 //exec_utils.c
