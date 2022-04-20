@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 15:18:58 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 19:15:00 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 13:52:56 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ char	*get_word(char *str, int start)
 	return (new);
 }
 
-int	set_file(char *file)
+int	set_file(char *file, int type)
 {
 	int	fd;
-
-	fd = open(file, O_TRUNC | O_CREAT, 0644);
+	
+	if (type)
+		fd = open(file, O_APPEND | O_CREAT, 0644);
+	else
+		fd = open(file, O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		ft_putstr_fd("Minishell: ", 2);
@@ -107,7 +110,7 @@ char	*set_redirection(t_s_cmd *cmd, char *line, int index, int i)
 			if (!is_in_quote(line, i))
 			{
 				line = ft_output(line, cmd, i);
-				if (!set_file(cmd->outfile))
+				if (!set_file(cmd->outfile, cmd->in_type))
 					return (0);
 				i = 0;
 			}
