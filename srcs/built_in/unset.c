@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:26:29 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 04:56:12 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:01:03 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,17 @@ int	find_variable(char *variable, t_s_cmd *cmd)
 		ft_putstr_fd("Minishell: unset: `", 2);
 		ft_putstr_fd(variable, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (check_return(cmd, 2));
+		return (check_return(cmd, 1));
 	}
 	if (i == tab_len(cmd->big_cmd->env))
 		return (check_return(cmd, 2));
-	unset_variable(cmd, i);
-	return (check_return(cmd, 1));
+	if (find_it(cmd->big_cmd->env, variable) != -1)
+	{
+		unset_variable(cmd, i);
+		return (check_return(cmd, 0));
+	}
+	else
+		return (check_return(cmd, 1));
 }
 
 int	ft_unset(t_s_cmd *cmd)
