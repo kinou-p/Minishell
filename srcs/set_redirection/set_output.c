@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:45:10 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 14:51:17 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:09:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*set_output(char *line, t_s_cmd *cmd, int index)
 		i++;
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])
 		i++;
+	if (cmd->outfile)
+		free(cmd->outfile);
 	cmd->outfile = get_word(line, index);
 	cmd->outfile = set_var(cmd->big_cmd, cmd->outfile);
 	line = cut_str(line, index, i);
