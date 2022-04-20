@@ -3,23 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 11:23:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 16:09:57 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/20 17:48:23 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+unsigned long long    ft_atoi_long(const char *nptr)
+{
+    int                    i;
+    unsigned long long    nbr;
+    unsigned long long    minus;
+
+    minus = 1;
+    nbr = 0;
+    i = 0;
+    while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
+        i++;
+    if (nptr[i] == '+')
+        i++;
+    else if (nptr[i] == '-')
+    {
+        i++;
+        minus = -1;
+    }
+    while (nptr[i] >= '0' && nptr[i] <= '9')
+    {
+        nbr = nbr * 10 + nptr[i] - '0';
+        i++;
+    }
+    return (minus * nbr);
+}
+
 int	max_long(char *nbr)
 {
+	unsigned long long long_max;
+
+	long_max = 9223372036854775807;
 	printf("%s\n", nbr);
-	if (ft_strlen(nbr) > 19)
+	if (ft_strlen(nbr) > 20)
 		return (1);
-	if (ft_atoi(nbr) > 9223372036854775800 && nbr[ft_strlen(nbr) - 1] > '7')
-		return (1);
-	if (ft_atoi(nbr) < -9223372036854775800 && nbr[ft_strlen(nbr) - 1] > '8')
+	if (nbr[0] == '-')
+	{
+		printf("--->%lld\n", ft_atoi_long(nbr));
+		if (ft_atoi_long(nbr + 1) > long_max + 1)
+			return (1);
+	}
+	else if (ft_atoi_long(nbr) > long_max)
 		return (1);
 	printf("return 0\n");
 	return (0);
