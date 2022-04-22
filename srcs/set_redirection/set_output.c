@@ -6,23 +6,44 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:45:10 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:02:24 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+char	*find_var(t_cmd *big_cmd, char *cmd, int i, int *index)
+{
+	char	*swap;
+	char	*swap2;
+	char	*ret;
+	char	*var;
+
+	swap = ft_substr(cmd, *index + 1, i - *index - 1);
+	var = get_var(big_cmd, swap);
+	free(swap);
+	swap2 = ft_strdup(cmd + i);
+	cmd[*index] = 0;
+	ret = ft_strjoin(cmd, var);
+	free(cmd);
+	if (*index > 0)
+		*index += ft_strlen(var) - 1;
+	free(var);
+	var = ret;
+	ret = ft_strjoin(ret, swap2);
+	free(var);
+	free(swap2);
+	return (ret);
+}
+
 int	check_access_output(t_s_cmd *cmd)
 {
-	if (access(cmd->outfile, W_OK))
+	if (!access(cmd->outfile, F_OK) && access(cmd->outfile, W_OK))
 	{
 		g_var = 1;
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(cmd->outfile, 2);
-		if (access(cmd->outfile, F_OK))
-			ft_putstr_fd(": no such file\n", 2);
-		else
-			ft_putstr_fd(": Permission denied\n", 2);
+		ft_putstr_fd(": Permission denied\n", 2);
 		free(cmd->outfile);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:01:36 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_simple {
 	struct s_command	*big_cmd;
 	int					fd[2];
 	int					pipe[2];
-	int					last;
 	int					last_pipe[2];
 	int					child;
 	int					nb_args;
@@ -123,7 +122,9 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index);
 char	*ft_output(char *line, t_s_cmd *cmd, int index);
 
 //set_var.c
+char	*get_var(t_cmd	*cmd, char *var_name);
 char	*set_var(t_cmd *big_cmd, char *cmd);
+char	*find_var(t_cmd *big_cmd, char *cmd, int i, int *index);
 
 //set_signals.c
 

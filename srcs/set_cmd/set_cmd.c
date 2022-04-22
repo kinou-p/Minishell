@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:41:45 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:50:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 		return (0);
 	s_cmd->fd[0] = -1;
 	s_cmd->fd[1] = -1;
+	s_cmd->cmd = 0;
 	s_cmd->args = 0;
 	s_cmd->infile = 0;
 	s_cmd->outfile = 0;

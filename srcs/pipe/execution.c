@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 04:43:32 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 04:44:20 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:51:32 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	exec_cmd(t_cmd *cmd, char **env, int *fdpipe)
 
 void	exec_last_cmd(t_cmd *cmd, int *fdin, int *fdout, int i)
 {
-	cmd->current_s_cmd->last = 1;
 	if (cmd->current_s_cmd->outfile)
 		*fdout = open(cmd->current_s_cmd->outfile,
 				O_RDWR | O_CREAT | O_APPEND, 0666);
@@ -58,7 +57,6 @@ void	exec_last_cmd(t_cmd *cmd, int *fdin, int *fdout, int i)
 
 void	exec_not_last_cmd(t_cmd *cmd, int *fdpipe, int *fdin, int *fdout)
 {
-	cmd->current_s_cmd->last = 0;
 	pipe(fdpipe);
 	cmd->current_s_cmd->fd[0] = *fdin;
 	if (cmd->current_s_cmd->outfile)

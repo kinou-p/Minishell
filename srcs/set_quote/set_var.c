@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 10:41:04 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:01:30 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,20 @@ char	*get_var(t_cmd	*cmd, char *var_name)
 char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 {
 	int		i;
-	char	*swap;
-	char	*swap2;
 	char	*ret;
-	char	*var;
 
 	i = *index + 1;
 	while (cmd[i] && (ft_isalnum(cmd[i]) || cmd[i] == '_'
 			|| cmd[i] == '?' || cmd[i] == '$'))
 		i++;
-	swap = ft_substr(cmd, *index + 1, i - *index - 1);
-	var = get_var(big_cmd, swap);
-	free(swap);
-	swap2 = ft_strdup(cmd + i);
-	cmd[*index] = 0;
-	ret = ft_strjoin(cmd, var);
-	free(cmd);
-	if (*index > 0)
-		*index += ft_strlen(var) - 1;
-	free(var);
-	var = ret;
-	ret = ft_strjoin(ret, swap2);
-	free(var);
-	free(swap2);
+	if (i == *index + 1)
+	{
+		(*index)++;
+		ret = ft_strdup(cmd);
+		free(cmd);
+		return (ret);
+	}
+	ret = find_var(big_cmd, cmd, i, index);
 	return (ret);
 }
 
