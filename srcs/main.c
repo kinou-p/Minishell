@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 13:27:11 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 04:53:03 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	**ft_dup_double(char **env)
 
 char	**read_line(char **path, char *input, t_cmd *cmd, int *err_var)
 {
+	(void)*err_var;
 	input = readline("\033[1;31m~$ \033[0m");
 	if (!input)
 	{
@@ -44,12 +45,12 @@ char	**read_line(char **path, char *input, t_cmd *cmd, int *err_var)
 	add_history(input);
 	if (ft_strlen(input) && next_space(input, 0) && input && path)
 	{
-		cmd = set_cmd(input, path, *err_var);
+		cmd = set_cmd(input, path, g_var);
 		if (cmd)
 		{
 			free_double(path);
 			execute(cmd);
-			*err_var = cmd->err_var;
+			g_var = cmd->err_var;
 			path = ft_dup_double(cmd->env);
 			free_cmd(cmd);
 			cmd = 0;

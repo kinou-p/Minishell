@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 15:49:33 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:41:45 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_cmd	*set_cmd(char *input, char **env, int nb)
 
 	if (!is_quote_good(input) || !is_pipe_good(input))
 	{
-		ft_putstr_fd("Minishell: error while parsing command\n", 2);
+		error_parsing(0);
 		return (0);
 	}
 	cmds = ft_split_with_quote(input, '|');

@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 16:58:49 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <errno.h>
 # include <signal.h>
 # include <dirent.h>
+
+int	g_var;
 
 // Command Data Structure
 
@@ -68,7 +70,7 @@ char	**ft_dup_double(char **env);
 void	execute(t_cmd *cmd);
 
 //set_cmd.c
-char	*error_parsing(void);
+char	*error_parsing(char *to_free);
 t_cmd	*set_cmd(char *input, char **path, int nb);
 
 //exec_utils.c

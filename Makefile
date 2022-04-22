@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+         #
+#    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/20 17:39:51 by sadjigui         ###   ########.fr        #
+#    Updated: 2022/04/22 11:25:14 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,15 +39,13 @@ SRCS	= srcs/main.c\
 		srcs/set_quote/set_quote.c\
 		srcs/set_signals/set_signal.c\
 		srcs/set_quote/set_var.c\
-		
+
 OBJS	= ${SRCS:.c=.o}
 CC		= clang
-CFLAGS	= -Wall -Wextra -g
+CFLAGS	= -Wall -Wextra -Werror -g
 LIB		= -lreadline
 RM		= rm -rf
 LIBFT	= ./libft
-
-#-include ./valgrind.mk
 
 ${NAME}: ${OBJS}
 		@make bonus -C ${LIBFT}

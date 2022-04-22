@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:44:22 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 16:50:37 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	check_access_input(t_s_cmd *cmd)
 {
 	if (access(cmd->infile, R_OK))
 	{
+		g_var = 1;
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(cmd->infile, 2);
 		if (access(cmd->infile, F_OK))
@@ -70,7 +71,7 @@ char	*ft_input(char *line, t_s_cmd *cmd, int index)
 	else
 		cmd->in_type = 0;
 	if (next == '<' || next == '>' || !next)
-		return (error_parsing());
+		return (error_parsing(line));
 	line = set_input(line, cmd, i);
 	if (!line)
 		return (0);

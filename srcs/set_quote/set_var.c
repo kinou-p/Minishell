@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:02:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/20 17:04:43 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 10:41:04 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ char	*change_var(t_cmd *big_cmd, char *cmd, int *index)
 	cmd[*index] = 0;
 	ret = ft_strjoin(cmd, var);
 	free(cmd);
-	*index += ft_strlen(var) - 1;
+	if (*index > 0)
+		*index += ft_strlen(var) - 1;
 	free(var);
 	var = ret;
 	ret = ft_strjoin(ret, swap2);
