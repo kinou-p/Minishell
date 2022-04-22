@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 17:58:25 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/19 13:18:17 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:54:54 by sadjigui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,15 @@ void	print_export(char *tmp)
 	i = find_len(tmp, 0, '=') + 1;
 	str2 = ft_substr(tmp, i, ft_strlen(tmp));
 	printf("declare -x %s", str1);
-	if (next_space(str2, 0) != '\0')
-		printf("=\"%s\"", str2);
+	if (ft_strlen(tmp) != ft_strlen(str1))
+	{
+		printf("=\"");
+		if (next_space(str2, 0) != '\0')
+		{
+			printf("%s", str2);
+		}
+		printf("\"");
+	}
 	printf("\n");
 	free(str1);
 	free(str2);
