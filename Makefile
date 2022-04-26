@@ -6,7 +6,7 @@
 #    By: apommier <apommier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 12:50:24 by apommier          #+#    #+#              #
-#    Updated: 2022/04/22 11:25:14 by apommier         ###   ########.fr        #
+#    Updated: 2022/04/23 13:33:48 by apommier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,15 +41,15 @@ SRCS	= srcs/main.c\
 		srcs/set_quote/set_var.c\
 
 OBJS	= ${SRCS:.c=.o}
-CC		= clang
-CFLAGS	= -Wall -Wextra -Werror -g
+CC		= gcc
+CFLAGS	= -Wall -Wextra -Werror -fcommon
 LIB		= -lreadline
 RM		= rm -rf
 LIBFT	= ./libft
 
 ${NAME}: ${OBJS}
 		@make bonus -C ${LIBFT}
-		@${CC} ${LIB} ${OBJS} ${LIBFT}/libft.a -o ${NAME} 
+		${CC}  ${OBJS} ${LIBFT}/libft.a -o ${NAME} -lreadline
 
 all:	${NAME}
 

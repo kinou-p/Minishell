@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:44:22 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:08:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,10 @@ int	check_access_input(t_s_cmd *cmd)
 char	*set_input(char *line, t_s_cmd *cmd, int index)
 {
 	int	i;
-	int	word_index;
 
-	word_index = 0;
 	i = index + 1;
 	if (line[i] == '<')
 		i++;
-	word_index = i;
 	while (line[i] == ' ' && line[i])
 		i++;
 	while ((line[i] != ' ' && line[i] != '<' && line[i] != '>') && line[i])

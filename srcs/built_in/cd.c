@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 18:30:26 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 16:09:32 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:10:35 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 void	add_one(t_s_cmd *cmd)
 {
 	char	p[1024];
-	char	*str;
 	int		i;
 
 	i = find_it(cmd->big_cmd->env, "PWD");
-	str = getcwd(p, sizeof(p));
+	getcwd(p, sizeof(p));
 	free(cmd->big_cmd->env[i]);
 	cmd->big_cmd->env[i] = ft_strjoin("PWD=", p);
 }
@@ -87,13 +86,10 @@ int	check_dir(t_s_cmd *cmd)
 int	open_directory(t_s_cmd *cmd)
 {
 	char	*p;
-	int		j;
 	int		i;
 
 	p = NULL;
 	i = 0;
-	if (find_it(cmd->big_cmd->env, "PWD") != -1)
-		j = size_path(cmd->big_cmd->env);
 	if (cmd->nb_args > 2)
 		return (cd_error(cmd, "Minishell: cd: too many arguments", 1));
 	if (!cmd->args[1])

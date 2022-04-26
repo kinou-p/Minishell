@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 15:30:30 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:43:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:12:16 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	crtl_c(int num)
 {
-	num = 0;
+	(void)num;
 	g_var = 130;
 	printf("\n");
 	rl_replace_line("", 0);

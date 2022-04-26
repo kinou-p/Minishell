@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 23:58:21 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 17:19:17 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:11:50 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,13 @@ int	parse_quote(t_cmd *cmd)
 {
 	int		i;
 	int		j;
-	char	*swap;
 
 	i = -1;
 	while (cmd->s_cmds[++i])
 	{		
 		j = -1;
 		while (cmd->s_cmds[i]->args[++j])
-		{
-			swap = cmd->s_cmds[i]->args[j];
 			cmd->s_cmds[i]->args[j] = set_var(cmd, cmd->s_cmds[i]->args[j]);
-		}
 		if (!is_builtin(cmd->s_cmds[i]->args[0]))
 		{
 			cmd->s_cmds[i]->cmd = get_command(cmd->s_cmds[i]->args, cmd->path);

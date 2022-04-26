@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:19:42 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:50:17 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:07:57 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_s_cmd	*set_s_cmd(char *line, int index)
 {
 	t_s_cmd	*s_cmd;
 	char	**split_line;
-	int		i;
 
-	i = 0;
 	s_cmd = malloc(sizeof(t_s_cmd));
 	if (!s_cmd)
 		return (0);

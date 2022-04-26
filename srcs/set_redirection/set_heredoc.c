@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 14:46:01 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 11:24:15 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:08:11 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ char	*set_heredoc(int index, char **in)
 	char	*nbr_file;
 	char	*file_name;
 	int		fd;
-	int		i;
 
-	i = 0;
 	if (index)
 	{
 		nbr_file = ft_itoa(index + 1);

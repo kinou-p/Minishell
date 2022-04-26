@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 19:50:50 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/19 16:15:11 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:11:27 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	next_quote(const char *s, int i)
 			while (s[i] != '\'')
 				i++;
 		}
-		else
+		else if (double_quote)
 		{
 			while (s[i] != '"')
 				i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sadjigui <sadjigui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:26:29 by sadjigui          #+#    #+#             */
-/*   Updated: 2022/04/20 15:01:03 by sadjigui         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:09:17 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ void	unset_variable(t_s_cmd *cmd, int i)
 int	find_variable(char *variable, t_s_cmd *cmd)
 {
 	int	i;
-	int	j;
 
 	i = find_it(cmd->big_cmd->env, variable);
-	j = 0;
 	if (check_variable(variable) == 1)
 	{
 		ft_putstr_fd("Minishell: unset: `", 2);

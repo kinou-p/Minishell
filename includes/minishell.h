@@ -6,7 +6,7 @@
 /*   By: apommier <apommier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 22:33:49 by apommier          #+#    #+#             */
-/*   Updated: 2022/04/22 13:01:36 by apommier         ###   ########.fr       */
+/*   Updated: 2022/04/23 13:37:53 by apommier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <errno.h>
 # include <signal.h>
 # include <dirent.h>
-
-int	g_var;
+# include <readline/readline.h>
+# include <readline/history.h>
 
 // Command Data Structure
 
@@ -47,6 +47,8 @@ typedef struct s_simple {
 	char				**args;
 	char				*cmd;
 }				t_s_cmd;
+
+int	g_var;
 
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
